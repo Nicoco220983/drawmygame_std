@@ -1,0 +1,19 @@
+{
+  "name": "drawmygame_std",
+  "catalogname": "std",
+  "version": "0.0.1",
+  "description": "DrawMyGame standard catalog",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ncarrez",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.4",
+    "@babel/plugin-proposal-decorators": "^7.27.1",
+    "@babel/preset-env": "^7.27.2"
+  }
+}
