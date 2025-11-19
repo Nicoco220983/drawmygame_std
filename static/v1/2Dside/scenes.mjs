@@ -39,7 +39,8 @@ var floor = Math.floor,
   min = Math.min,
   max = Math.max;
 import { GraphicsProps } from '../../../../core/v1/graphics.mjs';
-import { SceneCommon, GameScene, GameObject, Category, StateProperty, StateBool, StateNumber, Mixin, OwnerableMixin, Text, ModuleCatalog, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, importAndPreload } from '../../../../core/v1/game.mjs';
+import { CATALOG } from '../../../../core/v1/catalog.mjs';
+import { Dependencies, SceneCommon, GameScene, GameObject, Category, StateProperty, StateBool, StateNumber, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/game.mjs';
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs';
 import * as utils from '../../../../core/v1/utils.mjs';
 var sumTo = utils.sumTo,
@@ -53,7 +54,7 @@ var sumTo = utils.sumTo,
   importJs = utils.importJs,
   hasKeys = utils.hasKeys,
   nbKeys = utils.nbKeys;
-export var CATALOG = new ModuleCatalog(import.meta.url, {
+var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
@@ -90,7 +91,7 @@ _BorderManager = _applyDecs$c2[0];
 _initClass2 = _applyDecs$c2[1];
 _initClass2();
 export { _BorderManager as BorderManager };
-_classDecs3 = [CATALOG.registerObject({
+_classDecs3 = [MOD_CATALOG.registerObject({
   label: "Block Border",
   showInBuilder: true
 })];
@@ -152,7 +153,7 @@ _BlockBorderManager = _applyDecs$c3[0];
 _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _BlockBorderManager as BlockBorderManager };
-_classDecs4 = [CATALOG.registerObject({
+_classDecs4 = [MOD_CATALOG.registerObject({
   label: "Damage Border",
   showInBuilder: true
 }), StateNumber.define("heroOutDamages", {
@@ -206,7 +207,7 @@ _DamageBorderManager = _applyDecs$c4[0];
 _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _DamageBorderManager as DamageBorderManager };
-_classDecs5 = [CATALOG.registerObject({
+_classDecs5 = [MOD_CATALOG.registerObject({
   label: "Loop Border",
   showInBuilder: true
 })];
@@ -239,7 +240,7 @@ _LoopBorderManager = _applyDecs$c5[0];
 _initClass5 = _applyDecs$c5[1];
 _initClass5();
 export { _LoopBorderManager as LoopBorderManager };
-_classDecs6 = [CATALOG.registerObject({
+_classDecs6 = [MOD_CATALOG.registerObject({
   label: "Hero Lives",
   showInBuilder: true
 }), Category.append("heroslives"), StateProperty.define("deathsIts"), StateNumber.define("delay", {
@@ -318,7 +319,7 @@ _ViewManager = _applyDecs$c7[0];
 _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _ViewManager as ViewManager };
-_classDecs8 = [CATALOG.registerObject({
+_classDecs8 = [MOD_CATALOG.registerObject({
   label: "View Heros Center",
   showInBuilder: true
 })];
@@ -367,7 +368,7 @@ _ViewHerosCenterManag = _applyDecs$c8[0];
 _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _ViewHerosCenterManag as ViewHerosCenterManager };
-_classDecs9 = [CATALOG.registerObject({
+_classDecs9 = [MOD_CATALOG.registerObject({
   label: "View First Hero",
   showInBuilder: true
 })];
@@ -457,7 +458,7 @@ _ViewFirstHeroManager = _applyDecs$c9[0];
 _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _ViewFirstHeroManager as ViewFirstHeroManager };
-_classDecs0 = [CATALOG.registerObject({
+_classDecs0 = [MOD_CATALOG.registerObject({
   label: "Physics"
 }), StateNumber.define("gravityAcc", {
   "default": 1000,
@@ -481,7 +482,7 @@ _PhysicsManager = _applyDecs$c0[0];
 _initClass0 = _applyDecs$c0[1];
 _initClass0();
 export { _PhysicsManager as PhysicsManager };
-_classDecs1 = [CATALOG.registerObject({
+_classDecs1 = [MOD_CATALOG.registerObject({
   label: "Attack"
 }), Category.append("attack")];
 var _AttackManager;
@@ -754,10 +755,10 @@ _Background = _applyDecs$c10[0];
 _initClass10 = _applyDecs$c10[1];
 _initClass10();
 export { _Background as Background };
-var GreenLandscapeImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg");
-_classDecs11 = [CATALOG.registerObject({
+var GreenLandscapeImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg");
+_classDecs11 = [MOD_CATALOG.registerObject({
   label: "Green Landscape"
-})];
+}), Dependencies.add(GreenLandscapeImg)];
 var _GreenLandscapeBackgr;
 var GreenLandscapeBackground = /*#__PURE__*/function (_Background4) {
   function GreenLandscapeBackground() {
@@ -778,10 +779,10 @@ _GreenLandscapeBackgr = _applyDecs$c11[0];
 _initClass11 = _applyDecs$c11[1];
 _initClass11();
 export { _GreenLandscapeBackgr as GreenLandscapeBackground };
-var RockMountainsImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg");
-_classDecs12 = [CATALOG.registerObject({
+var RockMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg");
+_classDecs12 = [MOD_CATALOG.registerObject({
   label: "Rock Mountains"
-})];
+}), Dependencies.add(RockMountainsImg)];
 var _RockMountainsBackgro;
 var RockMountainsBackground = /*#__PURE__*/function (_Background6) {
   function RockMountainsBackground() {
@@ -802,10 +803,10 @@ _RockMountainsBackgro = _applyDecs$c12[0];
 _initClass12 = _applyDecs$c12[1];
 _initClass12();
 export { _RockMountainsBackgro as RockMountainsBackground };
-var SnowMountainsImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg");
-_classDecs13 = [CATALOG.registerObject({
+var SnowMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg");
+_classDecs13 = [MOD_CATALOG.registerObject({
   label: "Snow Mountains"
-})];
+}), Dependencies.add(SnowMountainsImg)];
 var _SnowMountainsBackgro;
 var SnowMountainsBackground = /*#__PURE__*/function (_Background8) {
   function SnowMountainsBackground() {
@@ -826,10 +827,10 @@ _SnowMountainsBackgro = _applyDecs$c13[0];
 _initClass13 = _applyDecs$c13[1];
 _initClass13();
 export { _SnowMountainsBackgro as SnowMountainsBackground };
-var DarkForestImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg");
-_classDecs14 = [CATALOG.registerObject({
+var DarkForestImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg");
+_classDecs14 = [MOD_CATALOG.registerObject({
   label: "Dark Forest"
-})];
+}), Dependencies.add(DarkForestImg)];
 var _DarkForestBackground;
 var DarkForestBackground = /*#__PURE__*/function (_Background0) {
   function DarkForestBackground() {
@@ -850,10 +851,10 @@ _DarkForestBackground = _applyDecs$c14[0];
 _initClass14 = _applyDecs$c14[1];
 _initClass14();
 export { _DarkForestBackground as DarkForestBackground };
-var DarkCityImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg");
-_classDecs15 = [CATALOG.registerObject({
+var DarkCityImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg");
+_classDecs15 = [MOD_CATALOG.registerObject({
   label: "Dark City"
-})];
+}), Dependencies.add(DarkCityImg)];
 var _DarkCityBackground;
 var DarkCityBackground = /*#__PURE__*/function (_Background10) {
   function DarkCityBackground() {
@@ -874,7 +875,7 @@ _DarkCityBackground = _applyDecs$c15[0];
 _initClass15 = _applyDecs$c15[1];
 _initClass15();
 export { _DarkCityBackground as DarkCityBackground };
-_classDecs16 = [CATALOG.registerScene(), StateBool.define("killAllEnemies", {
+_classDecs16 = [MOD_CATALOG.registerScene(), Dependencies.add(_GreenLandscapeBackgr), StateBool.define("killAllEnemies", {
   "default": false,
   showInBuilder: true
 }), StateBool.define("catchAllStars", {
@@ -984,15 +985,15 @@ var StandardScene = /*#__PURE__*/function (_GameScene) {
     key: "loadJoypadScene",
     value: function () {
       var _loadJoypadScene = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-        var _yield$importAndPrelo, JoypadGameScene;
+        var _yield$import, JoypadGameScene;
         return _regenerator().w(function (_context) {
           while (1) switch (_context.n) {
             case 0:
               _context.n = 1;
-              return importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
             case 1:
-              _yield$importAndPrelo = _context.v;
-              JoypadGameScene = _yield$importAndPrelo.JoypadGameScene;
+              _yield$import = _context.v;
+              JoypadGameScene = _yield$import.JoypadGameScene;
               return _context.a(2, new JoypadGameScene(this.game));
           }
         }, _callee, this);
@@ -1023,7 +1024,7 @@ _StandardScene = _applyDecs$c16[0];
 _initClass16 = _applyDecs$c16[1];
 _initClass16();
 export { _StandardScene as StandardScene };
-_classDecs17 = [CATALOG.registerScene(), StateNumber.define("duration", {
+_classDecs17 = [MOD_CATALOG.registerScene(), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("duration", {
   "default": 3 * 60,
   precision: 30,
   showInBuilder: true
@@ -1213,15 +1214,15 @@ var TagScene = /*#__PURE__*/function (_GameScene2) {
     key: "loadJoypadScene",
     value: function () {
       var _loadJoypadScene2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-        var _yield$importAndPrelo2, JoypadGameScene;
+        var _yield$import2, JoypadGameScene;
         return _regenerator().w(function (_context2) {
           while (1) switch (_context2.n) {
             case 0:
               _context2.n = 1;
-              return importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
             case 1:
-              _yield$importAndPrelo2 = _context2.v;
-              JoypadGameScene = _yield$importAndPrelo2.JoypadGameScene;
+              _yield$import2 = _context2.v;
+              JoypadGameScene = _yield$import2.JoypadGameScene;
               return _context2.a(2, new JoypadGameScene(this.game));
           }
         }, _callee2, this);
@@ -1252,10 +1253,10 @@ _TagScene = _applyDecs$c17[0];
 _initClass17 = _applyDecs$c17[1];
 _initClass17();
 export { _TagScene as TagScene };
-var TagImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/tag.png");
-_classDecs18 = [CATALOG.registerObject({
+var TagImg = new Img("/static/catalogs/std/v1/2Dside/assets/tag.png");
+_classDecs18 = [MOD_CATALOG.registerObject({
   showInBuilder: false
-}), OwnerableMixin.add({
+}), Dependencies.add(TagImg), OwnerableMixin.add({
   removedWithOwner: false
 })];
 var _Tag;
@@ -1301,7 +1302,7 @@ _Tag = _applyDecs$c18[0];
 _initClass18 = _applyDecs$c18[1];
 _initClass18();
 export { _Tag as Tag };
-_classDecs19 = [CATALOG.registerScene(), StateNumber.define("duration", {
+_classDecs19 = [MOD_CATALOG.registerScene(), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("duration", {
   "default": 3 * 60,
   precision: 30,
   showInBuilder: true
@@ -1432,15 +1433,15 @@ var StealTreasures = /*#__PURE__*/function (_GameScene3) {
     key: "loadJoypadScene",
     value: function () {
       var _loadJoypadScene3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-        var _yield$importAndPrelo3, JoypadGameScene;
+        var _yield$import3, JoypadGameScene;
         return _regenerator().w(function (_context3) {
           while (1) switch (_context3.n) {
             case 0:
               _context3.n = 1;
-              return importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
             case 1:
-              _yield$importAndPrelo3 = _context3.v;
-              JoypadGameScene = _yield$importAndPrelo3.JoypadGameScene;
+              _yield$import3 = _context3.v;
+              JoypadGameScene = _yield$import3.JoypadGameScene;
               return _context3.a(2, new JoypadGameScene(this.game));
           }
         }, _callee3, this);
@@ -1471,8 +1472,8 @@ _StealTreasures = _applyDecs$c19[0];
 _initClass19 = _applyDecs$c19[1];
 _initClass19();
 export { _StealTreasures as StealTreasures };
-var StarImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/star.png");
-_classDecs20 = [OwnerableMixin.add()];
+var StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png");
+_classDecs20 = [Dependencies.add(StarImg), OwnerableMixin.add()];
 var _StarsBar;
 var StarsBar = /*#__PURE__*/function (_GameObject6) {
   function StarsBar() {
@@ -1525,7 +1526,7 @@ function countStarExtras(hero) {
 }
 
 // WAIGTING
-_classDecs21 = [CATALOG.registerScene({
+_classDecs21 = [MOD_CATALOG.registerScene({
   showInBuilder: false
 })];
 var _WaitingScene;
@@ -1698,15 +1699,15 @@ var WaitingScene = /*#__PURE__*/function (_SceneCommon) {
     key: "loadJoypadScene",
     value: function () {
       var _loadJoypadScene4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-        var _yield$importAndPrelo4, JoypadWaitingScene;
+        var _yield$import4, JoypadWaitingScene;
         return _regenerator().w(function (_context5) {
           while (1) switch (_context5.n) {
             case 0:
               _context5.n = 1;
-              return importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
             case 1:
-              _yield$importAndPrelo4 = _context5.v;
-              JoypadWaitingScene = _yield$importAndPrelo4.JoypadWaitingScene;
+              _yield$import4 = _context5.v;
+              JoypadWaitingScene = _yield$import4.JoypadWaitingScene;
               return _context5.a(2, new JoypadWaitingScene(this.game));
           }
         }, _callee5, this);

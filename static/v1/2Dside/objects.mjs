@@ -1,13 +1,15 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _Class, _Hero3, _applyDecs$c, _SmokeExplosion2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Hero4, _Nico2, _Weapon3, _NicoHand2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Extra5, _ShurikenPack2, _Projectile3, _Shuriken2, _Extra7, _Bomb2, _Explosion2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
-var _initClass, _classDecs, _Hero2, _initClass2, _classDecs2, _initClass3, _classDecs3, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22, _initClass23, _classDecs23, _initClass24, _classDecs24, _initClass25, _classDecs25, _initClass26, _classDecs26, _initClass27, _classDecs27, _initClass28, _classDecs28;
+var _SmokeExplosion2, _Pop2, _Class, _Hero3, _applyDecs$c2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Weapon3, _NicoHand2, _Hero4, _Nico2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Extra5, _ShurikenPack2, _Projectile3, _Shuriken2, _Extra7, _Bomb2, _Explosion2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
+var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _Hero2, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22, _initClass23, _classDecs23, _initClass24, _classDecs24, _initClass25, _classDecs25, _initClass26, _classDecs26, _initClass27, _classDecs27, _initClass28, _classDecs28, _initClass29, _classDecs29;
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _identity(t) { return t; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -21,13 +23,11 @@ function _superPropBase(t, o) { for (; !{}.hasOwnProperty.call(t, o) && null !==
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _applyDecs(e, t, r, n, o, a) { function i(e, t, r) { return function (n, o) { return r && r(n), e[t].call(n, o); }; } function c(e, t) { for (var r = 0; r < e.length; r++) e[r].call(t); return t; } function s(e, t, r, n) { if ("function" != typeof e && (n || void 0 !== e)) throw new TypeError(t + " must " + (r || "be") + " a function" + (n ? "" : " or undefined")); return e; } function applyDec(e, t, r, n, o, a, c, u, l, f, p, d, h) { function m(e) { if (!h(e)) throw new TypeError("Attempted to access private element on non-instance"); } var y, v = t[0], g = t[3], b = !u; if (!b) { r || Array.isArray(v) || (v = [v]); var w = {}, S = [], A = 3 === o ? "get" : 4 === o || d ? "set" : "value"; f ? (p || d ? w = { get: _setFunctionName(function () { return g(this); }, n, "get"), set: function set(e) { t[4](this, e); } } : w[A] = g, p || _setFunctionName(w[A], n, 2 === o ? "" : A)) : p || (w = Object.getOwnPropertyDescriptor(e, n)); } for (var P = e, j = v.length - 1; j >= 0; j -= r ? 2 : 1) { var D = v[j], E = r ? v[j - 1] : void 0, I = {}, O = { kind: ["field", "accessor", "method", "getter", "setter", "class"][o], name: n, metadata: a, addInitializer: function (e, t) { if (e.v) throw Error("attempted to call addInitializer after decoration was finished"); s(t, "An initializer", "be", !0), c.push(t); }.bind(null, I) }; try { if (b) (y = s(D.call(E, P, O), "class decorators", "return")) && (P = y);else { var k, F; O["static"] = l, O["private"] = f, f ? 2 === o ? k = function k(e) { return m(e), w.value; } : (o < 4 && (k = i(w, "get", m)), 3 !== o && (F = i(w, "set", m))) : (k = function k(e) { return e[n]; }, (o < 2 || 4 === o) && (F = function F(e, t) { e[n] = t; })); var N = O.access = { has: f ? h.bind() : function (e) { return n in e; } }; if (k && (N.get = k), F && (N.set = F), P = D.call(E, d ? { get: w.get, set: w.set } : w[A], O), d) { if ("object" == _typeof(P) && P) (y = s(P.get, "accessor.get")) && (w.get = y), (y = s(P.set, "accessor.set")) && (w.set = y), (y = s(P.init, "accessor.init")) && S.push(y);else if (void 0 !== P) throw new TypeError("accessor decorators must return an object with get, set, or init properties or void 0"); } else s(P, (p ? "field" : "method") + " decorators", "return") && (p ? S.push(P) : w[A] = P); } } finally { I.v = !0; } } return (p || d) && u.push(function (e, t) { for (var r = S.length - 1; r >= 0; r--) t = S[r].call(e, t); return t; }), p || b || (f ? d ? u.push(i(w, "get"), i(w, "set")) : u.push(2 === o ? w[A] : i.call.bind(w[A])) : Object.defineProperty(e, n, w)), P; } function u(e, t) { return Object.defineProperty(e, Symbol.metadata || Symbol["for"]("Symbol.metadata"), { configurable: !0, enumerable: !0, value: t }); } if (arguments.length >= 6) var l = a[Symbol.metadata || Symbol["for"]("Symbol.metadata")]; var f = Object.create(null == l ? null : l), p = function (e, t, r, n) { var o, a, i = [], s = function s(t) { return _checkInRHS(t) === e; }, u = new Map(); function l(e) { e && i.push(c.bind(null, e)); } for (var f = 0; f < t.length; f++) { var p = t[f]; if (Array.isArray(p)) { var d = p[1], h = p[2], m = p.length > 3, y = 16 & d, v = !!(8 & d), g = 0 == (d &= 7), b = h + "/" + v; if (!g && !m) { var w = u.get(b); if (!0 === w || 3 === w && 4 !== d || 4 === w && 3 !== d) throw Error("Attempted to decorate a public method/accessor that has the same name as a previously decorated public method/accessor. This is not currently supported by the decorators plugin. Property name was: " + h); u.set(b, !(d > 2) || d); } applyDec(v ? e : e.prototype, p, y, m ? "#" + h : _toPropertyKey(h), d, n, v ? a = a || [] : o = o || [], i, v, m, g, 1 === d, v && m ? s : r); } } return l(o), l(a), i; }(e, t, o, f); return r.length || u(e, f), { e: p, get c() { var t = []; return r.length && [u(applyDec(e, [r], n, e.name, 5, f, t), f), c.bind(null, t, e)]; } }; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _setFunctionName(e, t, n) { "symbol" == _typeof(t) && (t = (t = t.description) ? "[" + t + "]" : ""); try { Object.defineProperty(e, "name", { configurable: !0, value: n ? n + " " + t : t }); } catch (e) {} return e; }
 function _checkInRHS(e) { if (Object(e) !== e) throw TypeError("right-hand side of 'in' should be an object, got " + (null !== e ? _typeof(e) : "null")); return e; }
-function _identity(t) { return t; }
 var assign = Object.assign;
 var abs = Math.abs,
   floor = Math.floor,
@@ -54,12 +54,98 @@ var sign = utils.sign,
   importJs = utils.importJs,
   cachedTransform = utils.cachedTransform,
   hasKeys = utils.hasKeys;
-import { ModuleCatalog, GameObject, Category, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, SpriteSheet, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/game.mjs';
-export var CATALOG = new ModuleCatalog(import.meta.url, {
+import { CATALOG } from '../../../../core/v1/catalog.mjs';
+import { GameObject, Category, Dependencies, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/game.mjs';
+var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
-_classDecs = [Category.append("hero"), CollectMixin.add({
+export var PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus");
+var SmokeExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png");
+var SmokeExplosionSpriteSheet = new SpriteSheet(SmokeExplosionSpriteSheetImg, 4, 1);
+_classDecs = [MOD_CATALOG.registerObject({
+  showInBuilder: false
+}), Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud), StateNumber.define("iteration")];
+var _SmokeExplosion;
+var SmokeExplosion = /*#__PURE__*/function (_GameObject) {
+  function SmokeExplosion() {
+    _classCallCheck(this, SmokeExplosion);
+    return _callSuper(this, SmokeExplosion, arguments);
+  }
+  _inherits(SmokeExplosion, _GameObject);
+  return _createClass(SmokeExplosion, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(SmokeExplosion, "init", this, 3)([kwargs]);
+      this.width = this.height = 100;
+      this.game.audio.playSound(PuffAud);
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.iteration += 1;
+      var time = this.iteration * this.game.dt;
+      if (time > .5) {
+        this.remove();
+        return;
+      }
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      var time = this.iteration * this.game.dt;
+      return SmokeExplosionSpriteSheet.get(floor(time / .5 * 4));
+    }
+  }]);
+}(GameObject);
+_SmokeExplosion2 = SmokeExplosion;
+var _applyDecs$c = _slicedToArray(_applyDecs(_SmokeExplosion2, [], _classDecs, 0, void 0, GameObject).c, 2);
+_SmokeExplosion = _applyDecs$c[0];
+_initClass = _applyDecs$c[1];
+_initClass();
+export { _SmokeExplosion as SmokeExplosion };
+var PopImg = new Img("/static/catalogs/std/v1/2Dside/assets/pop.png");
+var PopAud = new Aud("/static/catalogs/std/v1/2Dside/assets/pop.opus");
+_classDecs2 = [Dependencies.add(PopImg, PopAud)];
+var _Pop;
+var Pop = /*#__PURE__*/function (_GameObject2) {
+  function Pop() {
+    _classCallCheck(this, Pop);
+    return _callSuper(this, Pop, arguments);
+  }
+  _inherits(Pop, _GameObject2);
+  return _createClass(Pop, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(Pop, "init", this, 3)([kwargs]);
+      this.width = this.height = 10;
+      this.duration = floor(this.game.fps * .25);
+      this.remIt = this.duration;
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      if (!this._soundPlayed) {
+        this.game.audio.playSound(PopAud);
+        this._soundPlayed = true;
+      }
+      this.width = this.height = 10 + 100 * (1 - this.remIt / this.duration);
+      this.remIt -= 1;
+      if (this.remIt <= 0) this.remove();
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      return PopImg;
+    }
+  }]);
+}(GameObject);
+_Pop2 = Pop;
+var _applyDecs$c27 = _slicedToArray(_applyDecs(_Pop2, [], _classDecs2, 0, void 0, GameObject).c, 2);
+_Pop = _applyDecs$c27[0];
+_initClass2 = _applyDecs$c27[1];
+_initClass2();
+_classDecs3 = [Category.append("hero"), Dependencies.add(_SmokeExplosion, _Pop), CollectMixin.add({
   canCollect: true,
   canGetCollected: false
 }), AttackMixin.add({
@@ -70,12 +156,12 @@ _classDecs = [Category.append("hero"), CollectMixin.add({
   nullableWith: -Infinity
 })];
 var _Hero;
-new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject) {
+new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject3) {
   function Hero() {
     _classCallCheck(this, Hero);
     return _callSuper(this, Hero, arguments);
   }
-  _inherits(Hero, _GameObject);
+  _inherits(Hero, _GameObject3);
   return _createClass(Hero, [{
     key: "init",
     value: function init(kwargs) {
@@ -135,7 +221,7 @@ new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject) {
   }, {
     key: "addSpawnEffect",
     value: function addSpawnEffect() {
-      return this.scene.addVisual(Pop, {
+      return this.scene.addVisual(_Pop, {
         x: this.x,
         y: this.y
       });
@@ -235,96 +321,19 @@ new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject) {
       this.scene.syncHero(this);
     }
   }]);
-}(GameObject), _applyDecs$c = _slicedToArray(_applyDecs(_Hero3, [], _classDecs, 0, void 0, GameObject).c, 2), _Hero = _applyDecs$c[0], _initClass = _applyDecs$c[1], _Hero3), _Class = /*#__PURE__*/function (_identity2) {
+}(GameObject), _applyDecs$c2 = _slicedToArray(_applyDecs(_Hero3, [], _classDecs3, 0, void 0, GameObject).c, 2), _Hero = _applyDecs$c2[0], _initClass3 = _applyDecs$c2[1], _Hero3), _Class = /*#__PURE__*/function (_identity2) {
   function _Class() {
     var _this;
     _classCallCheck(this, _Class);
-    _this = _callSuper(this, _Class, [_Hero]), _defineProperty(_assertThisInitialized(_this), "IS_HERO", true), _initClass();
+    _this = _callSuper(this, _Class, [_Hero]), _defineProperty(_assertThisInitialized(_this), "IS_HERO", true), _initClass3();
     return _this;
   }
   _inherits(_Class, _identity2);
   return _createClass(_Class);
 }(_identity), _defineProperty(_Class, _Hero2, void 0), _Class)();
 export { _Hero as Hero };
-export var PuffAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/puff.opus");
-var SmokeExplosionSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png"), 4, 1);
-_classDecs2 = [CATALOG.registerObject({
-  showInBuilder: false
-}), StateNumber.define("iteration")];
-var _SmokeExplosion;
-var SmokeExplosion = /*#__PURE__*/function (_GameObject2) {
-  function SmokeExplosion() {
-    _classCallCheck(this, SmokeExplosion);
-    return _callSuper(this, SmokeExplosion, arguments);
-  }
-  _inherits(SmokeExplosion, _GameObject2);
-  return _createClass(SmokeExplosion, [{
-    key: "init",
-    value: function init(kwargs) {
-      _superPropGet(SmokeExplosion, "init", this, 3)([kwargs]);
-      this.width = this.height = 100;
-      this.game.audio.playSound(PuffAud);
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      this.iteration += 1;
-      var time = this.iteration * this.game.dt;
-      if (time > .5) {
-        this.remove();
-        return;
-      }
-    }
-  }, {
-    key: "getBaseImg",
-    value: function getBaseImg() {
-      var time = this.iteration * this.game.dt;
-      return SmokeExplosionSpriteSheet.get(floor(time / .5 * 4));
-    }
-  }]);
-}(GameObject);
-_SmokeExplosion2 = SmokeExplosion;
-var _applyDecs$c2 = _slicedToArray(_applyDecs(_SmokeExplosion2, [], _classDecs2, 0, void 0, GameObject).c, 2);
-_SmokeExplosion = _applyDecs$c2[0];
-_initClass2 = _applyDecs$c2[1];
-_initClass2();
-export { _SmokeExplosion as SmokeExplosion };
-var PopImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/pop.png");
-var PopAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/pop.opus");
-var Pop = /*#__PURE__*/function (_GameObject3) {
-  function Pop() {
-    _classCallCheck(this, Pop);
-    return _callSuper(this, Pop, arguments);
-  }
-  _inherits(Pop, _GameObject3);
-  return _createClass(Pop, [{
-    key: "init",
-    value: function init(kwargs) {
-      _superPropGet(Pop, "init", this, 3)([kwargs]);
-      this.width = this.height = 10;
-      this.duration = floor(this.game.fps * .25);
-      this.remIt = this.duration;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      if (!this._soundPlayed) {
-        this.game.audio.playSound(PopAud);
-        this._soundPlayed = true;
-      }
-      this.width = this.height = 10 + 100 * (1 - this.remIt / this.duration);
-      this.remIt -= 1;
-      if (this.remIt <= 0) this.remove();
-    }
-  }, {
-    key: "getBaseImg",
-    value: function getBaseImg() {
-      return PopImg;
-    }
-  }]);
-}(GameObject);
-export var ItemAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/item.opus");
-_classDecs3 = [Category.append("extra"), CollectMixin.add({
+export var ItemAud = new Aud("/static/catalogs/std/v1/2Dside/assets/item.opus");
+_classDecs4 = [Category.append("extra"), Dependencies.add(ItemAud), CollectMixin.add({
   canCollect: false,
   canGetCollected: true
 }), StateNumber.define("dropAge", {
@@ -398,12 +407,12 @@ var Extra = /*#__PURE__*/function (_GameObject4) {
   }]);
 }(GameObject);
 _Extra2 = Extra;
-var _applyDecs$c3 = _slicedToArray(_applyDecs(_Extra2, [], _classDecs3, 0, void 0, GameObject).c, 2);
+var _applyDecs$c3 = _slicedToArray(_applyDecs(_Extra2, [], _classDecs4, 0, void 0, GameObject).c, 2);
 _Extra = _applyDecs$c3[0];
-_initClass3 = _applyDecs$c3[1];
-_initClass3();
+_initClass4 = _applyDecs$c3[1];
+_initClass4();
 export { _Extra as Extra };
-_classDecs4 = [AttackMixin.add({
+_classDecs5 = [AttackMixin.add({
   canAttack: true,
   canGetAttacked: false
 })];
@@ -448,12 +457,12 @@ var Weapon = /*#__PURE__*/function (_Extra4) {
   }]);
 }(_Extra3 = _Extra);
 _Weapon2 = Weapon;
-var _applyDecs$c4 = _slicedToArray(_applyDecs(_Weapon2, [], _classDecs4, 0, void 0, _Extra3).c, 2);
+var _applyDecs$c4 = _slicedToArray(_applyDecs(_Weapon2, [], _classDecs5, 0, void 0, _Extra3).c, 2);
 _Weapon = _applyDecs$c4[0];
-_initClass4 = _applyDecs$c4[1];
-_initClass4();
+_initClass5 = _applyDecs$c4[1];
+_initClass5();
 export { _Weapon as Weapon };
-_classDecs5 = [Category.append("projectile"), AttackMixin.add({
+_classDecs6 = [Category.append("projectile"), AttackMixin.add({
   canAttack: true,
   canGetAttacked: false
 }), PhysicsMixin.add({
@@ -504,12 +513,12 @@ var Projectile = /*#__PURE__*/function (_GameObject5) {
   }]);
 }(GameObject); // NICO
 _Projectile2 = Projectile;
-var _applyDecs$c5 = _slicedToArray(_applyDecs(_Projectile2, [], _classDecs5, 0, void 0, GameObject).c, 2);
+var _applyDecs$c5 = _slicedToArray(_applyDecs(_Projectile2, [], _classDecs6, 0, void 0, GameObject).c, 2);
 _Projectile = _applyDecs$c5[0];
-_initClass5 = _applyDecs$c5[1];
-_initClass5();
+_initClass6 = _applyDecs$c5[1];
+_initClass6();
 export { _Projectile as Projectile };
-_classDecs6 = [PhysicsMixin.addIfAbsent()];
+_classDecs7 = [PhysicsMixin.addIfAbsent()];
 var _JumpMixin;
 var JumpMixin = /*#__PURE__*/function (_Mixin) {
   function JumpMixin() {
@@ -577,14 +586,81 @@ var JumpMixin = /*#__PURE__*/function (_Mixin) {
   }]);
 }(Mixin);
 _JumpMixin2 = JumpMixin;
-var _applyDecs$c6 = _slicedToArray(_applyDecs(_JumpMixin2, [], _classDecs6, 0, void 0, Mixin).c, 2);
+var _applyDecs$c6 = _slicedToArray(_applyDecs(_JumpMixin2, [], _classDecs7, 0, void 0, Mixin).c, 2);
 _JumpMixin = _applyDecs$c6[0];
-_initClass6 = _applyDecs$c6[1];
-_initClass6();
+_initClass7 = _applyDecs$c6[1];
+_initClass7();
 export { _JumpMixin as JumpMixin };
-var NicoImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/nico.png");
-var NicoBaseSpriteSheet = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/nico_full.png");
-var NicoColorableSpriteSheet = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/nico_full_colorable.png");
+var HandImg = new Img("/static/catalogs/std/v1/2Dside/assets/hand.png");
+var SlashAud = new Aud("/static/catalogs/std/v1/2Dside/assets/slash.opus");
+var HandHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/hand_hit.opus");
+_classDecs8 = [BodyMixin.add({
+  width: 25,
+  height: 25
+}), Dependencies.add(HandImg, SlashAud, HandHitAud)];
+var _NicoHand;
+var NicoHand = /*#__PURE__*/function (_Weapon4) {
+  function NicoHand() {
+    _classCallCheck(this, NicoHand);
+    return _callSuper(this, NicoHand, arguments);
+  }
+  _inherits(NicoHand, _Weapon4);
+  return _createClass(NicoHand, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(NicoHand, "init", this, 3)([kwargs]);
+      this.syncPos();
+      this.attackKnockback = 200;
+      this.initIt = this.scene.iteration;
+      this.game.audio.playSound(SlashAud);
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      _superPropGet(NicoHand, "update", this, 3)([]);
+      this.syncPos();
+      this.canAttack = this.scene.iteration == this.initIt;
+    }
+  }, {
+    key: "syncPos",
+    value: function syncPos() {
+      var owner = this.owner;
+      if (!owner) return;
+      this.x = owner.x + owner.dirX * 28;
+      this.y = owner.y;
+      this.dirX = owner.dirX;
+    }
+  }, {
+    key: "getAttackProps",
+    value: function getAttackProps(obj) {
+      var props = _superPropGet(NicoHand, "getAttackProps", this, 3)([obj]);
+      props.knockbackAngle = this.dirX > 0 ? -45 : -135;
+      return props;
+    }
+  }, {
+    key: "onAttack",
+    value: function onAttack(obj, props) {
+      this.game.audio.playSound(HandHitAud);
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      return HandImg;
+    }
+  }]);
+}(_Weapon3 = _Weapon);
+_NicoHand2 = NicoHand;
+var _applyDecs$c28 = _slicedToArray(_applyDecs(_NicoHand2, [], _classDecs8, 0, void 0, _Weapon3).c, 2);
+_NicoHand = _applyDecs$c28[0];
+_initClass8 = _applyDecs$c28[1];
+_initClass8();
+var ArrowsSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/arrows.png");
+var ArrowsSpriteSheet = new SpriteSheet(ArrowsSpriteSheetImg, 4, 1);
+var OuchAud = new Aud("/static/catalogs/std/v1/2Dside/assets/ouch.opus");
+var JumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jump.opus");
+var NicoImg = new Img("/static/catalogs/std/v1/2Dside/assets/nico.png");
+var NicoBaseSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_full.png");
+var NicoColorableSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_full_colorable.png");
 var NicoSpriteSheets = {
   spritesheets: {},
   get: function get(color) {
@@ -596,16 +672,10 @@ var NicoSpriteSheets = {
     }(), 4, 1));
   }
 };
-var HandImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/hand.png");
-var ArrowsSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/arrows.png"), 4, 1);
-var OuchAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/ouch.opus");
-var SlashAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/slash.opus");
-var HandHitAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/hand_hit.opus");
-var JumpAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/jump.opus");
-_classDecs7 = [CATALOG.registerObject({
+_classDecs9 = [MOD_CATALOG.registerObject({
   label: "Nico",
   icon: NicoImg
-}), _JumpMixin.add({
+}), Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, JumpAud, ArrowsSpriteSheetImg, _NicoHand), _JumpMixin.add({
   jumpSpeed: 500,
   nullJumpSpeed: 800,
   maxJumpBlockAngle: 90
@@ -789,81 +859,21 @@ var Nico = /*#__PURE__*/function (_Hero5) {
       return inputState;
     }
   }]);
-}(_Hero4 = _Hero);
+}(_Hero4 = _Hero); // weapons
 _Nico2 = Nico;
-var _applyDecs$c7 = _slicedToArray(_applyDecs(_Nico2, [], _classDecs7, 0, void 0, _Hero4).c, 2);
+var _applyDecs$c7 = _slicedToArray(_applyDecs(_Nico2, [], _classDecs9, 0, void 0, _Hero4).c, 2);
 _Nico = _applyDecs$c7[0];
-_initClass7 = _applyDecs$c7[1];
-_initClass7();
+_initClass9 = _applyDecs$c7[1];
+_initClass9();
 export { _Nico as Nico };
-_classDecs8 = [BodyMixin.add({
-  width: 25,
-  height: 25
-})];
-var _NicoHand;
-var NicoHand = /*#__PURE__*/function (_Weapon4) {
-  function NicoHand() {
-    _classCallCheck(this, NicoHand);
-    return _callSuper(this, NicoHand, arguments);
-  }
-  _inherits(NicoHand, _Weapon4);
-  return _createClass(NicoHand, [{
-    key: "init",
-    value: function init(kwargs) {
-      _superPropGet(NicoHand, "init", this, 3)([kwargs]);
-      this.syncPos();
-      this.attackKnockback = 200;
-      this.initIt = this.scene.iteration;
-      this.game.audio.playSound(SlashAud);
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      _superPropGet(NicoHand, "update", this, 3)([]);
-      this.syncPos();
-      this.canAttack = this.scene.iteration == this.initIt;
-    }
-  }, {
-    key: "syncPos",
-    value: function syncPos() {
-      var owner = this.owner;
-      if (!owner) return;
-      this.x = owner.x + owner.dirX * 28;
-      this.y = owner.y;
-      this.dirX = owner.dirX;
-    }
-  }, {
-    key: "getAttackProps",
-    value: function getAttackProps(obj) {
-      var props = _superPropGet(NicoHand, "getAttackProps", this, 3)([obj]);
-      props.knockbackAngle = this.dirX > 0 ? -45 : -135;
-      return props;
-    }
-  }, {
-    key: "onAttack",
-    value: function onAttack(obj, props) {
-      this.game.audio.playSound(HandHitAud);
-    }
-  }, {
-    key: "getBaseImg",
-    value: function getBaseImg() {
-      return HandImg;
-    }
-  }]);
-}(_Weapon3 = _Weapon); // weapons
-_NicoHand2 = NicoHand;
-var _applyDecs$c27 = _slicedToArray(_applyDecs(_NicoHand2, [], _classDecs8, 0, void 0, _Weapon3).c, 2);
-_NicoHand = _applyDecs$c27[0];
-_initClass8 = _applyDecs$c27[1];
-_initClass8();
 var SWORD_ATTACK_PERIOD = .5;
-var SwordImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/sword.png");
-var SwordSlashSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/slash.png"), 3, 2);
-var SwordHitAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus");
-_classDecs9 = [CATALOG.registerObject({
+var SwordImg = new Img("/static/catalogs/std/v1/2Dside/assets/sword.png");
+var SwordSlashSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/slash.png"), 3, 2);
+var SwordHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus");
+_classDecs0 = [MOD_CATALOG.registerObject({
   label: "Sword",
   icon: SwordImg
-}), BodyMixin.add({
+}), Dependencies.add(SwordImg, SwordSlashSpriteSheet, SlashAud, SwordHitAud), BodyMixin.add({
   width: 40,
   height: 40
 }), StateNumber.define("lastAttackAge", {
@@ -944,13 +954,13 @@ var Sword = /*#__PURE__*/function (_Weapon6) {
   }]);
 }(_Weapon5 = _Weapon);
 _Sword2 = Sword;
-var _applyDecs$c8 = _slicedToArray(_applyDecs(_Sword2, [], _classDecs9, 0, void 0, _Weapon5).c, 2);
+var _applyDecs$c8 = _slicedToArray(_applyDecs(_Sword2, [], _classDecs0, 0, void 0, _Weapon5).c, 2);
 _Sword = _applyDecs$c8[0];
-_initClass9 = _applyDecs$c8[1];
-_initClass9();
+_initClass0 = _applyDecs$c8[1];
+_initClass0();
 export { _Sword as Sword };
-var BoxingGloveImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
-_classDecs0 = [CATALOG.registerObject({
+var BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
+_classDecs1 = [MOD_CATALOG.registerObject({
   label: "Boxing Glove",
   icon: BoxingGloveImg
 }), BodyMixin.add({
@@ -1039,13 +1049,13 @@ var BoxingGlove = /*#__PURE__*/function (_Weapon8) {
   }]);
 }(_Weapon7 = _Weapon);
 _BoxingGlove2 = BoxingGlove;
-var _applyDecs$c9 = _slicedToArray(_applyDecs(_BoxingGlove2, [], _classDecs0, 0, void 0, _Weapon7).c, 2);
+var _applyDecs$c9 = _slicedToArray(_applyDecs(_BoxingGlove2, [], _classDecs1, 0, void 0, _Weapon7).c, 2);
 _BoxingGlove = _applyDecs$c9[0];
-_initClass0 = _applyDecs$c9[1];
-_initClass0();
+_initClass1 = _applyDecs$c9[1];
+_initClass1();
 export { _BoxingGlove as BoxingGlove };
-var ShurikenImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/shuriken.png");
-_classDecs1 = [CATALOG.registerObject({
+var ShurikenImg = new Img("/static/catalogs/std/v1/2Dside/assets/shuriken.png");
+_classDecs10 = [MOD_CATALOG.registerObject({
   label: "ShurikenPack",
   icon: ShurikenImg
 }), BodyMixin.add({
@@ -1117,12 +1127,12 @@ var ShurikenPack = /*#__PURE__*/function (_Extra6) {
   }]);
 }(_Extra5 = _Extra);
 _ShurikenPack2 = ShurikenPack;
-var _applyDecs$c0 = _slicedToArray(_applyDecs(_ShurikenPack2, [], _classDecs1, 0, void 0, _Extra5).c, 2);
+var _applyDecs$c0 = _slicedToArray(_applyDecs(_ShurikenPack2, [], _classDecs10, 0, void 0, _Extra5).c, 2);
 _ShurikenPack = _applyDecs$c0[0];
-_initClass1 = _applyDecs$c0[1];
-_initClass1();
+_initClass10 = _applyDecs$c0[1];
+_initClass10();
 export { _ShurikenPack as ShurikenPack };
-_classDecs10 = [CATALOG.registerObject({
+_classDecs11 = [MOD_CATALOG.registerObject({
   label: "Shuriken",
   icon: ShurikenImg,
   showInBuilder: false
@@ -1169,14 +1179,14 @@ var Shuriken = /*#__PURE__*/function (_Projectile4) {
   }]);
 }(_Projectile3 = _Projectile);
 _Shuriken2 = Shuriken;
-var _applyDecs$c1 = _slicedToArray(_applyDecs(_Shuriken2, [], _classDecs10, 0, void 0, _Projectile3).c, 2);
+var _applyDecs$c1 = _slicedToArray(_applyDecs(_Shuriken2, [], _classDecs11, 0, void 0, _Projectile3).c, 2);
 _Shuriken = _applyDecs$c1[0];
-_initClass10 = _applyDecs$c1[1];
-_initClass10();
+_initClass11 = _applyDecs$c1[1];
+_initClass11();
 export { _Shuriken as Shuriken };
-var BombImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/bomb.png");
-var BombSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png"), 2, 1);
-_classDecs11 = [CATALOG.registerObject({
+var BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png");
+var BombSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png"), 2, 1);
+_classDecs12 = [MOD_CATALOG.registerObject({
   label: "Bomb",
   icon: BombImg
 }), PhysicsMixin.add({
@@ -1257,13 +1267,13 @@ var Bomb = /*#__PURE__*/function (_Extra8) {
   }]);
 }(_Extra7 = _Extra);
 _Bomb2 = Bomb;
-var _applyDecs$c10 = _slicedToArray(_applyDecs(_Bomb2, [], _classDecs11, 0, void 0, _Extra7).c, 2);
+var _applyDecs$c10 = _slicedToArray(_applyDecs(_Bomb2, [], _classDecs12, 0, void 0, _Extra7).c, 2);
 _Bomb = _applyDecs$c10[0];
-_initClass11 = _applyDecs$c10[1];
-_initClass11();
+_initClass12 = _applyDecs$c10[1];
+_initClass12();
 export { _Bomb as Bomb };
-var ExplosionSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/explosion.png"), 4, 2);
-_classDecs12 = [CATALOG.registerObject({
+var ExplosionSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png"), 4, 2);
+_classDecs13 = [MOD_CATALOG.registerObject({
   showInBuilder: false
 }), AttackMixin.add({
   canAttack: true,
@@ -1315,15 +1325,15 @@ var Explosion = /*#__PURE__*/function (_GameObject6) {
   }]);
 }(GameObject);
 _Explosion2 = Explosion;
-var _applyDecs$c11 = _slicedToArray(_applyDecs(_Explosion2, [], _classDecs12, 0, void 0, GameObject).c, 2);
+var _applyDecs$c11 = _slicedToArray(_applyDecs(_Explosion2, [], _classDecs13, 0, void 0, GameObject).c, 2);
 _Explosion = _applyDecs$c11[0];
-_initClass12 = _applyDecs$c11[1];
-_initClass12();
+_initClass13 = _applyDecs$c11[1];
+_initClass13();
 export { _Explosion as Explosion };
-var JetPackImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/jetpack.png");
-var JetPackSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png"), 2, 1);
-var JetPackAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/jetpack.opus");
-_classDecs13 = [CATALOG.registerObject({
+var JetPackImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack.png");
+var JetPackSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png"), 2, 1);
+var JetPackAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jetpack.opus");
+_classDecs14 = [MOD_CATALOG.registerObject({
   label: "JetPack",
   icon: JetPackImg
 }), BodyMixin.add({
@@ -1413,12 +1423,12 @@ var JetPack = /*#__PURE__*/function (_Extra0) {
   }]);
 }(_Extra9 = _Extra); // ENEMIES
 _JetPack2 = JetPack;
-var _applyDecs$c12 = _slicedToArray(_applyDecs(_JetPack2, [], _classDecs13, 0, void 0, _Extra9).c, 2);
+var _applyDecs$c12 = _slicedToArray(_applyDecs(_JetPack2, [], _classDecs14, 0, void 0, _Extra9).c, 2);
 _JetPack = _applyDecs$c12[0];
-_initClass13 = _applyDecs$c12[1];
-_initClass13();
+_initClass14 = _applyDecs$c12[1];
+_initClass14();
 export { _JetPack as JetPack };
-_classDecs14 = [AttackMixin.add({
+_classDecs15 = [AttackMixin.add({
   canAttack: false,
   canGetAttacked: true
 }), Category.append("npc/enemy")];
@@ -1449,16 +1459,16 @@ var Enemy = /*#__PURE__*/function (_GameObject7) {
   }]);
 }(GameObject);
 _Enemy2 = Enemy;
-var _applyDecs$c13 = _slicedToArray(_applyDecs(_Enemy2, [], _classDecs14, 0, void 0, GameObject).c, 2);
+var _applyDecs$c13 = _slicedToArray(_applyDecs(_Enemy2, [], _classDecs15, 0, void 0, GameObject).c, 2);
 _Enemy = _applyDecs$c13[0];
-_initClass14 = _applyDecs$c13[1];
-_initClass14();
+_initClass15 = _applyDecs$c13[1];
+_initClass15();
 export { _Enemy as Enemy };
-var SpikyImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/spiky.png");
-_classDecs15 = [CATALOG.registerObject({
+var SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png");
+_classDecs16 = [MOD_CATALOG.registerObject({
   label: "Spiky",
   icon: SpikyImg
-}), AttackMixin.modify({
+}), Dependencies.add(SpikyImg), AttackMixin.modify({
   canAttack: true,
   maxHealth: 100,
   attackDamages: 10,
@@ -1499,16 +1509,16 @@ var Spiky = /*#__PURE__*/function (_Enemy4) {
   }]);
 }(_Enemy3 = _Enemy);
 _Spiky2 = Spiky;
-var _applyDecs$c14 = _slicedToArray(_applyDecs(_Spiky2, [], _classDecs15, 0, void 0, _Enemy3).c, 2);
+var _applyDecs$c14 = _slicedToArray(_applyDecs(_Spiky2, [], _classDecs16, 0, void 0, _Enemy3).c, 2);
 _Spiky = _applyDecs$c14[0];
-_initClass15 = _applyDecs$c14[1];
-_initClass15();
+_initClass16 = _applyDecs$c14[1];
+_initClass16();
 export { _Spiky as Spiky };
-var BlobImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blob.png");
-_classDecs16 = [CATALOG.registerObject({
+var BlobImg = new Img("/static/catalogs/std/v1/2Dside/assets/blob.png");
+_classDecs17 = [MOD_CATALOG.registerObject({
   label: "Blob",
   icon: BlobImg
-}), StateProperty.modify("dirX", {
+}), Dependencies.add(BlobImg), StateProperty.modify("dirX", {
   showInBuilder: true
 }), AttackMixin.modify({
   canAttack: true,
@@ -1614,12 +1624,12 @@ var BlobEnemy = /*#__PURE__*/function (_Enemy6) {
   }]);
 }(_Enemy5 = _Enemy);
 _BlobEnemy2 = BlobEnemy;
-var _applyDecs$c15 = _slicedToArray(_applyDecs(_BlobEnemy2, [], _classDecs16, 0, void 0, _Enemy5).c, 2);
+var _applyDecs$c15 = _slicedToArray(_applyDecs(_BlobEnemy2, [], _classDecs17, 0, void 0, _Enemy5).c, 2);
 _BlobEnemy = _applyDecs$c15[0];
-_initClass16 = _applyDecs$c15[1];
-_initClass16();
+_initClass17 = _applyDecs$c15[1];
+_initClass17();
 export { _BlobEnemy as BlobEnemy };
-_classDecs17 = [PhysicsMixin.add({
+_classDecs18 = [PhysicsMixin.add({
   canMove: false,
   checkGetBlockedAnyway: true
 }), BodyMixin.add({
@@ -1660,15 +1670,15 @@ var BlobEnemyBlockChecker = /*#__PURE__*/function (_GameObject8) {
   }]);
 }(GameObject);
 _BlobEnemyBlockChecker = BlobEnemyBlockChecker;
-var _applyDecs$c28 = _slicedToArray(_applyDecs(_BlobEnemyBlockChecker, [], _classDecs17, 0, void 0, GameObject).c, 2);
-_BlobEnemyBlockChecke = _applyDecs$c28[0];
-_initClass17 = _applyDecs$c28[1];
-_initClass17();
-var GhostImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/ghost.png");
-_classDecs18 = [CATALOG.registerObject({
+var _applyDecs$c29 = _slicedToArray(_applyDecs(_BlobEnemyBlockChecker, [], _classDecs18, 0, void 0, GameObject).c, 2);
+_BlobEnemyBlockChecke = _applyDecs$c29[0];
+_initClass18 = _applyDecs$c29[1];
+_initClass18();
+var GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png");
+_classDecs19 = [MOD_CATALOG.registerObject({
   label: "Ghost",
   icon: GhostImg
-}), StateProperty.modify("dirX", {
+}), Dependencies.add(GhostImg), StateProperty.modify("dirX", {
   showInBuilder: true
 }), AttackMixin.modify({
   canAttack: true,
@@ -1743,13 +1753,13 @@ var Ghost = /*#__PURE__*/function (_Enemy8) {
   }]);
 }(_Enemy7 = _Enemy); // COLLECTABLES
 _Ghost2 = Ghost;
-var _applyDecs$c16 = _slicedToArray(_applyDecs(_Ghost2, [], _classDecs18, 0, void 0, _Enemy7).c, 2);
+var _applyDecs$c16 = _slicedToArray(_applyDecs(_Ghost2, [], _classDecs19, 0, void 0, _Enemy7).c, 2);
 _Ghost = _applyDecs$c16[0];
-_initClass18 = _applyDecs$c16[1];
-_initClass18();
+_initClass19 = _applyDecs$c16[1];
+_initClass19();
 export { _Ghost as Ghost };
-var HeartImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/heart.png");
-_classDecs19 = [CATALOG.registerObject({
+var HeartImg = new Img("/static/catalogs/std/v1/2Dside/assets/heart.png");
+_classDecs20 = [MOD_CATALOG.registerObject({
   label: "Heart",
   icon: HeartImg
 }), CollectMixin.add({
@@ -1800,13 +1810,13 @@ var Heart = /*#__PURE__*/function (_GameObject9) {
   }]);
 }(GameObject);
 _Heart2 = Heart;
-var _applyDecs$c17 = _slicedToArray(_applyDecs(_Heart2, [], _classDecs19, 0, void 0, GameObject).c, 2);
+var _applyDecs$c17 = _slicedToArray(_applyDecs(_Heart2, [], _classDecs20, 0, void 0, GameObject).c, 2);
 _Heart = _applyDecs$c17[0];
-_initClass19 = _applyDecs$c17[1];
-_initClass19();
+_initClass20 = _applyDecs$c17[1];
+_initClass20();
 export { _Heart as Heart };
-var StarImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/star.png");
-_classDecs20 = [CATALOG.registerObject({
+var StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png");
+_classDecs21 = [MOD_CATALOG.registerObject({
   label: "Star",
   icon: StarImg
 }), PhysicsMixin.add({
@@ -1878,13 +1888,13 @@ var Star = /*#__PURE__*/function (_Extra10) {
   }]);
 }(_Extra1 = _Extra);
 _Star2 = Star;
-var _applyDecs$c18 = _slicedToArray(_applyDecs(_Star2, [], _classDecs20, 0, void 0, _Extra1).c, 2);
+var _applyDecs$c18 = _slicedToArray(_applyDecs(_Star2, [], _classDecs21, 0, void 0, _Extra1).c, 2);
 _Star = _applyDecs$c18[0];
-_initClass20 = _applyDecs$c18[1];
-_initClass20();
+_initClass21 = _applyDecs$c18[1];
+_initClass21();
 export { _Star as Star };
-var CheckpointImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/checkpoint.png");
-_classDecs21 = [CATALOG.registerObject({
+var CheckpointImg = new Img("/static/catalogs/std/v1/2Dside/assets/checkpoint.png");
+_classDecs22 = [MOD_CATALOG.registerObject({
   label: "CheckPoint",
   icon: CheckpointImg
 }), CollectMixin.add({
@@ -1915,14 +1925,14 @@ var Checkpoint = /*#__PURE__*/function (_GameObject0) {
   }]);
 }(GameObject);
 _Checkpoint2 = Checkpoint;
-var _applyDecs$c19 = _slicedToArray(_applyDecs(_Checkpoint2, [], _classDecs21, 0, void 0, GameObject).c, 2);
+var _applyDecs$c19 = _slicedToArray(_applyDecs(_Checkpoint2, [], _classDecs22, 0, void 0, GameObject).c, 2);
 _Checkpoint = _applyDecs$c19[0];
-_initClass21 = _applyDecs$c19[1];
-_initClass21();
+_initClass22 = _applyDecs$c19[1];
+_initClass22();
 export { _Checkpoint as Checkpoint };
-var PortalImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/portal.png");
-var PortalJumpAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus");
-_classDecs22 = [CATALOG.registerObject({
+var PortalImg = new Img("/static/catalogs/std/v1/2Dside/assets/portal.png");
+var PortalJumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus");
+_classDecs23 = [MOD_CATALOG.registerObject({
   label: "Portal",
   icon: PortalImg
 }), ActivableMixin.add(), StateBool.define("isOutput", {
@@ -1991,12 +2001,12 @@ var Portal = /*#__PURE__*/function (_GameObject1) {
   }]);
 }(GameObject); // SPAWNER
 _Portal2 = Portal;
-var _applyDecs$c20 = _slicedToArray(_applyDecs(_Portal2, [], _classDecs22, 0, void 0, GameObject).c, 2);
+var _applyDecs$c20 = _slicedToArray(_applyDecs(_Portal2, [], _classDecs23, 0, void 0, GameObject).c, 2);
 _Portal = _applyDecs$c20[0];
-_initClass22 = _applyDecs$c20[1];
-_initClass22();
+_initClass23 = _applyDecs$c20[1];
+_initClass23();
 export { _Portal as Portal };
-_classDecs23 = [CATALOG.registerObject({
+_classDecs24 = [MOD_CATALOG.registerObject({
   label: "Hero",
   icon: PopImg
 })];
@@ -2021,12 +2031,12 @@ var HeroSpawnPoint = /*#__PURE__*/function (_GameObject10) {
   }]);
 }(GameObject);
 _HeroSpawnPoint2 = HeroSpawnPoint;
-var _applyDecs$c21 = _slicedToArray(_applyDecs(_HeroSpawnPoint2, [], _classDecs23, 0, void 0, GameObject).c, 2);
+var _applyDecs$c21 = _slicedToArray(_applyDecs(_HeroSpawnPoint2, [], _classDecs24, 0, void 0, GameObject).c, 2);
 _HeroSpawnPoint = _applyDecs$c21[0];
-_initClass23 = _applyDecs$c21[1];
-_initClass23();
+_initClass24 = _applyDecs$c21[1];
+_initClass24();
 export { _HeroSpawnPoint as HeroSpawnPoint };
-_classDecs24 = [CATALOG.registerObject({
+_classDecs25 = [MOD_CATALOG.registerObject({
   label: "ObjectSpawner",
   icon: PopImg
 }), ActivableMixin.add(), BodyMixin.add({
@@ -2113,7 +2123,7 @@ var ObjectSpawner = /*#__PURE__*/function (_GameObject11) {
       this.nbSpawn += 1;
       this.spawnedObjects.add(obj.id);
       this.lastSpawnAge = 0;
-      scene.addVisual(Pop, {
+      scene.addVisual(_Pop, {
         x: this.x,
         y: this.y
       });
@@ -2145,12 +2155,12 @@ var ObjectSpawner = /*#__PURE__*/function (_GameObject11) {
   }]);
 }(GameObject); // WALL
 _ObjectSpawner2 = ObjectSpawner;
-var _applyDecs$c22 = _slicedToArray(_applyDecs(_ObjectSpawner2, [], _classDecs24, 0, void 0, GameObject).c, 2);
+var _applyDecs$c22 = _slicedToArray(_applyDecs(_ObjectSpawner2, [], _classDecs25, 0, void 0, GameObject).c, 2);
 _ObjectSpawner = _applyDecs$c22[0];
-_initClass24 = _applyDecs$c22[1];
-_initClass24();
+_initClass25 = _applyDecs$c22[1];
+_initClass25();
 export { _ObjectSpawner as ObjectSpawner };
-_classDecs25 = [CATALOG.registerObject({
+_classDecs26 = [MOD_CATALOG.registerObject({
   stateful: false
 }), Category.append("wall"), PhysicsMixin.add({
   canMove: false,
@@ -2266,12 +2276,12 @@ var Wall = /*#__PURE__*/function (_GameObject12) {
   }]);
 }(GameObject);
 _Wall2 = Wall;
-var _applyDecs$c23 = _slicedToArray(_applyDecs(_Wall2, [], _classDecs25, 0, void 0, GameObject).c, 2);
+var _applyDecs$c23 = _slicedToArray(_applyDecs(_Wall2, [], _classDecs26, 0, void 0, GameObject).c, 2);
 _Wall = _applyDecs$c23[0];
-_initClass25 = _applyDecs$c23[1];
-_initClass25();
+_initClass26 = _applyDecs$c23[1];
+_initClass26();
 export { _Wall as Wall };
-_classDecs26 = [CATALOG.registerObject({
+_classDecs27 = [MOD_CATALOG.registerObject({
   stateful: false
 })];
 var _PlatformWall;
@@ -2305,12 +2315,12 @@ var PlatformWall = /*#__PURE__*/function (_Wall4) {
   }]);
 }(_Wall3 = _Wall);
 _PlatformWall2 = PlatformWall;
-var _applyDecs$c24 = _slicedToArray(_applyDecs(_PlatformWall2, [], _classDecs26, 0, void 0, _Wall3).c, 2);
+var _applyDecs$c24 = _slicedToArray(_applyDecs(_PlatformWall2, [], _classDecs27, 0, void 0, _Wall3).c, 2);
 _PlatformWall = _applyDecs$c24[0];
-_initClass26 = _applyDecs$c24[1];
-_initClass26();
+_initClass27 = _applyDecs$c24[1];
+_initClass27();
 export { _PlatformWall as PlatformWall };
-_classDecs27 = [CATALOG.registerObject({
+_classDecs28 = [MOD_CATALOG.registerObject({
   stateful: false
 })];
 var _BouncingWall;
@@ -2330,12 +2340,12 @@ var BouncingWall = /*#__PURE__*/function (_Wall6) {
   }]);
 }(_Wall5 = _Wall);
 _BouncingWall2 = BouncingWall;
-var _applyDecs$c25 = _slicedToArray(_applyDecs(_BouncingWall2, [], _classDecs27, 0, void 0, _Wall5).c, 2);
+var _applyDecs$c25 = _slicedToArray(_applyDecs(_BouncingWall2, [], _classDecs28, 0, void 0, _Wall5).c, 2);
 _BouncingWall = _applyDecs$c25[0];
-_initClass27 = _applyDecs$c25[1];
-_initClass27();
+_initClass28 = _applyDecs$c25[1];
+_initClass28();
 export { _BouncingWall as BouncingWall };
-_classDecs28 = [CATALOG.registerObject({
+_classDecs29 = [MOD_CATALOG.registerObject({
   stateful: false
 })];
 var _GlidingWall;
@@ -2356,8 +2366,8 @@ var GlidingWall = /*#__PURE__*/function (_Wall8) {
   }]);
 }(_Wall7 = _Wall);
 _GlidingWall2 = GlidingWall;
-var _applyDecs$c26 = _slicedToArray(_applyDecs(_GlidingWall2, [], _classDecs28, 0, void 0, _Wall7).c, 2);
+var _applyDecs$c26 = _slicedToArray(_applyDecs(_GlidingWall2, [], _classDecs29, 0, void 0, _Wall7).c, 2);
 _GlidingWall = _applyDecs$c26[0];
-_initClass28 = _applyDecs$c26[1];
-_initClass28();
+_initClass29 = _applyDecs$c26[1];
+_initClass29();
 export { _GlidingWall as GlidingWall };

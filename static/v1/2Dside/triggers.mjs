@@ -55,8 +55,9 @@ var checkHit = utils.checkHit,
   newDomEl = utils.newDomEl,
   importJs = utils.importJs,
   cachedTransform = utils.cachedTransform;
-import { ModuleCatalog, GameObject, Category, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, SpriteSheet, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs';
-export var CATALOG = new ModuleCatalog(import.meta.url, {
+import { CATALOG } from '../../../../core/v1/catalog.mjs';
+import { Dependencies, GameObject, Category, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs';
+var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
@@ -89,12 +90,12 @@ _Trigger = _applyDecs$c[0];
 _initClass = _applyDecs$c[1];
 _initClass();
 export { _Trigger as Trigger };
-var BurronImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/button.png");
-var ButtonSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png"), 2, 1);
-_classDecs2 = [CATALOG.registerObject({
+var BurronImg = new Img("/static/catalogs/std/v1/2Dside/assets/button.png");
+var ButtonSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png"), 2, 1);
+_classDecs2 = [MOD_CATALOG.registerObject({
   label: "Button",
   icon: BurronImg
-}), Category.append("engine/trigger"), StateNumber.define("pushAge", {
+}), Dependencies.add(ButtonSpriteSheet), Category.append("engine/trigger"), StateNumber.define("pushAge", {
   "default": null,
   nullableWith: null
 }), StateNumber.define("duration", {
@@ -157,12 +158,12 @@ _Button = _applyDecs$c2[0];
 _initClass2 = _applyDecs$c2[1];
 _initClass2();
 export { _Button as Button };
-var ClockImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/clock.png");
-_classDecs3 = [CATALOG.registerObject({
+var ClockImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/clock.png");
+_classDecs3 = [MOD_CATALOG.registerObject({
   label: "Clock",
   icon: ClockImg,
   showInBuilder: true
-}), StateNumber.define("iteration"), StateNumber.define("triggered_period", {
+}), Dependencies.add(ClockImg), StateNumber.define("iteration"), StateNumber.define("triggered_period", {
   "default": 1,
   precision: .1,
   showInBuilder: true
@@ -209,12 +210,12 @@ _Clock = _applyDecs$c3[0];
 _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _Clock as Clock };
-var WatcherImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/watcher.png");
-_classDecs4 = [CATALOG.registerObject({
+var WatcherImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/watcher.png");
+_classDecs4 = [MOD_CATALOG.registerObject({
   label: "Watcher",
   icon: WatcherImg,
   showInBuilder: true
-}), StateBool.define("watchHeros", {
+}), Dependencies.add(WatcherImg), StateBool.define("watchHeros", {
   "default": true,
   showInBuilder: true
 }), StateNumber.define("watchDistance", {
@@ -272,12 +273,12 @@ _Viewer = _applyDecs$c4[0];
 _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _Viewer as Viewer };
-var InvertTriggerImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/invert_trigger.png");
-_classDecs5 = [CATALOG.registerObject({
+var InvertTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/invert_trigger.png");
+_classDecs5 = [MOD_CATALOG.registerObject({
   label: "Invert (NOT)",
   icon: InvertTriggerImg,
   showInBuilder: true
-}), LinkReaction.add("reactInvert", {
+}), Dependencies.add(InvertTriggerImg), LinkReaction.add("reactInvert", {
   label: "Invert",
   isDefault: true
 })];
@@ -381,12 +382,12 @@ _AggregatorTrigger = _applyDecs$c6[0];
 _initClass6 = _applyDecs$c6[1];
 _initClass6();
 export { _AggregatorTrigger as AggregatorTrigger };
-var MinTriggerImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/min_trigger.png");
-_classDecs7 = [CATALOG.registerObject({
+var MinTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/min_trigger.png");
+_classDecs7 = [MOD_CATALOG.registerObject({
   label: "Min (AND)",
   icon: MinTriggerImg,
   showInBuilder: true
-})];
+}), Dependencies.add(MinTriggerImg)];
 var _MinTrigger;
 var MinTrigger = /*#__PURE__*/function (_AggregatorTrigger4) {
   function MinTrigger() {
@@ -418,12 +419,12 @@ _MinTrigger = _applyDecs$c7[0];
 _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _MinTrigger as MinTrigger };
-var MaxTriggerImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/max_trigger.png");
-_classDecs8 = [CATALOG.registerObject({
+var MaxTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/max_trigger.png");
+_classDecs8 = [MOD_CATALOG.registerObject({
   label: "Max (OR)",
   icon: MaxTriggerImg,
   showInBuilder: true
-})];
+}), Dependencies.add(MaxTriggerImg)];
 var _MaxTrigger;
 var MaxTrigger = /*#__PURE__*/function (_AggregatorTrigger6) {
   function MaxTrigger() {
@@ -455,12 +456,12 @@ _MaxTrigger = _applyDecs$c8[0];
 _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _MaxTrigger as MaxTrigger };
-var XorTriggerImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/xor_trigger.png");
-_classDecs9 = [CATALOG.registerObject({
+var XorTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/xor_trigger.png");
+_classDecs9 = [MOD_CATALOG.registerObject({
   label: "Xor",
   icon: XorTriggerImg,
   showInBuilder: true
-})];
+}), Dependencies.add(XorTriggerImg)];
 var _XorTrigger;
 var XorTrigger = /*#__PURE__*/function (_AggregatorTrigger8) {
   function XorTrigger() {
@@ -505,12 +506,12 @@ _XorTrigger = _applyDecs$c9[0];
 _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _XorTrigger as XorTrigger };
-var DelayTriggerImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/triggers/delay_trigger.png");
-_classDecs0 = [CATALOG.registerObject({
+var DelayTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/delay_trigger.png");
+_classDecs0 = [MOD_CATALOG.registerObject({
   label: "Delay",
   icon: DelayTriggerImg,
   showInBuilder: true
-}), LinkReaction.add("reactDelay", {
+}), Dependencies.add(DelayTriggerImg), LinkReaction.add("reactDelay", {
   label: "delay",
   isDefault: true
 }), StateProperty.define(), StateNumber.define("delay", {

@@ -3,15 +3,76 @@ const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypo
 import * as utils from '../../../../core/v1/utils.mjs'
 import { GraphicsProps } from '../../../../core/v1/graphics.mjs'
 const { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys } = utils
-import { ModuleCatalog, GameObject, Category, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, SpriteSheet, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/game.mjs'
+import { CATALOG } from '../../../../core/v1/catalog.mjs'
+import { GameObject, Category, Dependencies, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/game.mjs'
 
-export const CATALOG = new ModuleCatalog(import.meta.url, {
+const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
 
 
+export const PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus")
+
+
+const SmokeExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png")
+const SmokeExplosionSpriteSheet = new SpriteSheet(SmokeExplosionSpriteSheetImg, 4, 1)
+
+@MOD_CATALOG.registerObject({
+    showInBuilder: false
+})
+@Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud)
+@StateNumber.define("iteration")
+export class SmokeExplosion extends GameObject {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.width = this.height = 100
+        this.game.audio.playSound(PuffAud)
+    }
+
+    update() {
+        this.iteration += 1
+        const time = this.iteration * this.game.dt
+        if(time > .5) { this.remove(); return }
+    }
+
+    getBaseImg() {
+        const time = this.iteration * this.game.dt
+        return SmokeExplosionSpriteSheet.get(floor(time/.5*4))
+    }
+}
+
+
+const PopImg = new Img("/static/catalogs/std/v1/2Dside/assets/pop.png")
+const PopAud = new Aud("/static/catalogs/std/v1/2Dside/assets/pop.opus")
+
+@Dependencies.add(PopImg, PopAud)
+class Pop extends GameObject {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.width = this.height = 10
+        this.duration = floor(this.game.fps * .25)
+        this.remIt = this.duration
+    }
+    update() {
+        if(!this._soundPlayed) {
+            this.game.audio.playSound(PopAud)
+            this._soundPlayed = true
+        }
+        this.width = this.height = 10 + 100 * (1 - this.remIt/this.duration)
+        this.remIt -= 1
+        if(this.remIt <= 0) this.remove()
+    }
+    getBaseImg() {
+        return PopImg
+    }
+}
+
+
 @Category.append("hero")
+@Dependencies.add(SmokeExplosion, Pop)
 @CollectMixin.add({
     canCollect: true,
     canGetCollected: false,
@@ -140,66 +201,11 @@ export class Hero extends GameObject {
 }
 
 
-export const PuffAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/puff.opus")
-
-
-const SmokeExplosionSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png"), 4, 1)
-
-@CATALOG.registerObject({
-    showInBuilder: false
-})
-@StateNumber.define("iteration")
-export class SmokeExplosion extends GameObject {
-
-    init(kwargs) {
-        super.init(kwargs)
-        this.width = this.height = 100
-        this.game.audio.playSound(PuffAud)
-    }
-
-    update() {
-        this.iteration += 1
-        const time = this.iteration * this.game.dt
-        if(time > .5) { this.remove(); return }
-    }
-
-    getBaseImg() {
-        const time = this.iteration * this.game.dt
-        return SmokeExplosionSpriteSheet.get(floor(time/.5*4))
-    }
-}
-
-
-const PopImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/pop.png")
-const PopAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/pop.opus")
-
-class Pop extends GameObject {
-
-    init(kwargs) {
-        super.init(kwargs)
-        this.width = this.height = 10
-        this.duration = floor(this.game.fps * .25)
-        this.remIt = this.duration
-    }
-    update() {
-        if(!this._soundPlayed) {
-            this.game.audio.playSound(PopAud)
-            this._soundPlayed = true
-        }
-        this.width = this.height = 10 + 100 * (1 - this.remIt/this.duration)
-        this.remIt -= 1
-        if(this.remIt <= 0) this.remove()
-    }
-    getBaseImg() {
-        return PopImg
-    }
-}
-
-
-export const ItemAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/item.opus")
+export const ItemAud = new Aud("/static/catalogs/std/v1/2Dside/assets/item.opus")
 
 
 @Category.append("extra")
+@Dependencies.add(ItemAud)
 @CollectMixin.add({
     canCollect: false,
     canGetCollected: true,
@@ -395,9 +401,64 @@ export class JumpMixin extends Mixin {
 }
 
 
-const NicoImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/nico.png")
-const NicoBaseSpriteSheet = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/nico_full.png")
-const NicoColorableSpriteSheet = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/nico_full_colorable.png")
+const HandImg = new Img("/static/catalogs/std/v1/2Dside/assets/hand.png")
+const SlashAud = new Aud("/static/catalogs/std/v1/2Dside/assets/slash.opus")
+const HandHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/hand_hit.opus")
+
+@BodyMixin.add({
+    width: 25,
+    height: 25,
+})
+@Dependencies.add(HandImg, SlashAud, HandHitAud)
+class NicoHand extends Weapon {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.syncPos()
+        this.attackKnockback = 200
+        this.initIt = this.scene.iteration
+        this.game.audio.playSound(SlashAud)
+    }
+
+    update() {
+        super.update()
+        this.syncPos()
+        this.canAttack = this.scene.iteration == this.initIt
+    }
+
+    syncPos() {
+        const { owner } = this
+        if(!owner) return
+        this.x = owner.x + owner.dirX * 28
+        this.y = owner.y
+        this.dirX = owner.dirX
+    }
+
+    getAttackProps(obj) {
+        const props = super.getAttackProps(obj)
+        props.knockbackAngle = this.dirX > 0 ? -45 : -135
+        return props
+    }
+
+    onAttack(obj, props) {
+        this.game.audio.playSound(HandHitAud)
+    }
+
+    getBaseImg() {
+        return HandImg
+    }
+}
+
+
+const ArrowsSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/arrows.png")
+const ArrowsSpriteSheet = new SpriteSheet(ArrowsSpriteSheetImg, 4, 1)
+
+const OuchAud = new Aud("/static/catalogs/std/v1/2Dside/assets/ouch.opus")
+const JumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jump.opus")
+
+const NicoImg = new Img("/static/catalogs/std/v1/2Dside/assets/nico.png")
+const NicoBaseSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_full.png")
+const NicoColorableSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_full_colorable.png")
 const NicoSpriteSheets = {
     spritesheets: {},
     get: function(color) {
@@ -409,20 +470,12 @@ const NicoSpriteSheets = {
     },
 }
 
-const HandImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/hand.png")
-const ArrowsSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/arrows.png"), 4, 1)
 
-const OuchAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/ouch.opus")
-const SlashAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/slash.opus")
-const HandHitAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/hand_hit.opus")
-const JumpAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/jump.opus")
-
-
-
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Nico",
     icon: NicoImg,
 })
+@Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, JumpAud, ArrowsSpriteSheetImg, NicoHand)
 @JumpMixin.add({
     jumpSpeed: 500,
     nullJumpSpeed: 800,
@@ -570,63 +623,20 @@ export class Nico extends Hero {
 }
 
 
-@BodyMixin.add({
-    width: 25,
-    height: 25,
-})
-class NicoHand extends Weapon {
-
-    init(kwargs) {
-        super.init(kwargs)
-        this.syncPos()
-        this.attackKnockback = 200
-        this.initIt = this.scene.iteration
-        this.game.audio.playSound(SlashAud)
-    }
-
-    update() {
-        super.update()
-        this.syncPos()
-        this.canAttack = this.scene.iteration == this.initIt
-    }
-
-    syncPos() {
-        const { owner } = this
-        if(!owner) return
-        this.x = owner.x + owner.dirX * 28
-        this.y = owner.y
-        this.dirX = owner.dirX
-    }
-
-    getAttackProps(obj) {
-        const props = super.getAttackProps(obj)
-        props.knockbackAngle = this.dirX > 0 ? -45 : -135
-        return props
-    }
-
-    onAttack(obj, props) {
-        this.game.audio.playSound(HandHitAud)
-    }
-
-    getBaseImg() {
-        return HandImg
-    }
-}
-
-
 // weapons
 
 const SWORD_ATTACK_PERIOD = .5
 
-const SwordImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/sword.png")
-const SwordSlashSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/slash.png"), 3, 2)
+const SwordImg = new Img("/static/catalogs/std/v1/2Dside/assets/sword.png")
+const SwordSlashSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/slash.png"), 3, 2)
 
-const SwordHitAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus")
+const SwordHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Sword",
     icon: SwordImg,
 })
+@Dependencies.add(SwordImg, SwordSlashSpriteSheet, SlashAud, SwordHitAud)
 @BodyMixin.add({
     width: 40,
     height: 40,
@@ -693,9 +703,9 @@ export class Sword extends Weapon {
 }
 
 
-const BoxingGloveImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
+const BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Boxing Glove",
     icon: BoxingGloveImg,
 })
@@ -769,9 +779,9 @@ export class BoxingGlove extends Weapon {
 }
 
 
-const ShurikenImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/shuriken.png")
+const ShurikenImg = new Img("/static/catalogs/std/v1/2Dside/assets/shuriken.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "ShurikenPack",
     icon: ShurikenImg,
 })
@@ -825,7 +835,7 @@ export class ShurikenPack extends Extra {
     }
 }
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Shuriken",
     icon: ShurikenImg,
     showInBuilder: false,
@@ -862,10 +872,10 @@ export class Shuriken extends Projectile {
 }
 
 
-const BombImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/bomb.png")
-const BombSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png"), 2, 1)
+const BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png")
+const BombSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png"), 2, 1)
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Bomb",
     icon: BombImg
 })
@@ -927,9 +937,9 @@ export class Bomb extends Extra {
 }
 
 
-const ExplosionSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/explosion.png"), 4, 2)
+const ExplosionSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png"), 4, 2)
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     showInBuilder: false
 })
 @AttackMixin.add({
@@ -977,11 +987,11 @@ export class Explosion extends GameObject {
 }
 
 
-const JetPackImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/jetpack.png")
-const JetPackSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png"), 2, 1)
-const JetPackAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/jetpack.opus")
+const JetPackImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack.png")
+const JetPackSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png"), 2, 1)
+const JetPackAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jetpack.opus")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "JetPack",
     icon: JetPackImg,
 })
@@ -1077,12 +1087,13 @@ export class Enemy extends GameObject {
 }
 
 
-const SpikyImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/spiky.png")
+const SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Spiky",
     icon: SpikyImg,
 })
+@Dependencies.add(SpikyImg)
 @AttackMixin.modify({
     canAttack: true,
     maxHealth: 100,
@@ -1114,12 +1125,13 @@ export class Spiky extends Enemy {
 }
 
 
-const BlobImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blob.png")
+const BlobImg = new Img("/static/catalogs/std/v1/2Dside/assets/blob.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Blob",
     icon: BlobImg,
 })
+@Dependencies.add(BlobImg)
 @StateProperty.modify("dirX", { showInBuilder: true })
 @AttackMixin.modify({
     canAttack: true,
@@ -1242,12 +1254,13 @@ class BlobEnemyBlockChecker extends GameObject {
 }
 
 
-const GhostImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/ghost.png")
+const GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Ghost",
     icon: GhostImg,
 })
+@Dependencies.add(GhostImg)
 @StateProperty.modify("dirX", { showInBuilder: true })
 @AttackMixin.modify({
     canAttack: true,
@@ -1313,9 +1326,9 @@ export class Ghost extends Enemy {
 
 // COLLECTABLES
 
-const HeartImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/heart.png")
+const HeartImg = new Img("/static/catalogs/std/v1/2Dside/assets/heart.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Heart",
     icon: HeartImg,
 })
@@ -1354,9 +1367,9 @@ export class Heart extends GameObject {
 }
 
 
-const StarImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/star.png")
+const StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Star",
     icon: StarImg,
 })
@@ -1415,9 +1428,9 @@ export class Star extends Extra {
 }
 
 
-const CheckpointImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/checkpoint.png")
+const CheckpointImg = new Img("/static/catalogs/std/v1/2Dside/assets/checkpoint.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "CheckPoint",
     icon: CheckpointImg,
 })
@@ -1442,10 +1455,10 @@ export class Checkpoint extends GameObject {
 }
 
 
-const PortalImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/portal.png")
-const PortalJumpAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus")
+const PortalImg = new Img("/static/catalogs/std/v1/2Dside/assets/portal.png")
+const PortalJumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Portal",
     icon: PortalImg,
 })
@@ -1496,7 +1509,7 @@ export class Portal extends GameObject {
 
 // SPAWNER
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Hero",
     icon: PopImg,
 })
@@ -1513,7 +1526,7 @@ export class HeroSpawnPoint extends GameObject {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "ObjectSpawner",
     icon: PopImg,
 })
@@ -1607,7 +1620,7 @@ export class ObjectSpawner extends GameObject {
 
 // WALL
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     stateful: false,
 })
 @Category.append("wall")
@@ -1684,7 +1697,7 @@ export class Wall extends GameObject {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     stateful: false,
 })
 export class PlatformWall extends Wall {
@@ -1705,7 +1718,7 @@ export class PlatformWall extends Wall {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     stateful: false,
 })
 export class BouncingWall extends Wall {
@@ -1718,7 +1731,7 @@ export class BouncingWall extends Wall {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     stateful: false,
 })
 export class GlidingWall extends Wall {

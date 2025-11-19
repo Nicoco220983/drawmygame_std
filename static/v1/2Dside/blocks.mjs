@@ -41,8 +41,9 @@ var abs = Math.abs,
   random = Math.random,
   hypot = Math.hypot;
 import { cachedTransform, cloneCanvas, colorizeCanvas } from '../../../../core/v1/utils.mjs';
-import { ModuleCatalog, GameObject, Category, StateProperty, StateBool, StateNumber, StateString, StateEnum, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, SpriteSheet, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs';
-export var CATALOG = new ModuleCatalog(import.meta.url, {
+import { CATALOG } from '../../../../core/v1/catalog.mjs';
+import { Dependencies, GameObject, Category, StateProperty, StateBool, StateNumber, StateString, StateEnum, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs';
+var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
@@ -118,11 +119,11 @@ new (_BackgroundBlock2 = (_BackgroundBlock3 = /*#__PURE__*/function (_GameObject
   return _createClass(_Class2);
 }(_identity), _defineProperty(_Class2, _BackgroundBlock2, void 0), _Class2)();
 export { _BackgroundBlock as BackgroundBlock };
-var DirtImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png");
-_classDecs3 = [CATALOG.registerObject({
+var DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png");
+_classDecs3 = [MOD_CATALOG.registerObject({
   label: "Dirt",
   icon: DirtImg
-}), StateString.define("color", {
+}), Dependencies.add(DirtImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _DirtBlock;
@@ -152,11 +153,11 @@ _DirtBlock = _applyDecs$c3[0];
 _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _DirtBlock as DirtBlock };
-var StoneImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png");
-_classDecs4 = [CATALOG.registerObject({
+var StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png");
+_classDecs4 = [MOD_CATALOG.registerObject({
   label: "Stone",
   icon: StoneImg
-}), StateString.define("color", {
+}), Dependencies.add(StoneImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _StoneBlock;
@@ -186,11 +187,11 @@ _StoneBlock = _applyDecs$c4[0];
 _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _StoneBlock as StoneBlock };
-var BackgroundStoneImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png");
-_classDecs5 = [CATALOG.registerObject({
+var BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png");
+_classDecs5 = [MOD_CATALOG.registerObject({
   label: "Background Stone",
   icon: BackgroundStoneImg
-}), StateString.define("color", {
+}), Dependencies.add(BackgroundStoneImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BackgroundStoneBlock;
@@ -220,11 +221,11 @@ _BackgroundStoneBlock = _applyDecs$c5[0];
 _initClass5 = _applyDecs$c5[1];
 _initClass5();
 export { _BackgroundStoneBlock as BackgroundStoneBlock };
-var BricksImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png");
-_classDecs6 = [CATALOG.registerObject({
+var BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png");
+_classDecs6 = [MOD_CATALOG.registerObject({
   label: "Bricks",
   icon: BricksImg
-}), StateString.define("color", {
+}), Dependencies.add(BricksImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BricksBlock;
@@ -254,11 +255,11 @@ _BricksBlock = _applyDecs$c6[0];
 _initClass6 = _applyDecs$c6[1];
 _initClass6();
 export { _BricksBlock as BricksBlock };
-var BackgroundBricksImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png");
-_classDecs7 = [CATALOG.registerObject({
+var BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png");
+_classDecs7 = [MOD_CATALOG.registerObject({
   label: "Background Bricks",
   icon: BackgroundBricksImg
-}), StateString.define("color", {
+}), Dependencies.add(BackgroundBricksImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BackgroundBricksBloc;
@@ -288,11 +289,11 @@ _BackgroundBricksBloc = _applyDecs$c7[0];
 _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _BackgroundBricksBloc as BackgroundBricksBlock };
-var WoodImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png");
-_classDecs8 = [CATALOG.registerObject({
+var WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png");
+_classDecs8 = [MOD_CATALOG.registerObject({
   label: "Wood",
   icon: WoodImg
-}), StateString.define("color", {
+}), Dependencies.add(WoodImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _WoodBlock;
@@ -322,11 +323,11 @@ _WoodBlock = _applyDecs$c8[0];
 _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _WoodBlock as WoodBlock };
-var BackgroundWoodImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png");
-_classDecs9 = [CATALOG.registerObject({
+var BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png");
+_classDecs9 = [MOD_CATALOG.registerObject({
   label: "Background Wood",
   icon: BackgroundWoodImg
-}), StateString.define("color", {
+}), Dependencies.add(BackgroundWoodImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BackgroundWoodBlock;
@@ -356,11 +357,11 @@ _BackgroundWoodBlock = _applyDecs$c9[0];
 _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _BackgroundWoodBlock as BackgroundWoodBlock };
-var PlatformImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png");
-_classDecs0 = [CATALOG.registerObject({
+var PlatformImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png");
+_classDecs0 = [MOD_CATALOG.registerObject({
   label: "Platform",
   icon: PlatformImg
-}), StateString.define("color", {
+}), Dependencies.add(PlatformImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _PlatformBlock;
@@ -415,13 +416,13 @@ _PlatformBlock = _applyDecs$c0[0];
 _initClass0 = _applyDecs$c0[1];
 _initClass0();
 export { _PlatformBlock as PlatformBlock };
-var DoorImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/door.png");
-var DoorSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png"), 2, 1);
-_classDecs1 = [CATALOG.registerObject({
+var DoorImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door.png");
+var DoorSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png"), 2, 1);
+_classDecs1 = [MOD_CATALOG.registerObject({
   label: "Door",
   icon: DoorImg,
   showInBuilder: true
-}), LinkReaction.add("reactToggle", {
+}), Dependencies.add(DoorSpriteSheet), LinkReaction.add("reactToggle", {
   label: "toggle",
   isDefault: true
 }), StateBool.define("closed", {
@@ -474,12 +475,12 @@ _Door = _applyDecs$c1[0];
 _initClass1 = _applyDecs$c1[1];
 _initClass1();
 export { _Door as Door };
-var CloudImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png");
-_classDecs10 = [CATALOG.registerObject({
+var CloudImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png");
+_classDecs10 = [MOD_CATALOG.registerObject({
   label: "Cloud",
   icon: CloudImg,
   showInBuilder: true
-}), StateNumber.define("blockAge", {
+}), Dependencies.add(CloudImg), StateNumber.define("blockAge", {
   "default": Infinity,
   nullableWith: Infinity
 }), StateNumber.define("timeToDisappear", {
@@ -597,8 +598,8 @@ var _applyDecs$c15 = _slicedToArray(_applyDecs(_CloudBlockChecker2, [], _classDe
 _CloudBlockChecker = _applyDecs$c15[0];
 _initClass11 = _applyDecs$c15[1];
 _initClass11();
-var DetectAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/detect.wav");
-_classDecs12 = [AttackMixin.add(), LinkReaction.add("reactTrigger", {
+var DetectAud = new Aud("/static/catalogs/std/v1/2Dside/assets/detect.wav");
+_classDecs12 = [Dependencies.add(DetectAud), AttackMixin.add(), LinkReaction.add("reactTrigger", {
   label: "trigger",
   isDefault: true
 }), StateNumber.define("lastDetectAge", {
@@ -695,12 +696,12 @@ _Trap = _applyDecs$c11[0];
 _initClass12 = _applyDecs$c11[1];
 _initClass12();
 export { _Trap as Trap };
-var BoxingGloveImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
-_classDecs13 = [CATALOG.registerObject({
+var BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
+_classDecs13 = [MOD_CATALOG.registerObject({
   label: "Boxing Trap",
   icon: BoxingGloveImg,
   showInBuilder: true
-})];
+}), Dependencies.add(BoxingGloveImg)];
 var _BoxingTrap;
 var BoxingTrap = /*#__PURE__*/function (_Trap4) {
   function BoxingTrap() {
@@ -728,12 +729,12 @@ _BoxingTrap = _applyDecs$c12[0];
 _initClass13 = _applyDecs$c12[1];
 _initClass13();
 export { _BoxingTrap as BoxingTrap };
-var BouncingBlockImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png");
-_classDecs14 = [CATALOG.registerObject({
+var BouncingBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png");
+_classDecs14 = [MOD_CATALOG.registerObject({
   label: "Bouncing Block",
   icon: BouncingBlockImg,
   showInBuilder: true
-})];
+}), Dependencies.add(BouncingBlockImg)];
 var _BouncingBlock;
 var BouncingBlock = /*#__PURE__*/function (_Block19) {
   function BouncingBlock() {
@@ -760,12 +761,12 @@ _BouncingBlock = _applyDecs$c13[0];
 _initClass14 = _applyDecs$c13[1];
 _initClass14();
 export { _BouncingBlock as BouncingBlock };
-var IceBlockImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png");
-_classDecs15 = [CATALOG.registerObject({
+var IceBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png");
+_classDecs15 = [MOD_CATALOG.registerObject({
   label: "Ice Block",
   icon: IceBlockImg,
   showInBuilder: true
-})];
+}), Dependencies.add(IceBlockImg)];
 var _IceBlock;
 var IceBlock = /*#__PURE__*/function (_Block21) {
   function IceBlock() {

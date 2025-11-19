@@ -1,8 +1,9 @@
 const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypot } = Math
 import { cachedTransform, cloneCanvas, colorizeCanvas } from '../../../../core/v1/utils.mjs'
-import { ModuleCatalog, GameObject, Category, StateProperty, StateBool, StateNumber, StateString, StateEnum, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, SpriteSheet, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs'
+import { CATALOG } from '../../../../core/v1/catalog.mjs'
+import { Dependencies, GameObject, Category, StateProperty, StateBool, StateNumber, StateString, StateEnum, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs'
 
-export const CATALOG = new ModuleCatalog(import.meta.url, {
+const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
@@ -52,12 +53,13 @@ export class BackgroundBlock extends GameObject {
 
 
 
-const DirtImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png")
+const DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Dirt",
     icon: DirtImg,
 })
+@Dependencies.add(DirtImg)
 @StateString.define("color", { showInBuilder: true })
 export class DirtBlock extends Block {
     getBaseImg() {
@@ -73,12 +75,13 @@ export class DirtBlock extends Block {
 
 
 
-const StoneImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png")
+const StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Stone",
     icon: StoneImg,
 })
+@Dependencies.add(StoneImg)
 @StateString.define("color", { showInBuilder: true })
 export class StoneBlock extends Block {
     getBaseImg() {
@@ -93,12 +96,13 @@ export class StoneBlock extends Block {
 }
 
 
-const BackgroundStoneImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png")
+const BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Background Stone",
     icon: BackgroundStoneImg,
 })
+@Dependencies.add(BackgroundStoneImg)
 @StateString.define("color", { showInBuilder: true })
 export class BackgroundStoneBlock extends BackgroundBlock {
     getBaseImg() {
@@ -114,12 +118,13 @@ export class BackgroundStoneBlock extends BackgroundBlock {
 
 
 
-const BricksImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png")
+const BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Bricks",
     icon: BricksImg,
 })
+@Dependencies.add(BricksImg)
 @StateString.define("color", { showInBuilder: true })
 export class BricksBlock extends Block {
     getBaseImg() {
@@ -135,12 +140,13 @@ export class BricksBlock extends Block {
 
 
 
-const BackgroundBricksImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png")
+const BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Background Bricks",
     icon: BackgroundBricksImg,
 })
+@Dependencies.add(BackgroundBricksImg)
 @StateString.define("color", { showInBuilder: true })
 export class BackgroundBricksBlock extends BackgroundBlock {
     getBaseImg() {
@@ -156,12 +162,13 @@ export class BackgroundBricksBlock extends BackgroundBlock {
 
 
 
-const WoodImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png")
+const WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Wood",
     icon: WoodImg,
 })
+@Dependencies.add(WoodImg)
 @StateString.define("color", { showInBuilder: true })
 export class WoodBlock extends Block {
     getBaseImg() {
@@ -177,12 +184,13 @@ export class WoodBlock extends Block {
 
 
 
-const BackgroundWoodImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png")
+const BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Background Wood",
     icon: BackgroundWoodImg,
 })
+@Dependencies.add(BackgroundWoodImg)
 @StateString.define("color", { showInBuilder: true })
 export class BackgroundWoodBlock extends BackgroundBlock {
     getBaseImg() {
@@ -198,12 +206,13 @@ export class BackgroundWoodBlock extends BackgroundBlock {
 
 
 
-const PlatformImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png")
+const PlatformImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Platform",
     icon: PlatformImg,
 })
+@Dependencies.add(PlatformImg)
 @StateString.define("color", { showInBuilder: true })
 export class PlatformBlock extends Block {
 
@@ -238,14 +247,15 @@ export class PlatformBlock extends Block {
 }
 
 
-const DoorImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/door.png")
-const DoorSpriteSheet = new SpriteSheet(CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png"), 2, 1)
+const DoorImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door.png")
+const DoorSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png"), 2, 1)
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Door",
     icon: DoorImg,
     showInBuilder: true,
 })
+@Dependencies.add(DoorSpriteSheet)
 @LinkReaction.add("reactToggle", { label:"toggle", isDefault: true })
 @StateBool.define("closed", { default: true, showInBuilder: true })
 @Category.append("engine")
@@ -279,13 +289,14 @@ export class Door extends Block {
 }
 
 
-const CloudImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png")
+const CloudImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Cloud",
     icon: CloudImg,
     showInBuilder: true,
 })
+@Dependencies.add(CloudImg)
 @StateNumber.define("blockAge", { default: Infinity, nullableWith: Infinity })
 @StateNumber.define("timeToDisappear", { default: 1, precision: .5, showInBuilder: true })
 @StateNumber.define("timeToReappear", { default: 3, precision: .5, nullableWith: Infinity, showInBuilder: true })
@@ -363,10 +374,11 @@ class CloudBlockChecker extends GameObject {
 }
 
 
-const DetectAud = CATALOG.registerAudio("/static/catalogs/std/v1/2Dside/assets/detect.wav")
+const DetectAud = new Aud("/static/catalogs/std/v1/2Dside/assets/detect.wav")
 
 
 
+@Dependencies.add(DetectAud)
 @AttackMixin.add()
 @LinkReaction.add("reactTrigger", { label:"trigger", isDefault: true })
 @StateNumber.define("lastDetectAge", { default: Infinity, nulableWith: Infinity })
@@ -427,13 +439,14 @@ export class Trap extends Block {
 }
 
 
-const BoxingGloveImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
+const BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Boxing Trap",
     icon: BoxingGloveImg,
     showInBuilder: true,
 })
+@Dependencies.add(BoxingGloveImg)
 export class BoxingTrap extends Trap {
 
     init(kwargs) {
@@ -448,13 +461,14 @@ export class BoxingTrap extends Trap {
 }
 
 
-const BouncingBlockImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png")
+const BouncingBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Bouncing Block",
     icon: BouncingBlockImg,
     showInBuilder: true,
 })
+@Dependencies.add(BouncingBlockImg)
 export class BouncingBlock extends Block {
 
     init(kwargs) {
@@ -468,13 +482,14 @@ export class BouncingBlock extends Block {
 }
 
 
-const IceBlockImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png")
+const IceBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Ice Block",
     icon: IceBlockImg,
     showInBuilder: true,
 })
+@Dependencies.add(IceBlockImg)
 export class IceBlock extends Block {
 
     init(kwargs) {

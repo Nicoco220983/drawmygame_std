@@ -1,12 +1,13 @@
 const { assign } = Object
 const { floor, round, ceil, min, max } = Math
 import { GraphicsProps } from '../../../../core/v1/graphics.mjs'
-import { SceneCommon, GameScene, GameObject, Category, StateProperty, StateBool, StateNumber, Mixin, OwnerableMixin, Text, ModuleCatalog, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, importAndPreload } from '../../../../core/v1/game.mjs'
+import { CATALOG } from '../../../../core/v1/catalog.mjs'
+import { Dependencies, SceneCommon, GameScene, GameObject, Category, StateProperty, StateBool, StateNumber, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/game.mjs'
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs'
 import * as utils from '../../../../core/v1/utils.mjs'
 const { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys } = utils
 
-export const CATALOG = new ModuleCatalog(import.meta.url, {
+const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
@@ -26,7 +27,7 @@ export class Manager extends GameObject {}
 export class BorderManager extends Manager {}
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Block Border",
     showInBuilder: true,
 })
@@ -49,7 +50,7 @@ export class BlockBorderManager extends BorderManager {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Damage Border",
     showInBuilder: true,
 })
@@ -80,7 +81,7 @@ export class DamageBorderManager extends BorderManager {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Loop Border",
     showInBuilder: true,
 })
@@ -100,7 +101,7 @@ export class LoopBorderManager extends BorderManager {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Hero Lives",
     showInBuilder: true,
 })
@@ -145,7 +146,7 @@ export class HerosLivesManager extends Manager {
 export class ViewManager extends Manager {}
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "View Heros Center",
     showInBuilder: true
 })
@@ -182,7 +183,7 @@ export class ViewHerosCenterManager extends ViewManager {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "View First Hero",
     showInBuilder: true
 })
@@ -254,7 +255,7 @@ export class ViewFirstHeroManager extends ViewManager {
 }
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Physics",
 })
 @StateNumber.define("gravityAcc", { default: 1000, precision: 100 })
@@ -263,7 +264,7 @@ export class ViewFirstHeroManager extends ViewManager {
 export class PhysicsManager extends Manager {}
 
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Attack",
 })
 @Category.append("attack")
@@ -442,11 +443,12 @@ export class Background extends GameObject {
 }
 
 
-const GreenLandscapeImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg")
+const GreenLandscapeImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Green Landscape",
 })
+@Dependencies.add(GreenLandscapeImg)
 export class GreenLandscapeBackground extends Background {
     getBaseImg() {
         return GreenLandscapeImg
@@ -454,11 +456,12 @@ export class GreenLandscapeBackground extends Background {
 }
 
 
-const RockMountainsImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg")
+const RockMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Rock Mountains",
 })
+@Dependencies.add(RockMountainsImg)
 export class RockMountainsBackground extends Background {
     getBaseImg() {
         return RockMountainsImg
@@ -466,11 +469,12 @@ export class RockMountainsBackground extends Background {
 }
 
 
-const SnowMountainsImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg")
+const SnowMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Snow Mountains",
 })
+@Dependencies.add(SnowMountainsImg)
 export class SnowMountainsBackground extends Background {
     getBaseImg() {
         return SnowMountainsImg
@@ -478,11 +482,12 @@ export class SnowMountainsBackground extends Background {
 }
 
 
-const DarkForestImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg")
+const DarkForestImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Dark Forest",
 })
+@Dependencies.add(DarkForestImg)
 export class DarkForestBackground extends Background {
     getBaseImg() {
         return DarkForestImg
@@ -490,11 +495,12 @@ export class DarkForestBackground extends Background {
 }
 
 
-const DarkCityImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg")
+const DarkCityImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     label: "Dark City",
 })
+@Dependencies.add(DarkCityImg)
 export class DarkCityBackground extends Background {
     getBaseImg() {
         return DarkCityImg
@@ -504,7 +510,8 @@ export class DarkCityBackground extends Background {
 
 // Standard
 
-@CATALOG.registerScene()
+@MOD_CATALOG.registerScene()
+@Dependencies.add(GreenLandscapeBackground)
 @StateBool.define("killAllEnemies", { default: false, showInBuilder: true })
 @StateBool.define("catchAllStars", { default: false, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
@@ -575,7 +582,7 @@ export class StandardScene extends GameScene {
     }
 
     async loadJoypadScene() {
-        const { JoypadGameScene } = await importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        const { JoypadGameScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
         return new JoypadGameScene(this.game)
     }
 
@@ -594,7 +601,8 @@ export class StandardScene extends GameScene {
 
 // TAG
 
-@CATALOG.registerScene()
+@MOD_CATALOG.registerScene()
+@Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
     filter: { category: "manager/attack" },
@@ -742,7 +750,7 @@ export class TagScene extends GameScene {
     }
 
     async loadJoypadScene() {
-        const { JoypadGameScene } = await importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        const { JoypadGameScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
         return new JoypadGameScene(this.game)
     }
 
@@ -759,11 +767,12 @@ export class TagScene extends GameScene {
 }
 
 
-const TagImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/tag.png")
+const TagImg = new Img("/static/catalogs/std/v1/2Dside/assets/tag.png")
 
-@CATALOG.registerObject({
+@MOD_CATALOG.registerObject({
     showInBuilder: false
 })
+@Dependencies.add(TagImg)
 @OwnerableMixin.add({
     removedWithOwner: false,
 })
@@ -795,7 +804,8 @@ export class Tag extends GameObject {
 }
 
 
-@CATALOG.registerScene()
+@MOD_CATALOG.registerScene()
+@Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
     filter: { category: "manager/attack" },
@@ -893,7 +903,7 @@ export class StealTreasures extends GameScene {
     }
 
     async loadJoypadScene() {
-        const { JoypadGameScene } = await importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        const { JoypadGameScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
         return new JoypadGameScene(this.game)
     }
 
@@ -910,8 +920,9 @@ export class StealTreasures extends GameScene {
 }
 
 
-const StarImg = CATALOG.registerImage("/static/catalogs/std/v1/2Dside/assets/star.png")
+const StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png")
 
+@Dependencies.add(StarImg)
 @OwnerableMixin.add()
 class StarsBar extends GameObject {
 
@@ -955,7 +966,7 @@ function countStarExtras(hero) {
 
 // WAIGTING
 
-@CATALOG.registerScene({
+@MOD_CATALOG.registerScene({
     showInBuilder: false,
 })
 export class WaitingScene extends SceneCommon {
@@ -1067,7 +1078,7 @@ export class WaitingScene extends SceneCommon {
     }
 
     async loadJoypadScene() {
-        const { JoypadWaitingScene } = await importAndPreload("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        const { JoypadWaitingScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
         return new JoypadWaitingScene(this.game)
     }
 }
