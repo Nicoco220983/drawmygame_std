@@ -35,10 +35,7 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random;
 var assign = Object.assign;
-import { GraphicsEngine, GraphicsProps } from "../../../../core/v1/graphics.mjs";
-import { CATALOG } from '../../../../core/v1/catalog.mjs';
-import { Dependencies, GameObject, Text, GameObjectGroup, Img } from "../../../../core/v1/game.mjs";
-import { cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas } from "../../../../core/v1/utils.mjs";
+import { cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas, GraphicsEngine, GraphicsProps, CATALOG, Dependencies, GameObject, Text, GameObjectGroup, Img } from "../../../../core/v1/index.mjs";
 var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"

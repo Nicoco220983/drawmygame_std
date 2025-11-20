@@ -42,20 +42,7 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import * as utils from '../../../../core/v1/utils.mjs';
-import { GraphicsProps } from '../../../../core/v1/graphics.mjs';
-var sign = utils.sign,
-  sumTo = utils.sumTo,
-  newCanvas = utils.newCanvas,
-  addCanvas = utils.addCanvas,
-  cloneCanvas = utils.cloneCanvas,
-  colorizeCanvas = utils.colorizeCanvas,
-  newDomEl = utils.newDomEl,
-  importJs = utils.importJs,
-  cachedTransform = utils.cachedTransform,
-  hasKeys = utils.hasKeys;
-import { CATALOG } from '../../../../core/v1/catalog.mjs';
-import { GameObject, Category, Dependencies, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/game.mjs';
+import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/index.mjs';
 var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"

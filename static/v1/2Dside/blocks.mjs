@@ -40,9 +40,7 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { cachedTransform, cloneCanvas, colorizeCanvas } from '../../../../core/v1/utils.mjs';
-import { CATALOG } from '../../../../core/v1/catalog.mjs';
-import { Dependencies, GameObject, Category, StateProperty, StateBool, StateNumber, StateString, StateEnum, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs';
+import { cachedTransform, cloneCanvas, colorizeCanvas, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
 var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
   version: "v1",
   perspective: "2Dside"

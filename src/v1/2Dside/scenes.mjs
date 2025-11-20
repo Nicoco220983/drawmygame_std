@@ -1,11 +1,13 @@
 const { assign } = Object
 const { floor, round, ceil, min, max } = Math
-import { GraphicsProps } from '../../../../core/v1/graphics.mjs'
-import { CATALOG } from '../../../../core/v1/catalog.mjs'
-import { Dependencies, SceneCommon, GameScene, GameObject, Category, StateProperty, StateBool, StateNumber, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/game.mjs'
+import {
+    sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys,
+    GraphicsProps,
+    CATALOG,
+    StateProperty, StateBool, StateNumber, 
+    Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
+} from '../../../../core/v1/index.mjs'
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs'
-import * as utils from '../../../../core/v1/utils.mjs'
-const { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys } = utils
 
 const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
     version: "v1",

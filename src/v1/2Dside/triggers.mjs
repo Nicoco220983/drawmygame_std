@@ -1,9 +1,10 @@
 const { assign } = Object
 const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypot } = Math
-import * as utils from '../../../../core/v1/utils.mjs'
-const { checkHit, urlAbsPath, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform } = utils
-import { CATALOG } from '../../../../core/v1/catalog.mjs'
-import { Dependencies, GameObject, Category, StateProperty, StateBool, StateNumber, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs,ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/game.mjs'
+import {
+    CATALOG,
+    StateProperty, StateBool, StateNumber, 
+    Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
+} from '../../../../core/v1/index.mjs'
 
 const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
     version: "v1",
