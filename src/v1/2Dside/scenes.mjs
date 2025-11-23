@@ -3,13 +3,13 @@ const { floor, round, ceil, min, max } = Math
 import {
     sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys,
     GraphicsProps,
-    CATALOG,
-    StateProperty, StateBool, StateNumber, 
+    CatalogContext, CATALOG,
+    StateProperty, StateBool, StateNumber,
     Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
 } from '../../../../core/v1/index.mjs'
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs'
 
-const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+const CATCTX = new CatalogContext(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
@@ -22,14 +22,14 @@ const IS_SERVER_ENV = (typeof window === 'undefined')
 @StateNumber.undefine("y")
 @StateNumber.undefine("x")
 @Category.append("manager")
-export class Manager extends GameObject {}
+export class Manager extends GameObject { }
 
 
 @Category.append("border")
-export class BorderManager extends Manager {}
+export class BorderManager extends Manager { }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Block Border",
     showInBuilder: true,
 })
@@ -41,18 +41,18 @@ export class BlockBorderManager extends BorderManager {
     }
 
     initWalls() {
-        if(this._initWallsDone) return
+        if (this._initWallsDone) return
         this._initWallsDone = true
         const { scene } = this, { width, height } = scene
-        scene.addObject(Wall, { x1:0, y1:0, x2:width, y2:0, visibility:0 })
-        scene.addObject(Wall, { x1:width, y1:0, x2:width, y2:height, visibility:0 })
-        scene.addObject(Wall, { x1:width, y1:height, x2:0, y2:height, visibility:0 })
-        scene.addObject(Wall, { x1:0, y1:height, x2:0, y2:0, visibility:0 })
+        scene.addObject(Wall, { x1: 0, y1: 0, x2: width, y2: 0, visibility: 0 })
+        scene.addObject(Wall, { x1: width, y1: 0, x2: width, y2: height, visibility: 0 })
+        scene.addObject(Wall, { x1: width, y1: height, x2: 0, y2: height, visibility: 0 })
+        scene.addObject(Wall, { x1: 0, y1: height, x2: 0, y2: 0, visibility: 0 })
     }
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Damage Border",
     showInBuilder: true,
 })
@@ -66,16 +66,16 @@ export class DamageBorderManager extends BorderManager {
         const { width, height } = scene
         scene.objects.forEach(obj => {
             const { x, y } = obj
-            if(x < -limit || x > width + limit || y < -limit || y > height + limit) {
+            if (x < -limit || x > width + limit || y < -limit || y > height + limit) {
                 this.handleObjectOut(obj)
             }
         })
     }
 
     handleObjectOut(obj) {
-        if(obj instanceof Hero) {
+        if (obj instanceof Hero) {
             obj.getDamaged(this.heroOutDamages)
-            if(obj.getHealth() > 0) this.scene.spawnHero(obj)
+            if (obj.getHealth() > 0) this.scene.spawnHero(obj)
         } else {
             obj.remove()
         }
@@ -83,7 +83,7 @@ export class DamageBorderManager extends BorderManager {
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Loop Border",
     showInBuilder: true,
 })
@@ -94,16 +94,16 @@ export class LoopBorderManager extends BorderManager {
         const { scene } = this, { width, height } = scene
         scene.objects.forEach(obj => {
             const { x, y } = obj
-            if(x > width) obj.x -= width
-            else if(x < 0) obj.x += width
-            if(y > height) obj.y -= height
-            else if(y < 0) obj.y += height
+            if (x > width) obj.x -= width
+            else if (x < 0) obj.x += width
+            if (y > height) obj.y -= height
+            else if (y < 0) obj.y += height
         })
     }
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Hero Lives",
     showInBuilder: true,
 })
@@ -118,7 +118,7 @@ export class HerosLivesManager extends Manager {
         const { scene } = this
         hackMethod(scene, "onAddObject", -1, evt => {
             const obj = evt.inputArgs[0]
-            if(!(obj instanceof Hero)) return
+            if (!(obj instanceof Hero)) return
             hackMethod(obj, "die", -1, evt => {
                 const deathsIts = this.deathsIts ||= {}
                 deathsIts[obj.playerId] = scene.iteration
@@ -129,26 +129,26 @@ export class HerosLivesManager extends Manager {
         const { scene, deathsIts, delay } = this
         const { game, iteration } = scene
         const { fps } = game
-        if(deathsIts) {
-            for(let playerId in deathsIts) {
-                if(this.lives <= 0) break
-                if(iteration >= (deathsIts[playerId] + (delay*fps))) {
+        if (deathsIts) {
+            for (let playerId in deathsIts) {
+                if (this.lives <= 0) break
+                if (iteration >= (deathsIts[playerId] + (delay * fps))) {
                     scene.addHero(playerId)
                     delete deathsIts[playerId]
                     this.lives -= 1
                 }
             }
-            if(!hasKeys(deathsIts)) this.deathsIts = null
+            if (!hasKeys(deathsIts)) this.deathsIts = null
         }
     }
 }
 
 
 @Category.append("view")
-export class ViewManager extends Manager {}
+export class ViewManager extends Manager { }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "View Heros Center",
     showInBuilder: true
 })
@@ -162,30 +162,30 @@ export class ViewHerosCenterManager extends ViewManager {
     updateSceneView() {
         const scn = this.scene
         const { heros, localHero, viewWidth, viewHeight } = scn
-        if(!hasKeys(heros)) return
-        if(localHero) {
+        if (!hasKeys(heros)) return
+        if (localHero) {
             scn.setView(
-                localHero.x - viewWidth/2,
-                localHero.y - viewHeight/2,
+                localHero.x - viewWidth / 2,
+                localHero.y - viewHeight / 2,
             )
         } else {
             let sumX = 0, sumY = 0, nbHeros = 0
-            for(let playerId in heros) {
+            for (let playerId in heros) {
                 const hero = heros[playerId]
                 sumX += hero.x
                 sumY += hero.y
                 nbHeros += 1
             }
             scn.setView(
-                sumX / nbHeros - viewWidth/2,
-                sumY / nbHeros - viewHeight/2,
+                sumX / nbHeros - viewWidth / 2,
+                sumY / nbHeros - viewHeight / 2,
             )
         }
     }
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "View First Hero",
     showInBuilder: true
 })
@@ -210,17 +210,17 @@ export class ViewFirstHeroManager extends ViewManager {
     updateSceneView() {
         const scn = this.scene
         const { heros, localHero, viewWidth, viewHeight } = scn
-        if(!hasKeys(heros)) return
-        if(localHero) {
+        if (!hasKeys(heros)) return
+        if (localHero) {
             scn.setView(
-                localHero.x - viewWidth/2,
-                localHero.y - viewHeight/2,
+                localHero.x - viewWidth / 2,
+                localHero.y - viewHeight / 2,
             )
         } else {
             const firstHero = scn.getFirstHero()
-            if(firstHero) scn.setView(
-                firstHero.x - viewWidth/2,
-                firstHero.y - viewHeight/2,
+            if (firstHero) scn.setView(
+                firstHero.x - viewWidth / 2,
+                firstHero.y - viewHeight / 2,
             )
         }
     }
@@ -229,13 +229,13 @@ export class ViewFirstHeroManager extends ViewManager {
         const scn = this.scene
         const { heros, viewWidth, viewHeight } = scn
         const firstHero = scn.getFirstHero()
-        if(!firstHero) return
-        const { x:fhx, y:fhy } = firstHero
-        for(let playerId in heros) {
-            if(playerId === firstHero.playerId) continue
+        if (!firstHero) return
+        const { x: fhx, y: fhy } = firstHero
+        for (let playerId in heros) {
+            if (playerId === firstHero.playerId) continue
             const hero = heros[playerId]
             const dx = hero.x - fhx, dy = hero.y - fhy
-            if(dx < -viewWidth*.7 || dx > viewWidth*.7 || dy < -viewHeight*.7 || dy > viewHeight*.7) {
+            if (dx < -viewWidth * .7 || dx > viewWidth * .7 || dy < -viewHeight * .7 || dy > viewHeight * .7) {
                 this.spawnHero(hero)
             }
         }
@@ -245,7 +245,7 @@ export class ViewFirstHeroManager extends ViewManager {
         const scn = this.scene
         const firstHero = scn.getFirstHero()
         let spawnX, spawnY
-        if(!firstHero || hero === firstHero) {
+        if (!firstHero || hero === firstHero) {
             spawnX = scn.herosSpawnX
             spawnY = scn.herosSpawnY
         } else {
@@ -257,16 +257,16 @@ export class ViewFirstHeroManager extends ViewManager {
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Physics",
 })
 @StateNumber.define("gravityAcc", { default: 1000, precision: 100 })
 @StateNumber.define("gravityMaxSpeed", { default: 1000, precision: 100 })
 @Category.append("physics")
-export class PhysicsManager extends Manager {}
+export class PhysicsManager extends Manager { }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Attack",
 })
 @Category.append("attack")
@@ -303,28 +303,32 @@ export class HeadsUpDisplay extends GameObject {
     }
     initPlayerElements(hero) {
         const { game, playersElems, textArgs, margin, barWidth, barHeight, heroLineMinHeight } = this
-        for(let playerId in game.players) {
-            if(playersElems.has(playerId)) continue
+        for (let playerId in game.players) {
+            if (playersElems.has(playerId)) continue
             const grp = new GameObjectGroup(this.scene)
             playersElems.set(playerId, grp)
             //grp.nbBarElems = 0
-            grp.add(PlayerIcon, { x: heroLineMinHeight/2, y: heroLineMinHeight/2, width: heroLineMinHeight, height: heroLineMinHeight, playerId })
-            if(this.showHerosHealths) grp.add(HealthBar, { playerId, width:barWidth, height:barHeight })
-            if(this.showPlayersScores) grp.add(PlayerScoreText, { playerId, ...textArgs })
+            grp.add(PlayerIcon, { x: heroLineMinHeight / 2, y: heroLineMinHeight / 2, width: heroLineMinHeight, height: heroLineMinHeight, playerId })
+            if (this.showHerosHealths) grp.add(HealthBar, { playerId, width: barWidth, height: barHeight })
+            if (this.showPlayersScores) grp.add(PlayerScoreText, { playerId, ...textArgs })
             grp.sync = () => {
                 let hasBars = false, elemsX = heroLineMinHeight + margin, barsY = 0
-                grp.forEach(elem => { if(elem instanceof BarNotif) {
-                    elem.x = elemsX + elem.width/2,
-                    elem.y = barsY + elem.height/2
-                    hasBars = true
-                    barsY = elem.y + elem.height/2 + margin
-                }})
-                if(hasBars) elemsX += barWidth + margin
-                grp.forEach(elem => { if(!(elem instanceof BarNotif || elem instanceof PlayerIcon)) {
-                    elem.x = elemsX + elem.width/2
-                    elem.y = elem.height/2
-                    elemsX = elem.x + elem.width + margin
-                }})
+                grp.forEach(elem => {
+                    if (elem instanceof BarNotif) {
+                        elem.x = elemsX + elem.width / 2,
+                            elem.y = barsY + elem.height / 2
+                        hasBars = true
+                        barsY = elem.y + elem.height / 2 + margin
+                    }
+                })
+                if (hasBars) elemsX += barWidth + margin
+                grp.forEach(elem => {
+                    if (!(elem instanceof BarNotif || elem instanceof PlayerIcon)) {
+                        elem.x = elemsX + elem.width / 2
+                        elem.y = elem.height / 2
+                        elemsX = elem.x + elem.width + margin
+                    }
+                })
                 grp.height = max(heroLineMinHeight, barsY)
             }
             grp.sync()
@@ -342,8 +346,8 @@ export class HeadsUpDisplay extends GameObject {
         const { margin } = this
         let prevGrp = null
         let playerIds = Array.from(this.playersElems.keys())
-        if(this.playersLinesSorter) playerIds.sort(this.playersLinesSorter)
-        for(let playerId of playerIds) {
+        if (this.playersLinesSorter) playerIds.sort(this.playersLinesSorter)
+        for (let playerId of playerIds) {
             const grp = this.playersElems.get(playerId)
             grp.x = margin
             grp.y = (prevGrp ? (prevGrp.y + prevGrp.height) : 0) + margin
@@ -439,15 +443,15 @@ export class Background extends GameObject {
         const { scene } = this
         this.width = scene.viewWidth
         this.height = scene.viewHeight
-        this.x = this.width/2
-        this.y = this.height/2
+        this.x = this.width / 2
+        this.y = this.height / 2
     }
 }
 
 
 const GreenLandscapeImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Green Landscape",
 })
 @Dependencies.add(GreenLandscapeImg)
@@ -460,7 +464,7 @@ export class GreenLandscapeBackground extends Background {
 
 const RockMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Rock Mountains",
 })
 @Dependencies.add(RockMountainsImg)
@@ -473,7 +477,7 @@ export class RockMountainsBackground extends Background {
 
 const SnowMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Snow Mountains",
 })
 @Dependencies.add(SnowMountainsImg)
@@ -486,7 +490,7 @@ export class SnowMountainsBackground extends Background {
 
 const DarkForestImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Dark Forest",
 })
 @Dependencies.add(DarkForestImg)
@@ -499,7 +503,7 @@ export class DarkForestBackground extends Background {
 
 const DarkCityImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Dark City",
 })
 @Dependencies.add(DarkCityImg)
@@ -512,7 +516,7 @@ export class DarkCityBackground extends Background {
 
 // Standard
 
-@MOD_CATALOG.registerScene()
+@CATALOG.registerScene(CATCTX)
 @Dependencies.add(GreenLandscapeBackground)
 @StateBool.define("killAllEnemies", { default: false, showInBuilder: true })
 @StateBool.define("catchAllStars", { default: false, showInBuilder: true })
@@ -555,7 +559,7 @@ export class StandardScene extends GameScene {
 
     initHerosSpawnPos() {
         const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
-        if(points.length == 0) return
+        if (points.length == 0) return
         const firstPoint = points[0]
         this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
     }
@@ -569,17 +573,17 @@ export class StandardScene extends GameScene {
         this.physicsManager.update()
         this.attackManager.update()
         this.hud.update()
-        if(this.step == "GAME") {
+        if (this.step == "GAME") {
             let allOk = null
-            if(allOk!==false && this.catchAllStars) {
+            if (allOk !== false && this.catchAllStars) {
                 const stars = this.filterObjects("stars", obj => obj instanceof Star)
                 allOk = (stars.length == 0)
             }
-            if(allOk!==false && this.killAllEnemies) {
+            if (allOk !== false && this.killAllEnemies) {
                 const enemies = this.filterObjects("enemies", obj => obj instanceof Enemy)
                 allOk = (enemies.length == 0)
             }
-            if(allOk) this.step = "VICTORY"
+            if (allOk) this.step = "VICTORY"
         }
     }
 
@@ -603,7 +607,7 @@ export class StandardScene extends GameScene {
 
 // TAG
 
-@MOD_CATALOG.registerScene()
+@CATALOG.registerScene(CATCTX)
 @Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
@@ -627,7 +631,7 @@ export class StandardScene extends GameScene {
     showInBuilder: true,
 })
 export class TagScene extends GameScene {
-    
+
     init(args) {
         super.init(args)
         this.step = "INIT"
@@ -639,7 +643,7 @@ export class TagScene extends GameScene {
 
     initHerosSpawnPos() {
         const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
-        if(points.length == 0) return
+        if (points.length == 0) return
         const firstPoint = points[0]
         this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
     }
@@ -651,7 +655,7 @@ export class TagScene extends GameScene {
 
     onAddObject(obj) {
         super.onAddObject(obj)
-        if(obj instanceof Hero) this.hackHero(obj)
+        if (obj instanceof Hero) this.hackHero(obj)
     }
 
     hackHero(hero) {
@@ -660,7 +664,7 @@ export class TagScene extends GameScene {
             const attackProps = evt.inputArgs[0]
             const { attacker } = attackProps
             const tag = this.tag
-            if(!tag || !attacker || tag.owner != attacker) return
+            if (!tag || !attacker || tag.owner != attacker) return
             tag.owner = hero
         })
     }
@@ -674,29 +678,29 @@ export class TagScene extends GameScene {
         this.hud.update()
         this.checkTaggedHero()
         this.preventTaggedHeroToMove(this.step == "INIT")
-        if(this.step == "INIT") this.updateStepInit()
+        if (this.step == "INIT") this.updateStepInit()
     }
 
     checkTaggedHero() {
         const taggedHero = this.tag.owner
-        if(taggedHero && !taggedHero.removed) return
+        if (taggedHero && !taggedHero.removed) return
         let heros = []
         this.objects.forEach(ent => {
-            if(ent instanceof Hero) heros.push(ent)
+            if (ent instanceof Hero) heros.push(ent)
         })
-        if(heros.length == 0) return
+        if (heros.length == 0) return
         const numHero = floor(this.rand("tag") * heros.length)
         this.tag.owner = heros[numHero]
     }
 
     preventTaggedHeroToMove(val) {
         const taggedHero = this.tag.owner
-        if(!taggedHero || taggedHero.removed) return
-        if(val) {
+        if (!taggedHero || taggedHero.removed) return
+        if (val) {
             this.taggedHeroPreventMoveHack ||= hackMethod(taggedHero, "getInputState", 1, evt => {
                 evt.stopPropagation()
             })
-        } else if(this.taggedHeroPreventMoveHack) {
+        } else if (this.taggedHeroPreventMoveHack) {
             this.taggedHeroPreventMoveHack.remove()
             this.taggedHeroPreventMoveHack = null
         }
@@ -707,7 +711,7 @@ export class TagScene extends GameScene {
         const { fps } = this.game
         this.initCountDown()
         this.updateWorld()
-        if(iteration > initDuration * fps) {
+        if (iteration > initDuration * fps) {
             this.step = "GAME"
             delete this.countDown
         }
@@ -715,8 +719,8 @@ export class TagScene extends GameScene {
 
     initCountDown() {
         this.countDown ||= this.notifs.add(CountDown, {
-            x: this.width/2,
-            y: this.height/2,
+            x: this.width / 2,
+            y: this.height / 2,
             duration: 3,
             font: "bold 200px arial",
             fillStyle: "black",
@@ -727,26 +731,26 @@ export class TagScene extends GameScene {
         const { iteration, initDuration, duration } = this
         const { fps } = this.game
         super.updateStepGame()
-        if(iteration % fps == 0) this.incrNonTaggedPlayerScores()
-        if(iteration > (initDuration + duration) * fps) this.step = "GAMEOVER"
+        if (iteration % fps == 0) this.incrNonTaggedPlayerScores()
+        if (iteration > (initDuration + duration) * fps) this.step = "GAMEOVER"
     }
 
     incrNonTaggedPlayerScores() {
         const { tag } = this
         const taggedHero = tag.owner
-        if(!taggedHero) return
+        if (!taggedHero) return
         const taggedPlayerId = taggedHero.playerId
-        for(let playerId in this.game.players) {
-            if(playerId == taggedPlayerId) continue
+        for (let playerId in this.game.players) {
+            if (playerId == taggedPlayerId) continue
             this.incrScore(playerId, 1)
         }
     }
 
     updateStepGameOver() {
         const { scores } = this
-        if(!this.scoresBoard) this.scoresBoard = this.notifs.add(ScoresBoard, {
-            x: this.width/2,
-            y: this.height/2,
+        if (!this.scoresBoard) this.scoresBoard = this.notifs.add(ScoresBoard, {
+            x: this.width / 2,
+            y: this.height / 2,
             scores,
         })
     }
@@ -771,7 +775,7 @@ export class TagScene extends GameScene {
 
 const TagImg = new Img("/static/catalogs/std/v1/2Dside/assets/tag.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     showInBuilder: false
 })
 @Dependencies.add(TagImg)
@@ -795,7 +799,7 @@ export class Tag extends GameObject {
 
     sync() {
         const { owner } = this
-        if(!owner) return
+        if (!owner) return
         this.x = owner.x
         this.y = owner.y - 50
     }
@@ -806,7 +810,7 @@ export class Tag extends GameObject {
 }
 
 
-@MOD_CATALOG.registerScene()
+@CATALOG.registerScene(CATCTX)
 @Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
@@ -830,7 +834,7 @@ export class Tag extends GameObject {
     showInBuilder: true,
 })
 export class StealTreasures extends GameScene {
-    
+
     init(args) {
         super.init(args)
         const { scores } = this
@@ -844,23 +848,23 @@ export class StealTreasures extends GameScene {
 
     initHerosSpawnPos() {
         const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
-        if(points.length == 0) return
+        if (points.length == 0) return
         const firstPoint = points[0]
         this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
     }
 
     onAddObject(obj) {
         super.onAddObject(obj)
-        if(obj instanceof Hero) this.hackHero(obj)
+        if (obj instanceof Hero) this.hackHero(obj)
     }
 
     hackHero(hero) {
         hero.maxHealth = Infinity
         hackMethod(hero, "onGetAttacked", 0, evt => {
             let oneDropped = false
-            if(hero.extras) hero.extras.forEach(extra => {
-                if(oneDropped) return
-                if(extra instanceof Star) {
+            if (hero.extras) hero.extras.forEach(extra => {
+                if (oneDropped) return
+                if (extra instanceof Star) {
                     extra.drop()
                     oneDropped = true
                 }
@@ -883,13 +887,13 @@ export class StealTreasures extends GameScene {
     updateStepGame() {
         super.updateStepGame()
         this.updatePlayersScore()
-        if(this.iteration > this.duration * this.game.fps) this.step = "GAMEOVER"
+        if (this.iteration > this.duration * this.game.fps) this.step = "GAMEOVER"
     }
 
     updatePlayersScore() {
-        for(let playerId in this.game.players) {
+        for (let playerId in this.game.players) {
             const hero = this.getHero(playerId)
-            if(!hero) continue
+            if (!hero) continue
             const nbStars = countStarExtras(hero)
             this.incrScore(playerId, nbStars / this.game.fps)
         }
@@ -897,9 +901,9 @@ export class StealTreasures extends GameScene {
 
     updateStepGameOver() {
         const { scores } = this
-        if(!this.scoresBoard) this.scoresBoard = this.notifs.add(ScoresBoard, {
-            x: this.width/2,
-            y: this.height/2,
+        if (!this.scoresBoard) this.scoresBoard = this.notifs.add(ScoresBoard, {
+            x: this.width / 2,
+            y: this.height / 2,
             scores,
         })
     }
@@ -931,25 +935,25 @@ class StarsBar extends GameObject {
     update() {
         super.update()
         const { owner } = this
-        if(owner) {
+        if (owner) {
             this.x = owner.x
-            this.y = owner.y - owner.height/2 - 10
+            this.y = owner.y - owner.height / 2 - 10
         }
     }
 
     draw(drawer) {
         const { owner } = this
-        if(!owner) return
+        if (!owner) return
         const nbStars = countStarExtras(owner)
         const props = this._starsProps ||= []
-        for(let i=0; i<nbStars; ++i) {
-            if(i >= props.length) props.push(new GraphicsProps({
+        for (let i = 0; i < nbStars; ++i) {
+            if (i >= props.length) props.push(new GraphicsProps({
                 img: StarImg,
                 width: 10,
                 height: 10,
             }))
             const prop = props[i]
-            prop.x = this.x + i*5 - (nbStars-1)*5/2
+            prop.x = this.x + i * 5 - (nbStars - 1) * 5 / 2
             prop.y = this.y
             prop.draw(drawer)
         }
@@ -959,8 +963,8 @@ class StarsBar extends GameObject {
 
 function countStarExtras(hero) {
     let nbStars = 0
-    if(hero.extras) hero.extras.forEach(extra => {
-        if(extra instanceof Star) nbStars += 1
+    if (hero.extras) hero.extras.forEach(extra => {
+        if (extra instanceof Star) nbStars += 1
     })
     return nbStars
 }
@@ -968,7 +972,7 @@ function countStarExtras(hero) {
 
 // WAIGTING
 
-@MOD_CATALOG.registerScene({
+@CATALOG.registerScene(CATCTX, {
     showInBuilder: false,
 })
 export class WaitingScene extends SceneCommon {
@@ -988,8 +992,8 @@ export class WaitingScene extends SceneCommon {
             fillStyle: "white",
         })
         titleTxt.syncPos = () => {
-            titleTxt.x = this.viewWidth/2
-            titleTxt.y = this.viewHeight/6
+            titleTxt.x = this.viewWidth / 2
+            titleTxt.y = this.viewHeight / 6
         }
         hackMethod(titleTxt, "update", 0, evt => titleTxt.syncPos())
         titleTxt.syncPos()
@@ -1006,28 +1010,28 @@ export class WaitingScene extends SceneCommon {
         const { players } = this.game
         // add & place players
         let numPlayer = 0
-        for(let playerId in players) {
+        for (let playerId in players) {
             const grp = this.initPlayerObjGroup(playerId)
-            grp.x = viewWidth/2
-            grp.y = viewHeight/3 + (numPlayer * 40)
+            grp.x = viewWidth / 2
+            grp.y = viewHeight / 3 + (numPlayer * 40)
             numPlayer += 1
         }
         // rm removed players
-        for(let playerId in playerObjs)
-            if(!(playerId in players))
+        for (let playerId in playerObjs)
+            if (!(playerId in players))
                 playerObjs.remove(playerId)
     }
 
     initPlayerObjGroup(playerId) {
         const { game, playerObjs } = this
         let grp = playerObjs.get(playerId)
-        if(!grp) {
+        if (!grp) {
             grp = new GameObjectGroup(this)
             playerObjs.set(playerId, grp)
             grp.add(PlayerIcon, { x: 15, y: 15, playerId, width: 30, height: 30, strokeColor: "white" })
             const txt = grp.add(PlayerText, { y: 15, playerId, font: "bold 30px arial", fillStyle: "white" })
             txt.sync = () => {
-                txt.x = 35 + txt.width/2
+                txt.x = 35 + txt.width / 2
                 txt.updateText(game.players[playerId]?.name ?? "")
             }
             txt.sync()
@@ -1047,33 +1051,33 @@ export class WaitingScene extends SceneCommon {
         this.notifs.draw(drawer)
         this.playerObjs.forEach(objs => objs.draw(drawer))
         const qrcodeProps = this.getQrcodeGraphicsProps()
-        if(qrcodeProps) drawer.draw(qrcodeProps)
+        if (qrcodeProps) drawer.draw(qrcodeProps)
         return can
     }
 
     getQrcodeGraphicsProps() {
         const qrcodeImg = this._qrcodeImg
-        if(!qrcodeImg) return null
+        if (!qrcodeImg) return null
         const qrcodeProps = this._qrcodeGraphicsProps ||= new GraphicsProps({
             img: qrcodeImg,
             width: 200,
             height: 200,
             x: 150,
-            y: this.viewHeight/2,
+            y: this.viewHeight / 2,
         })
         return qrcodeProps
     }
 
     async initQrcodeImg() {
-        if(IS_SERVER_ENV) return
+        if (IS_SERVER_ENV) return
         let res = this._qrcodeImg
-        if(!res) {
+        if (!res) {
             const qrcodeImg = this._qrcodeImg = await this.game.initQrcodeImg()
-            const can = newCanvas(ceil(qrcodeImg.width*1.2), ceil(qrcodeImg.height*1.2))
+            const can = newCanvas(ceil(qrcodeImg.width * 1.2), ceil(qrcodeImg.height * 1.2))
             const ctx = can.getContext("2d")
             ctx.fillStyle = "white"
             ctx.fillRect(0, 0, can.width, can.height)
-            ctx.drawImage(qrcodeImg, floor((can.width-qrcodeImg.width)/2), floor((can.height-qrcodeImg.height)/2))
+            ctx.drawImage(qrcodeImg, floor((can.width - qrcodeImg.width) / 2), floor((can.height - qrcodeImg.height) / 2))
             res = this._qrcodeImg = can
         }
         return res
@@ -1125,7 +1129,7 @@ export class ScoresBoard extends GameObject {
         const { width } = can
         const { players } = this.game
         const ctx = can.getContext("2d")
-        const fontHeight = floor(lineHeight *.7)
+        const fontHeight = floor(lineHeight * .7)
         const fontArgs = {
             font: `${fontHeight}px arial`,
             fillStyle: "black"
@@ -1134,13 +1138,13 @@ export class ScoresBoard extends GameObject {
             ...fontArgs,
             font: `bold ${fontHeight}px arial`,
         })
-        ctx.drawImage(titleCan, (width-titleCan.width)/2, lineHeight/4)
+        ctx.drawImage(titleCan, (width - titleCan.width) / 2, lineHeight / 4)
         const sortedPlayerScores = Object.keys(players).map(pid => [pid, scores.get(pid) ?? 0]).sort((a, b) => b[1] - a[1])
-        for(let i in sortedPlayerScores) {
+        for (let i in sortedPlayerScores) {
             const [playerId, score] = sortedPlayerScores[i]
             const playerName = players[playerId].name
             const lineCan = newTextCanvas(`${playerName}: ${floor(score)}`, fontArgs)
-            ctx.drawImage(lineCan, (width-lineCan.width)/2, headerHeight + i * lineHeight)
+            ctx.drawImage(lineCan, (width - lineCan.width) / 2, headerHeight + i * lineHeight)
         }
     }
 }
@@ -1158,13 +1162,13 @@ export class CountDown extends Text {
     update() {
         const { iteration } = this.scene
         const { fps } = this.game
-        if((iteration - this.startIt)/fps > this.duration) this.remove()
+        if ((iteration - this.startIt) / fps > this.duration) this.remove()
         this.syncText()
     }
 
     syncText() {
         const { iteration } = this.scene
         const { fps } = this.game
-        this.updateText(ceil((this.duration - (iteration - this.startIt)/fps)))
+        this.updateText(ceil((this.duration - (iteration - this.startIt) / fps)))
     }
 }

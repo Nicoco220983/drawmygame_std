@@ -3,12 +3,13 @@ const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypo
 import {
     sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys,
     GraphicsProps,
-    CATALOG,
-    StateProperty, StateBool, StateNumber, 
+    CatalogContext, CATALOG,
+    StateProperty, StateBool, StateNumber,
     GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod,
 } from '../../../../core/v1/index.mjs'
 
-const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+
+const CATCTX = new CatalogContext(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
@@ -20,7 +21,7 @@ export const PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus"
 const SmokeExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png")
 const SmokeExplosionSpriteSheet = new SpriteSheet(SmokeExplosionSpriteSheetImg, 4, 1)
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     showInBuilder: false
 })
 @Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud)
@@ -36,12 +37,12 @@ export class SmokeExplosion extends GameObject {
     update() {
         this.iteration += 1
         const time = this.iteration * this.game.dt
-        if(time > .5) { this.remove(); return }
+        if (time > .5) { this.remove(); return }
     }
 
     getBaseImg() {
         const time = this.iteration * this.game.dt
-        return SmokeExplosionSpriteSheet.get(floor(time/.5*4))
+        return SmokeExplosionSpriteSheet.get(floor(time / .5 * 4))
     }
 }
 
@@ -59,13 +60,13 @@ class Pop extends GameObject {
         this.remIt = this.duration
     }
     update() {
-        if(!this._soundPlayed) {
+        if (!this._soundPlayed) {
             this.game.audio.playSound(PopAud)
             this._soundPlayed = true
         }
-        this.width = this.height = 10 + 100 * (1 - this.remIt/this.duration)
+        this.width = this.height = 10 + 100 * (1 - this.remIt / this.duration)
         this.remIt -= 1
-        if(this.remIt <= 0) this.remove()
+        if (this.remIt <= 0) this.remove()
     }
     getBaseImg() {
         return PopImg
@@ -90,11 +91,11 @@ export class Hero extends GameObject {
     init(kwargs) {
         super.init(kwargs)
         this.team = "hero"
-        if(kwargs && kwargs.playerId !== undefined) this.setPlayerId(kwargs.playerId)
+        if (kwargs && kwargs.playerId !== undefined) this.setPlayerId(kwargs.playerId)
     }
 
     setPlayerId(playerId) {
-        if(playerId === this.playerId) return
+        if (playerId === this.playerId) return
         this.playerId = playerId
         this.scene.syncHero(this)
     }
@@ -115,7 +116,7 @@ export class Hero extends GameObject {
 
     onExtraDrop(extra) {
         const extras = this.extras
-        if(extras) extras.delete(extra.id)
+        if (extras) extras.delete(extra.id)
     }
 
     update() {
@@ -127,8 +128,8 @@ export class Hero extends GameObject {
         const { lastSpawnIt } = this
         const { iteration } = this.scene
         const { fps } = this.game
-        if(lastSpawnIt + fps > iteration) {
-            if(!this._spawnEnt) this._spawnEnt = this.addSpawnEffect()
+        if (lastSpawnIt + fps > iteration) {
+            if (!this._spawnEnt) this._spawnEnt = this.addSpawnEffect()
         } else {
             delete this._spawnEnt
             this.lastSpawnIt = -Infinity
@@ -147,14 +148,14 @@ export class Hero extends GameObject {
         state.pid = this.playerId
         state.liv = this.lives
         const inputState = this.inputState
-        if(inputState && hasKeys(inputState)) state.ist = inputState
+        if (inputState && hasKeys(inputState)) state.ist = inputState
         else delete state.ist
         const extras = this.extras
-        if(extras && extras.size > 0) {
+        if (extras && extras.size > 0) {
             const stExtras = state.extras ||= []
             stExtras.length = 0
-            for(let exId of extras) stExtras.push(exId)
-        } else if(state.extras) state.extras.length = 0
+            for (let exId of extras) stExtras.push(exId)
+        } else if (state.extras) state.extras.length = 0
         return state
     }
 
@@ -162,10 +163,10 @@ export class Hero extends GameObject {
         super.setState(state)
         this.setPlayerId(state.pid)
         this.inputState = state.ist
-        if(this.extras || state.extras) {
+        if (this.extras || state.extras) {
             const extras = this.initExtras()
             extras.clear()
-            if(state.extras) for(let exId of state.extras) extras.add(exId)
+            if (state.extras) for (let exId of state.extras) extras.add(exId)
         }
     }
 
@@ -180,10 +181,10 @@ export class Hero extends GameObject {
         this._isStateToSend = true
     }
 
-    initJoypadButtons(joypadScn) {}
+    initJoypadButtons(joypadScn) { }
 
     spawn(x, y) {
-        this.x = x + floor((this.scene.rand("spawn")-.5) * 50)
+        this.x = x + floor((this.scene.rand("spawn") - .5) * 50)
         this.y = y
         this.speedX = 0
         this.speedY = -200
@@ -223,20 +224,20 @@ export class Extra extends GameObject {
 
     getPriority() {
         const { owner } = this
-        if(owner) return owner.getPriority() - 1
+        if (owner) return owner.getPriority() - 1
         else super.getPriority()
     }
 
     update() {
         super.update()
         const { owner } = this
-        if(owner && this.stuckToOwner) {
+        if (owner && this.stuckToOwner) {
             this.x = owner.x
             this.y = owner.y
             this.z = owner.z + 1
         }
         this.dropAge += 1
-        if(this.dropAge > this.game.fps) this.dropAge = Infinity
+        if (this.dropAge > this.game.fps) this.dropAge = Infinity
     }
 
     canGetCollectedByObject(obj) {
@@ -250,11 +251,11 @@ export class Extra extends GameObject {
 
     removeOwnerExtraWithSameKey(owner) {
         const { extraKey } = this
-        if(!this.extraKey) return
+        if (!this.extraKey) return
         const { extras } = owner
-        if(!extras) return
+        if (!extras) return
         extras.forEach(extra2 => {
-            if(extra2.extraKey = extraKey) {
+            if (extra2.extraKey = extraKey) {
                 extra2.drop()
                 extra2.remove()  // TODO rm when infinite drop/collect solved
             }
@@ -368,7 +369,7 @@ export class JumpMixin extends Mixin {
     onGetBlocked(obj, details) {
         const { maxJumpBlockAngle } = this
         const { angle } = details
-        if(angle<=-90+maxJumpBlockAngle && angle>=-90-maxJumpBlockAngle) {
+        if (angle <= -90 + maxJumpBlockAngle && angle >= -90 - maxJumpBlockAngle) {
             this.jumpBlockLastIt = this.scene.iteration
             this.jumpBlockLastAngle = angle
         }
@@ -379,7 +380,7 @@ export class JumpMixin extends Mixin {
     }
 
     mayJump() {
-        if(this.canJump) {
+        if (this.canJump) {
             this.jump()
             return true
         } else {
@@ -389,15 +390,15 @@ export class JumpMixin extends Mixin {
 
     jump() {
         const { jumpSpeed, nullJumpSpeed, jumpBlockLastAngle } = this
-        const jumpAngle = -90 - (-90 - jumpBlockLastAngle)/2
+        const jumpAngle = -90 - (-90 - jumpBlockLastAngle) / 2
         //const angleJumpSpeed = jumpSpeed*sin(jumpBlockLastAngle * PI / 180)  // < 0
-        if(jumpAngle != -90) {
+        if (jumpAngle != -90) {
             const jumpSpeedX = jumpSpeed * cos(jumpAngle * PI / 180)
             this.speedX += jumpSpeedX
             this.dirX = sign(jumpSpeedX)
         }
         const jumpSpeedY = jumpSpeed * sin(jumpAngle * PI / 180) // < 0
-        this.speedY += max(jumpSpeedY, min(0, jumpSpeedY * (1 + this.speedY/nullJumpSpeed)))
+        this.speedY += max(jumpSpeedY, min(0, jumpSpeedY * (1 + this.speedY / nullJumpSpeed)))
         this.game.audio.playSound(JumpAud)
     }
 }
@@ -430,7 +431,7 @@ class NicoHand extends Weapon {
 
     syncPos() {
         const { owner } = this
-        if(!owner) return
+        if (!owner) return
         this.x = owner.x + owner.dirX * 28
         this.y = owner.y
         this.dirX = owner.dirX
@@ -463,9 +464,9 @@ const NicoBaseSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_
 const NicoColorableSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_full_colorable.png")
 const NicoSpriteSheets = {
     spritesheets: {},
-    get: function(color) {
+    get: function (color) {
         return this.spritesheets[color] ||= new SpriteSheet((() => {
-            if(!color) return NicoBaseSpriteSheet
+            if (!color) return NicoBaseSpriteSheet
             const coloredImg = colorizeCanvas(cloneCanvas(NicoColorableSpriteSheet), color)
             return addCanvas(cloneCanvas(NicoBaseSpriteSheet), coloredImg)
         })(), 4, 1)
@@ -473,7 +474,7 @@ const NicoSpriteSheets = {
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Nico",
     icon: NicoImg,
 })
@@ -508,11 +509,11 @@ export class Nico extends Hero {
     }
 
     updateHand() {
-        if(this.handRemIt == this.handDur) {
+        if (this.handRemIt == this.handDur) {
             this.hand ||= this.scene.addObject(NicoHand, {
                 owner: this
             })
-        } else if(this.hand && !this.handRemIt) {
+        } else if (this.hand && !this.handRemIt) {
             this.hand.remove()
             this.hand = null
         }
@@ -527,30 +528,30 @@ export class Nico extends Hero {
 
     applyInputState() {
         const { dt } = this.game
-        if(this.getHealth() == 0) return
+        if (this.getHealth() == 0) return
         const { inputState } = this
-        if(!inputState || !inputState.walkX) {
+        if (!inputState || !inputState.walkX) {
             this.physicsStaticFriction = 500
             this.physicsDynamicFriction = 2
-        } else if(inputState.walkX > 0) {
+        } else if (inputState.walkX > 0) {
             this.dirX = 1
             this.speedX = sumTo(this.speedX, 1000 * dt, 300)
             this.physicsStaticFriction = this.physicsDynamicFriction = 0
-        } else if(inputState.walkX < 0) {
+        } else if (inputState.walkX < 0) {
             this.dirX = -1
             this.speedX = sumTo(this.speedX, 1000 * dt, -300)
             this.physicsStaticFriction = this.physicsDynamicFriction = 0
         }
-        if(inputState && inputState.jump) this.mayJump()
-        if(this.handRemIt) this.handRemIt -= 1
-        if(inputState && inputState.obj) this.act()
-        else if(this.handRemIt === 0) this.handRemIt = null
+        if (inputState && inputState.jump) this.mayJump()
+        if (this.handRemIt) this.handRemIt -= 1
+        if (inputState && inputState.obj) this.act()
+        else if (this.handRemIt === 0) this.handRemIt = null
     }
 
     act() {
         const actionExtra = this.getActionExtra()
-        if(actionExtra) actionExtra.act()
-        else if(this.handRemIt===null) this.handRemIt = this.handDur
+        if (actionExtra) actionExtra.act()
+        else if (this.handRemIt === null) this.handRemIt = this.handDur
     }
 
     getHitBox() {
@@ -568,33 +569,33 @@ export class Nico extends Hero {
 
     initJoypadButtons(joypadScn) {
         const { width, height } = joypadScn
-        const size = height*.45
-        joypadScn.addButton({ inputKey:"ArrowLeft", x:width*.15, y:height*.27, size, icon: ArrowsSpriteSheet.get(3) })
-        joypadScn.addButton({ inputKey:"ArrowRight", x:width*.3, y:height*.73, size, icon: ArrowsSpriteSheet.get(1) })
-        joypadScn.addButton({ inputKey:"ArrowUp", x:width*.85, y:height*.27, size, icon: ArrowsSpriteSheet.get(0) })
-        joypadScn.actionButton = joypadScn.addButton({ inputKey:" ", x:width*.7, y:height*.73, size, icon: HandImg })
+        const size = height * .45
+        joypadScn.addButton({ inputKey: "ArrowLeft", x: width * .15, y: height * .27, size, icon: ArrowsSpriteSheet.get(3) })
+        joypadScn.addButton({ inputKey: "ArrowRight", x: width * .3, y: height * .73, size, icon: ArrowsSpriteSheet.get(1) })
+        joypadScn.addButton({ inputKey: "ArrowUp", x: width * .85, y: height * .27, size, icon: ArrowsSpriteSheet.get(0) })
+        joypadScn.actionButton = joypadScn.addButton({ inputKey: " ", x: width * .7, y: height * .73, size, icon: HandImg })
         this.syncJoypadActionButton()
     }
 
     syncJoypadActionButton() {
         const { scenes } = this.game
         const actionButton = scenes.joypad && scenes.joypad.actionButton
-        if(!actionButton) return
+        if (!actionButton) return
         const actionExtra = this.getActionExtra()
         actionButton.icon = actionExtra ? actionExtra.getBaseImg() : HandImg
     }
 
     addExtra(extra) {
         super.addExtra(extra)
-        if(extra.isActionExtra) this.syncJoypadActionButton()
+        if (extra.isActionExtra) this.syncJoypadActionButton()
     }
 
     getActionExtra() {
         const { extras } = this
-        if(!extras) return null
+        if (!extras) return null
         let actionExtra = null
         extras.forEach(extra => {
-            if(extra.isActionExtra) actionExtra = extra
+            if (extra.isActionExtra) actionExtra = extra
         })
         return actionExtra
     }
@@ -605,20 +606,20 @@ export class Nico extends Hero {
         const player = players && players[this.playerId]
         const color = player && player.color
         const spriteSheet = NicoSpriteSheets.get(color)
-        if(iteration > 0 && (this.handRemIt || !this.canJump)) return spriteSheet.get(1)
-        else if(this.speedX == 0) return spriteSheet.get(0)
+        if (iteration > 0 && (this.handRemIt || !this.canJump)) return spriteSheet.get(1)
+        else if (this.speedX == 0) return spriteSheet.get(0)
         else return spriteSheet.get(1 + floor((iteration * dt * 6) % 3))
     }
 
     getInputState() {
         const { game } = this
         const inputState = super.getInputState()
-        if(game.isKeyPressed("ArrowRight")) inputState.walkX = 1
-        else if(game.isKeyPressed("ArrowLeft")) inputState.walkX = -1
+        if (game.isKeyPressed("ArrowRight")) inputState.walkX = 1
+        else if (game.isKeyPressed("ArrowLeft")) inputState.walkX = -1
         else delete inputState.walkX
-        if(game.isKeyPressed("ArrowUp")) inputState.jump = true
+        if (game.isKeyPressed("ArrowUp")) inputState.jump = true
         else delete inputState.jump
-        if(game.isKeyPressed(" ")) inputState.obj = true
+        if (game.isKeyPressed(" ")) inputState.obj = true
         else delete inputState.obj
         return inputState
     }
@@ -630,15 +631,16 @@ export class Nico extends Hero {
 const SWORD_ATTACK_PERIOD = .5
 
 const SwordImg = new Img("/static/catalogs/std/v1/2Dside/assets/sword.png")
-const SwordSlashSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/slash.png"), 3, 2)
+const SwordSlashSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/slash.png")
+const SwordSlashSpriteSheet = new SpriteSheet(SwordSlashSpriteSheetImg, 3, 2)
 
 const SwordHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Sword",
     icon: SwordImg,
 })
-@Dependencies.add(SwordImg, SwordSlashSpriteSheet, SlashAud, SwordHitAud)
+@Dependencies.add(SwordImg, SwordSlashSpriteSheetImg, SlashAud, SwordHitAud)
 @BodyMixin.add({
     width: 40,
     height: 40,
@@ -657,17 +659,17 @@ export class Sword extends Weapon {
     update() {
         super.update()
         this.syncPos()
-        if(this.lastAttackAge == 0) this.game.audio.playSound(SlashAud)
+        if (this.lastAttackAge == 0) this.game.audio.playSound(SlashAud)
         this.lastAttackAge += 1
-        if(this.lastAttackAge > (SWORD_ATTACK_PERIOD * this.game.fps)) this.lastAttackAge = Infinity
+        if (this.lastAttackAge > (SWORD_ATTACK_PERIOD * this.game.fps)) this.lastAttackAge = Infinity
     }
 
     syncPos() {
         const { owner } = this
-        if(!owner) return
+        if (!owner) return
         this.dirX = owner.dirX
         this.y = owner.y
-        if(this.isAttacking()) {
+        if (this.isAttacking()) {
             this.x = owner.x + 40 * owner.dirX
             this.width = this.height = 60
         } else {
@@ -677,12 +679,12 @@ export class Sword extends Weapon {
     }
 
     act() {
-        if(this.isAttacking()) return
+        if (this.isAttacking()) return
         this.lastAttackAge = 0
     }
 
     canAttackObject(obj) {
-        if(!this.isAttacking()) return false
+        if (!this.isAttacking()) return false
         return super.canAttackObject(obj)
     }
 
@@ -696,8 +698,8 @@ export class Sword extends Weapon {
 
     getBaseImg() {
         const ratioSinceLastAttack = this.lastAttackAge / (SWORD_ATTACK_PERIOD * this.game.fps)
-        if(ratioSinceLastAttack <= 1) {
-            return SwordSlashSpriteSheet.get(floor(6*ratioSinceLastAttack))
+        if (ratioSinceLastAttack <= 1) {
+            return SwordSlashSpriteSheet.get(floor(6 * ratioSinceLastAttack))
         } else {
             return SwordImg
         }
@@ -707,10 +709,11 @@ export class Sword extends Weapon {
 
 const BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Boxing Glove",
     icon: BoxingGloveImg,
 })
+@Dependencies.add(BoxingGloveImg)
 @BodyMixin.add({
     width: 25,
     height: 20,
@@ -730,17 +733,17 @@ export class BoxingGlove extends Weapon {
     update() {
         super.update()
         this.syncPos()
-        if(this.lastAttackAge == 0) this.game.audio.playSound(SlashAud)
+        if (this.lastAttackAge == 0) this.game.audio.playSound(SlashAud)
         this.lastAttackAge += 1
-        if(this.lastAttackAge > this.attackPeriod * this.game.fps) this.lastAttackAge = Infinity
+        if (this.lastAttackAge > this.attackPeriod * this.game.fps) this.lastAttackAge = Infinity
     }
 
     syncPos() {
         const { owner } = this
-        if(!owner) return
+        if (!owner) return
         this.dirX = owner.dirX
         this.y = owner.y
-        if(this.isAttacking()) {
+        if (this.isAttacking()) {
             this.x = owner.x + 40 * owner.dirX
             this.width = 40
             this.height = 32
@@ -756,12 +759,12 @@ export class BoxingGlove extends Weapon {
     }
 
     act() {
-        if(this.isAttacking()) return
+        if (this.isAttacking()) return
         this.lastAttackAge = 0
     }
 
     canAttackObject(obj) {
-        if(!this.isAttacking()) return false
+        if (!this.isAttacking()) return false
         return super.canAttackObject(obj)
     }
 
@@ -783,65 +786,13 @@ export class BoxingGlove extends Weapon {
 
 const ShurikenImg = new Img("/static/catalogs/std/v1/2Dside/assets/shuriken.png")
 
-@MOD_CATALOG.registerObject({
-    label: "ShurikenPack",
-    icon: ShurikenImg,
-})
-@BodyMixin.add({
-    width: 30,
-    height: 30,
-})
-@StateNumber.define("nb", { default: 10, nullableWith: Infinity, showInBuilder: true })
-export class ShurikenPack extends Extra {
 
-    init(kwargs) {
-        super.init(kwargs)
-        this.extraKey = "hands"
-        this.isActionExtra = true
-        this.actLastTryIt = -Infinity
-        this.actRemIt = 0
-        if(kwargs?.nb !== undefined) this.nb = kwargs.nb
-        this.throwPeriod = .3
-    }
-
-    act() {
-        const prevActLastTryIt = this.actLastTryIt
-        this.actLastTryIt = this.scene.iteration
-        if(this.actLastTryIt <= prevActLastTryIt+1 || this.actRemIt > 0) return
-        this.actRemIt = ceil(this.throwPeriod * this.game.fps)
-        this.throwOneShuriken()
-        this.nb -= 1
-        if(this.nb <= 0) this.remove()
-    }
-
-    throwOneShuriken() {
-        const { x, y, owner } = this
-        if(!owner) return
-        this.scene.addObject(Shuriken, {
-            x, y, owner,
-        })
-    }
-
-    update() {
-        super.update()
-        const { owner } = this
-        if(owner) {
-            this.x = owner.x
-            this.y = owner.y
-        }
-        if(this.actRemIt > 0) this.actRemIt -= 1
-    }
-
-    getBaseImg() {
-        return ShurikenImg
-    }
-}
-
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Shuriken",
     icon: ShurikenImg,
     showInBuilder: false,
 })
+@Dependencies.add(ShurikenImg)
 @BodyMixin.add({
     width: 30,
     height: 30,
@@ -851,7 +802,7 @@ export class Shuriken extends Projectile {
 
     init(kwargs) {
         super.init(kwargs)
-        if(this.owner) this.dirX = this.owner.dirX
+        if (this.owner) this.dirX = this.owner.dirX
         this.speedX = this.dirX * 500
         this.itToLive = 2 * this.game.fps
         this.attackDamages = 35
@@ -865,7 +816,7 @@ export class Shuriken extends Projectile {
     update() {
         this.angle += 30
         this.itToLive -= 1
-        if(this.itToLive <= 0) this.remove()
+        if (this.itToLive <= 0) this.remove()
     }
 
     getBaseImg() {
@@ -874,76 +825,69 @@ export class Shuriken extends Projectile {
 }
 
 
-const BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png")
-const BombSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png"), 2, 1)
-
-@MOD_CATALOG.registerObject({
-    label: "Bomb",
-    icon: BombImg
+@CATALOG.registerObject(CATCTX, {
+    label: "ShurikenPack",
+    icon: ShurikenImg,
 })
-@PhysicsMixin.add({
-    affectedByGravity: false,
-    physicsBounciness: .5,
-    physicsStaticFriction: 100,
-    physicsDynamicFriction: 2,
-})
+@Dependencies.add(ShurikenImg, Shuriken)
 @BodyMixin.add({
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
 })
-@StateNumber.define("countdown", { default: 2, precision:.5, showInBuilder: true })
-@StateNumber.define("itToLive", { default: null })
-export class Bomb extends Extra {
+@StateNumber.define("nb", { default: 10, nullableWith: Infinity, showInBuilder: true })
+export class ShurikenPack extends Extra {
 
     init(kwargs) {
         super.init(kwargs)
-        this.width = this.height = 40
         this.extraKey = "hands"
         this.isActionExtra = true
+        this.actLastTryIt = -Infinity
+        this.actRemIt = 0
+        if (kwargs?.nb !== undefined) this.nb = kwargs.nb
+        this.throwPeriod = .3
+    }
+
+    act() {
+        const prevActLastTryIt = this.actLastTryIt
+        this.actLastTryIt = this.scene.iteration
+        if (this.actLastTryIt <= prevActLastTryIt + 1 || this.actRemIt > 0) return
+        this.actRemIt = ceil(this.throwPeriod * this.game.fps)
+        this.throwOneShuriken()
+        this.nb -= 1
+        if (this.nb <= 0) this.remove()
+    }
+
+    throwOneShuriken() {
+        const { x, y, owner } = this
+        if (!owner) return
+        this.scene.addObject(Shuriken, {
+            x, y, owner,
+        })
     }
 
     update() {
         super.update()
-        this.canBeHit = this.owner == null && this.itToLive == null
-        const { dt } = this.game
-        const { x, y, owner } = this
-        this.affectedByGravity = this.canGetBlocked = (this.itToLive !== null)
-        if(this.itToLive !== null) {
-            if(this.itToLive <= 0) {
-                this.scene.addObject(Explosion, { x, y, owner })
-                this.remove()
-            }
-            this.itToLive -= 1
-        } else if(owner) {
+        const { owner } = this
+        if (owner) {
             this.x = owner.x
             this.y = owner.y
         }
-    }
-
-    act() {
-        const { owner } = this
-        if(!owner) return
-        this.drop()
-        this.owner = owner
-        this.stuckToOwner = false
-        this.speedX = owner.dirX * 200
-        this.speedY = -500
-        this.itToLive = this.countdown * this.game.fps
+        if (this.actRemIt > 0) this.actRemIt -= 1
     }
 
     getBaseImg() {
-        const { itToLive, countdown } = this
-        if(itToLive === null) return BombSpriteSheet.get(0)
-        return BombSpriteSheet.get(floor(pow(3*(1 - (itToLive / this.game.fps)/countdown), 2)*2) % 2)
+        return ShurikenImg
     }
 }
 
 
-const ExplosionSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png"), 4, 2)
+const ExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png")
+const ExplosionSpriteSheet = new SpriteSheet(ExplosionSpriteSheetImg, 4, 2)
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     showInBuilder: false
 })
+@Dependencies.add(ExplosionSpriteSheetImg)
 @AttackMixin.add({
     canAttack: true,
     canGetAttacked: false,
@@ -968,14 +912,14 @@ export class Explosion extends GameObject {
 
     update() {
         super.update()
-        const age = this.iteration/this.game.fps
-        if(age >= 1) return this.remove()
+        const age = this.iteration / this.game.fps
+        if (age >= 1) return this.remove()
         this.iteration += 1
     }
 
     getGraphicsProps() {
         const props = super.getGraphicsProps()
-        if(!props) return null
+        if (!props) return null
         props.width = 500
         props.height = 500
         return props
@@ -989,14 +933,83 @@ export class Explosion extends GameObject {
 }
 
 
+const BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png")
+const BombSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png")
+const BombSpriteSheet = new SpriteSheet(BombSpriteSheetImg, 2, 1)
+
+@CATALOG.registerObject(CATCTX, {
+    label: "Bomb",
+    icon: BombImg
+})
+@Dependencies.add(BombSpriteSheetImg, Explosion)
+@PhysicsMixin.add({
+    affectedByGravity: false,
+    physicsBounciness: .5,
+    physicsStaticFriction: 100,
+    physicsDynamicFriction: 2,
+})
+@BodyMixin.add({
+    width: 40,
+    height: 40,
+})
+@StateNumber.define("countdown", { default: 2, precision: .5, showInBuilder: true })
+@StateNumber.define("itToLive", { default: null })
+export class Bomb extends Extra {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.width = this.height = 40
+        this.extraKey = "hands"
+        this.isActionExtra = true
+    }
+
+    update() {
+        super.update()
+        this.canBeHit = this.owner == null && this.itToLive == null
+        const { dt } = this.game
+        const { x, y, owner } = this
+        this.affectedByGravity = this.canGetBlocked = (this.itToLive !== null)
+        if (this.itToLive !== null) {
+            if (this.itToLive <= 0) {
+                this.scene.addObject(Explosion, { x, y, owner })
+                this.remove()
+            }
+            this.itToLive -= 1
+        } else if (owner) {
+            this.x = owner.x
+            this.y = owner.y
+        }
+    }
+
+    act() {
+        const { owner } = this
+        if (!owner) return
+        this.drop()
+        this.owner = owner
+        this.stuckToOwner = false
+        this.speedX = owner.dirX * 200
+        this.speedY = -500
+        this.itToLive = this.countdown * this.game.fps
+    }
+
+    getBaseImg() {
+        const { itToLive, countdown } = this
+        if (itToLive === null) return BombSpriteSheet.get(0)
+        return BombSpriteSheet.get(floor(pow(3 * (1 - (itToLive / this.game.fps) / countdown), 2) * 2) % 2)
+    }
+}
+
+
 const JetPackImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack.png")
-const JetPackSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png"), 2, 1)
+const JetPackSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png")
+const JetPackSpriteSheet = new SpriteSheet(JetPackSpriteSheetImg, 2, 1)
 const JetPackAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jetpack.opus")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "JetPack",
     icon: JetPackImg,
 })
+@Dependencies.add(JetPackSpriteSheetImg, JetPackAud)
 @BodyMixin.add({
     width: 20,
     height: 50,
@@ -1017,14 +1030,14 @@ export class JetPack extends Extra {
         const { dt } = this.game
         super.onGetCollected(owner)
         hackMethod(owner, "mayJump", -1, evt => {
-            if(this.owner != owner) return
+            if (this.owner != owner) return
             const jumped = evt.returnValue
-            if(jumped) return
-            if(this.duration != Infinity) {
-                if(this.useIt >= this.duration * this.game.fps) return
+            if (jumped) return
+            if (this.duration != Infinity) {
+                if (this.useIt >= this.duration * this.game.fps) return
                 this.useIt += 1
             }
-            if(owner.speedY > 0) owner.speedY -= this.dec * dt
+            if (owner.speedY > 0) owner.speedY -= this.dec * dt
             else owner.speedY -= this.acc * dt
             this.audPrm ||= this.game.audio.playSound(JetPackAud, 1.0, true)
             this.flyLastIt = this.scene.iteration
@@ -1038,18 +1051,18 @@ export class JetPack extends Extra {
     update() {
         super.update()
         this.syncWithOwner()
-        if(!this.isFlying()) this.stopAud()
+        if (!this.isFlying()) this.stopAud()
     }
 
     stopAud() {
-        if(!this.audPrm) return
+        if (!this.audPrm) return
         this.audPrm.then(aud => aud && aud.stop())
         this.audPrm = null
     }
 
     syncWithOwner() {
         const { owner } = this
-        if(!owner) return
+        if (!owner) return
         this.dirX = owner.dirX
         this.x = owner.x - owner.dirX * 15
         this.y = owner.y + 10
@@ -1091,7 +1104,7 @@ export class Enemy extends GameObject {
 
 const SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Spiky",
     icon: SpikyImg,
 })
@@ -1129,7 +1142,7 @@ export class Spiky extends Enemy {
 
 const BlobImg = new Img("/static/catalogs/std/v1/2Dside/assets/blob.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Blob",
     icon: BlobImg,
 })
@@ -1160,7 +1173,7 @@ export class BlobEnemy extends Enemy {
 
     onGetBlocked(obj, details) {
         const { angle } = details
-        if(angle<0) this.onFloorLastIt = this.scene.iteration
+        if (angle < 0) this.onFloorLastIt = this.scene.iteration
     }
 
     update() {
@@ -1168,8 +1181,8 @@ export class BlobEnemy extends Enemy {
         const { dt } = this.game
         this.initGetBlockedChecker()
         // move
-        if(abs(this.speedX) < 10) this.mayChangeDir()
-        if(this.onFloorLastIt == this.scene.iteration) this.speedX = sumTo(this.speedX, this.acc * dt, this.dirX * this.maxSpeed)
+        if (abs(this.speedX) < 10) this.mayChangeDir()
+        if (this.onFloorLastIt == this.scene.iteration) this.speedX = sumTo(this.speedX, this.acc * dt, this.dirX * this.maxSpeed)
         this.lastChangeDirAge += 1
     }
 
@@ -1180,8 +1193,8 @@ export class BlobEnemy extends Enemy {
     }
 
     mayChangeDir() {
-        if(this.onFloorLastIt != this.scene.iteration) return
-        if(this.lastChangeDirAge < this.game.fps) return
+        if (this.onFloorLastIt != this.scene.iteration) return
+        if (this.lastChangeDirAge < this.game.fps) return
         this.lastChangeDirAge = 0
         this.dirX *= -1
         this.speedX *= -1
@@ -1193,7 +1206,7 @@ export class BlobEnemy extends Enemy {
 
     getAttackProps(obj) {
         const props = super.getAttackProps(obj)
-        props.knockbackAngle = this.x<obj.x ? -45 : -135
+        props.knockbackAngle = this.x < obj.x ? -45 : -135
         return props
     }
 
@@ -1242,12 +1255,12 @@ class BlobEnemyBlockChecker extends GameObject {
     update() {
         super.update()
         const { owner } = this
-        this.x = owner.x + owner.dirX * owner.width/2
-        this.y = owner.y + owner.height/2
-        if(this.lastGetBlockedIteration < this.scene.iteration) {
+        this.x = owner.x + owner.dirX * owner.width / 2
+        this.y = owner.y + owner.height / 2
+        if (this.lastGetBlockedIteration < this.scene.iteration) {
             owner.mayChangeDir()
         }
-        if(this.owner.removed) this.remove()
+        if (this.owner.removed) this.remove()
     }
 
     onGetBlocked(obj, details) {
@@ -1258,7 +1271,7 @@ class BlobEnemyBlockChecker extends GameObject {
 
 const GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Ghost",
     icon: GhostImg,
 })
@@ -1285,14 +1298,14 @@ export class Ghost extends Enemy {
         const { dt } = this.game
         const { width } = this.scene.map
         // move
-        if((this.x < 0 && this.dirX < 0) || (this.x > width && this.dirX > 0) || abs(this.speedX) < 10) this.mayChangeDir()
+        if ((this.x < 0 && this.dirX < 0) || (this.x > width && this.dirX > 0) || abs(this.speedX) < 10) this.mayChangeDir()
         this.speedX = sumTo(this.speedX, 1000 * dt, this.dirX * 2000 * dt)
         this.speedY = sumTo(this.speedY, 1000 * dt, 0)
         this.lastChangeDirAge += 1
     }
 
     mayChangeDir() {
-        if(this.lastChangeDirAge < this.game.fps) return
+        if (this.lastChangeDirAge < this.game.fps) return
         this.lastChangeDirAge = 0
         this.dirX *= -1
         this.speedX *= -1
@@ -1330,10 +1343,11 @@ export class Ghost extends Enemy {
 
 const HeartImg = new Img("/static/catalogs/std/v1/2Dside/assets/heart.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Heart",
     icon: HeartImg,
 })
+@Dependencies.add(HeartImg)
 @CollectMixin.add({
     canCollect: false,
     canGetCollected: true,
@@ -1371,10 +1385,11 @@ export class Heart extends GameObject {
 
 const StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Star",
     icon: StarImg,
 })
+@Dependencies.add(StarImg)
 @PhysicsMixin.add({
     affectedByGravity: false,
     canGetBlocked: true,
@@ -1386,16 +1401,16 @@ const StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png")
     width: 30,
     height: 30,
 })
-@StateNumber.define("speed", { precision:100, showInBuilder: true })
+@StateNumber.define("speed", { precision: 100, showInBuilder: true })
 export class Star extends Extra {
 
     update() {
         super.update()
         const { speed, owner, speedX, speedY, scene } = this
-        if(owner) {
+        if (owner) {
             this.speedX = this.speedY = 0
-        } else if(speed > 0) {
-            if(this.speedX == 0 && this.speedY == 0) {
+        } else if (speed > 0) {
+            if (this.speedX == 0 && this.speedY == 0) {
                 // first speed
                 const angle = floor(this.scene.rand("starangle") * 4) * 90 + 45
                 this.speedX = this.speed * cos(angle * PI / 180)
@@ -1408,16 +1423,16 @@ export class Star extends Extra {
             }
         }
         // scene border
-        if(speedX > 0 && this.x > scene.width) this.speedX *= -1
-        else if(speedX < 0 && this.x < 0) this.speedX *= -1
-        if(speedY > 0 && this.y > scene.height) this.speedY *= -1
-        else if(speedY < 0 && this.y < 0) this.speedY *= -1
+        if (speedX > 0 && this.x > scene.width) this.speedX *= -1
+        else if (speedX < 0 && this.x < 0) this.speedX *= -1
+        if (speedY > 0 && this.y > scene.height) this.speedY *= -1
+        else if (speedY < 0 && this.y < 0) this.speedY *= -1
     }
 
     getGraphicsProps() {
         const { fps } = this.game, { iteration } = this.scene
         const props = super.getGraphicsProps()
-        if(!props) return null
+        if (!props) return null
         const rand = this._graphicsRand ||= floor(random() * fps)
         const angle = PI * (rand + iteration) / fps, cosAngle = cos(angle)
         props.y += props.height * .05 * cosAngle
@@ -1432,10 +1447,11 @@ export class Star extends Extra {
 
 const CheckpointImg = new Img("/static/catalogs/std/v1/2Dside/assets/checkpoint.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "CheckPoint",
     icon: CheckpointImg,
 })
+@Dependencies.add(CheckpointImg)
 @CollectMixin.add({
     canGetCollected: true,
 })
@@ -1460,10 +1476,11 @@ export class Checkpoint extends GameObject {
 const PortalImg = new Img("/static/catalogs/std/v1/2Dside/assets/portal.png")
 const PortalJumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Portal",
     icon: PortalImg,
 })
+@Dependencies.add(PortalImg, PortalJumpAud)
 @ActivableMixin.add()
 @StateBool.define("isOutput", { default: true, showInBuilder: true })
 @StateBool.define("isInput", { default: true, showInBuilder: true })
@@ -1476,9 +1493,9 @@ export class Portal extends GameObject {
 
     update() {
         super.update()
-        if(this.activated && this.isInput) {
+        if (this.activated && this.isInput) {
             this.scene.objects.forEach(obj => {
-                if(hypot(obj.x-this.x, obj.y-this.y)<30 && (obj.speedX * (this.x-obj.x) + obj.speedY * (this.y-obj.y))>0) {
+                if (hypot(obj.x - this.x, obj.y - this.y) < 30 && (obj.speedX * (this.x - obj.x) + obj.speedY * (this.y - obj.y)) > 0) {
                     this.teleport(obj)
                 }
             })
@@ -1489,7 +1506,7 @@ export class Portal extends GameObject {
         const { scene } = this
         const portals = scene.filterObjects("portals", obj => obj instanceof Portal)
         const candidates = portals.filter(port => port != this && port.activated && port.isOutput)
-        if(candidates.length == 0) return
+        if (candidates.length == 0) return
         let targetPortal = candidates[floor(scene.rand("teleport") * candidates.length)]
         obj.x = targetPortal.x + (this.x - obj.x)
         obj.y = targetPortal.y + (this.y - obj.y)
@@ -1511,7 +1528,7 @@ export class Portal extends GameObject {
 
 // SPAWNER
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Hero",
     icon: PopImg,
 })
@@ -1528,10 +1545,11 @@ export class HeroSpawnPoint extends GameObject {
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "ObjectSpawner",
     icon: PopImg,
 })
+@Dependencies.add(Pop)
 @ActivableMixin.add()
 @BodyMixin.add({
     width: 50,
@@ -1562,30 +1580,30 @@ export class ObjectSpawner extends GameObject {
     update() {
         super.update()
         this.spawnedObjects.update()
-        if(this.nbSpawn >= this.max && this.spawnedObjects.size == 0) this.remove()
+        if (this.nbSpawn >= this.max && this.spawnedObjects.size == 0) this.remove()
         this.maySpawnObject()
     }
 
     maySpawnObject() {
-        if(!this.activated) return
-        if(this.nbSpawn >= this.max) return
-        if(this.spawnedObjects.size >= this.maxLiving) return
+        if (!this.activated) return
+        if (this.nbSpawn >= this.max) return
+        if (this.spawnedObjects.size >= this.maxLiving) return
         const { x, y, prevFuther } = this
-        if(prevFuther > 0) {
+        if (prevFuther > 0) {
             let allFar = true
             this.spawnedObjects.forEach(obj => {
-                if(hypot(x-obj.x, y-obj.y) <= prevFuther) allFar = false
+                if (hypot(x - obj.x, y - obj.y) <= prevFuther) allFar = false
             })
-            if(!allFar) return
+            if (!allFar) return
         }
         this.lastSpawnAge += 1
-        if(this.lastSpawnAge < ceil(this.period * this.game.fps)) return
+        if (this.lastSpawnAge < ceil(this.period * this.game.fps)) return
         this.spawnObject()
     }
 
     spawnObject() {
         const { scene, model } = this
-        if(!model) return
+        if (!model) return
         const obj = scene.addObject(model.getKey())
         obj.setState(model.getState())
         obj.x = this.x
@@ -1593,15 +1611,15 @@ export class ObjectSpawner extends GameObject {
         this.nbSpawn += 1
         this.spawnedObjects.add(obj.id)
         this.lastSpawnAge = 0
-        scene.addVisual(Pop, { x:this.x, y:this.y })
+        scene.addVisual(Pop, { x: this.x, y: this.y })
         return obj
     }
 
     draw(drawer) {
-        if(!this.game.isBuilder) return
+        if (!this.game.isBuilder) return
         super.draw(drawer)
         const { model } = this
-        if(!model) return
+        if (!model) return
         const modelProps = model.getGraphicsProps()
         const modelProps2 = this._modelGraphicsProps ||= new GraphicsProps({
             visibility: .5
@@ -1622,7 +1640,7 @@ export class ObjectSpawner extends GameObject {
 
 // WALL
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     stateful: false,
 })
 @Category.append("wall")
@@ -1633,11 +1651,11 @@ export class ObjectSpawner extends GameObject {
 export class Wall extends GameObject {
 
     init(kwargs) {
-        if(kwargs?.x1 !== undefined) this.x1 = kwargs.x1
-        if(kwargs?.y1 !== undefined) this.y1 = kwargs.y1
-        if(kwargs?.x2 !== undefined) this.x2 = kwargs.x2
-        if(kwargs?.y2 !== undefined) this.y2 = kwargs.y2
-        if(kwargs?.visibility !== undefined) this.visibility = kwargs.visibility
+        if (kwargs?.x1 !== undefined) this.x1 = kwargs.x1
+        if (kwargs?.y1 !== undefined) this.y1 = kwargs.y1
+        if (kwargs?.x2 !== undefined) this.x2 = kwargs.x2
+        if (kwargs?.y2 !== undefined) this.y2 = kwargs.y2
+        if (kwargs?.visibility !== undefined) this.visibility = kwargs.visibility
         this.color = "black"
     }
 
@@ -1660,8 +1678,8 @@ export class Wall extends GameObject {
         props.img = img
         props.x = (x1 + x2) / 2
         props.y = (y1 + y2) / 2
-        props.width = abs(x1 - x2) + 2*lineWidth
-        props.height = abs(y1 - y2) + 2*lineWidth
+        props.width = abs(x1 - x2) + 2 * lineWidth
+        props.height = abs(y1 - y2) + 2 * lineWidth
         props.visibility = this.visibility
         return props
     }
@@ -1669,22 +1687,22 @@ export class Wall extends GameObject {
     getBaseImg() {
         const { x1, y1, x2, y2 } = this
         let baseImg = this._baseImg
-        if(baseImg && baseImg.x1 == x1 && baseImg.y1 == y1 && baseImg.x2 == x2 && baseImg.y2 == y2) return baseImg
+        if (baseImg && baseImg.x1 == x1 && baseImg.y1 == y1 && baseImg.x2 == x2 && baseImg.y2 == y2) return baseImg
         const lineWidth = 5
-        baseImg = this._baseImg = newCanvas(abs(x1-x2)+2*lineWidth, abs(y1-y2)+2*lineWidth)
+        baseImg = this._baseImg = newCanvas(abs(x1 - x2) + 2 * lineWidth, abs(y1 - y2) + 2 * lineWidth)
         assign(baseImg, { x1, y1, x2, y2 })
         const ctx = baseImg.getContext("2d")
         ctx.lineWidth = lineWidth
         ctx.strokeStyle = this.color
         ctx.beginPath()
         const minX = min(x1, x2), minY = min(y1, y2)
-        ctx.moveTo(lineWidth+x1-minX, lineWidth+y1-minY)
-        ctx.lineTo(lineWidth+x2-minX, lineWidth+y2-minY)
+        ctx.moveTo(lineWidth + x1 - minX, lineWidth + y1 - minY)
+        ctx.lineTo(lineWidth + x2 - minX, lineWidth + y2 - minY)
         ctx.stroke()
         return baseImg
     }
 
-    getState(isInitState=false) {
+    getState(isInitState = false) {
         const state = super.getState(isInitState)
         const { x1, y1, x2, y2 } = this
         assign(state, { x1, y1, x2, y2 })
@@ -1699,7 +1717,7 @@ export class Wall extends GameObject {
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     stateful: false,
 })
 export class PlatformWall extends Wall {
@@ -1712,15 +1730,15 @@ export class PlatformWall extends Wall {
     getHitProps(dt) {
         const props = super.getHitProps(dt)
         const { x1, x2, y1, y2 } = this
-        const dx = x2-x1, dy = y2-y1, dd = hypot(dx, dy)
-        props.uniDirX = dy/dd
-        props.uniDirY = -dx/dd
+        const dx = x2 - x1, dy = y2 - y1, dd = hypot(dx, dy)
+        props.uniDirX = dy / dd
+        props.uniDirY = -dx / dd
         return props
     }
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     stateful: false,
 })
 export class BouncingWall extends Wall {
@@ -1733,7 +1751,7 @@ export class BouncingWall extends Wall {
 }
 
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     stateful: false,
 })
 export class GlidingWall extends Wall {

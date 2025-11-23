@@ -1,5 +1,5 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _SmokeExplosion2, _Pop2, _Class, _Hero3, _applyDecs$c2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Weapon3, _NicoHand2, _Hero4, _Nico2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Extra5, _ShurikenPack2, _Projectile3, _Shuriken2, _Extra7, _Bomb2, _Explosion2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
+var _SmokeExplosion2, _Pop2, _Class, _Hero3, _applyDecs$c2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Weapon3, _NicoHand2, _Hero4, _Nico2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Projectile3, _Shuriken2, _Extra5, _ShurikenPack2, _Explosion2, _Extra7, _Bomb2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
 var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _Hero2, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22, _initClass23, _classDecs23, _initClass24, _classDecs24, _initClass25, _classDecs25, _initClass26, _classDecs26, _initClass27, _classDecs27, _initClass28, _classDecs28, _initClass29, _classDecs29;
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -42,15 +42,15 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/index.mjs';
-var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/index.mjs';
+var CATCTX = new CatalogContext(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
 export var PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus");
 var SmokeExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png");
 var SmokeExplosionSpriteSheet = new SpriteSheet(SmokeExplosionSpriteSheetImg, 4, 1);
-_classDecs = [MOD_CATALOG.registerObject({
+_classDecs = [CATALOG.registerObject(CATCTX, {
   showInBuilder: false
 }), Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud), StateNumber.define("iteration")];
 var _SmokeExplosion;
@@ -659,7 +659,7 @@ var NicoSpriteSheets = {
     }(), 4, 1));
   }
 };
-_classDecs9 = [MOD_CATALOG.registerObject({
+_classDecs9 = [CATALOG.registerObject(CATCTX, {
   label: "Nico",
   icon: NicoImg
 }), Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, JumpAud, ArrowsSpriteSheetImg, _NicoHand), _JumpMixin.add({
@@ -855,12 +855,13 @@ _initClass9();
 export { _Nico as Nico };
 var SWORD_ATTACK_PERIOD = .5;
 var SwordImg = new Img("/static/catalogs/std/v1/2Dside/assets/sword.png");
-var SwordSlashSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/slash.png"), 3, 2);
+var SwordSlashSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/slash.png");
+var SwordSlashSpriteSheet = new SpriteSheet(SwordSlashSpriteSheetImg, 3, 2);
 var SwordHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus");
-_classDecs0 = [MOD_CATALOG.registerObject({
+_classDecs0 = [CATALOG.registerObject(CATCTX, {
   label: "Sword",
   icon: SwordImg
-}), Dependencies.add(SwordImg, SwordSlashSpriteSheet, SlashAud, SwordHitAud), BodyMixin.add({
+}), Dependencies.add(SwordImg, SwordSlashSpriteSheetImg, SlashAud, SwordHitAud), BodyMixin.add({
   width: 40,
   height: 40
 }), StateNumber.define("lastAttackAge", {
@@ -947,10 +948,10 @@ _initClass0 = _applyDecs$c8[1];
 _initClass0();
 export { _Sword as Sword };
 var BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
-_classDecs1 = [MOD_CATALOG.registerObject({
+_classDecs1 = [CATALOG.registerObject(CATCTX, {
   label: "Boxing Glove",
   icon: BoxingGloveImg
-}), BodyMixin.add({
+}), Dependencies.add(BoxingGloveImg), BodyMixin.add({
   width: 25,
   height: 20
 }), StateNumber.define("lastAttackAge", {
@@ -1042,10 +1043,62 @@ _initClass1 = _applyDecs$c9[1];
 _initClass1();
 export { _BoxingGlove as BoxingGlove };
 var ShurikenImg = new Img("/static/catalogs/std/v1/2Dside/assets/shuriken.png");
-_classDecs10 = [MOD_CATALOG.registerObject({
+_classDecs10 = [CATALOG.registerObject(CATCTX, {
+  label: "Shuriken",
+  icon: ShurikenImg,
+  showInBuilder: false
+}), Dependencies.add(ShurikenImg), BodyMixin.add({
+  width: 30,
+  height: 30
+}), StateNumber.define("itToLive", {
+  "default": null
+})];
+var _Shuriken;
+var Shuriken = /*#__PURE__*/function (_Projectile4) {
+  function Shuriken() {
+    _classCallCheck(this, Shuriken);
+    return _callSuper(this, Shuriken, arguments);
+  }
+  _inherits(Shuriken, _Projectile4);
+  return _createClass(Shuriken, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(Shuriken, "init", this, 3)([kwargs]);
+      if (this.owner) this.dirX = this.owner.dirX;
+      this.speedX = this.dirX * 500;
+      this.itToLive = 2 * this.game.fps;
+      this.attackDamages = 35;
+      this.game.audio.playSound(SlashAud);
+    }
+  }, {
+    key: "onGetBlocked",
+    value: function onGetBlocked() {
+      this.remove();
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.angle += 30;
+      this.itToLive -= 1;
+      if (this.itToLive <= 0) this.remove();
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      return ShurikenImg;
+    }
+  }]);
+}(_Projectile3 = _Projectile);
+_Shuriken2 = Shuriken;
+var _applyDecs$c0 = _slicedToArray(_applyDecs(_Shuriken2, [], _classDecs10, 0, void 0, _Projectile3).c, 2);
+_Shuriken = _applyDecs$c0[0];
+_initClass10 = _applyDecs$c0[1];
+_initClass10();
+export { _Shuriken as Shuriken };
+_classDecs11 = [CATALOG.registerObject(CATCTX, {
   label: "ShurikenPack",
   icon: ShurikenImg
-}), BodyMixin.add({
+}), Dependencies.add(ShurikenImg, _Shuriken), BodyMixin.add({
   width: 30,
   height: 30
 }), StateNumber.define("nb", {
@@ -1114,69 +1167,77 @@ var ShurikenPack = /*#__PURE__*/function (_Extra6) {
   }]);
 }(_Extra5 = _Extra);
 _ShurikenPack2 = ShurikenPack;
-var _applyDecs$c0 = _slicedToArray(_applyDecs(_ShurikenPack2, [], _classDecs10, 0, void 0, _Extra5).c, 2);
-_ShurikenPack = _applyDecs$c0[0];
-_initClass10 = _applyDecs$c0[1];
-_initClass10();
+var _applyDecs$c1 = _slicedToArray(_applyDecs(_ShurikenPack2, [], _classDecs11, 0, void 0, _Extra5).c, 2);
+_ShurikenPack = _applyDecs$c1[0];
+_initClass11 = _applyDecs$c1[1];
+_initClass11();
 export { _ShurikenPack as ShurikenPack };
-_classDecs11 = [MOD_CATALOG.registerObject({
-  label: "Shuriken",
-  icon: ShurikenImg,
+var ExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png");
+var ExplosionSpriteSheet = new SpriteSheet(ExplosionSpriteSheetImg, 4, 2);
+_classDecs12 = [CATALOG.registerObject(CATCTX, {
   showInBuilder: false
+}), Dependencies.add(ExplosionSpriteSheetImg), AttackMixin.add({
+  canAttack: true,
+  canGetAttacked: false,
+  attackDamages: 100,
+  attackPeriod: Infinity
+}), OwnerableMixin.add({
+  removedWithOwner: false
 }), BodyMixin.add({
-  width: 30,
-  height: 30
-}), StateNumber.define("itToLive", {
-  "default": null
-})];
-var _Shuriken;
-var Shuriken = /*#__PURE__*/function (_Projectile4) {
-  function Shuriken() {
-    _classCallCheck(this, Shuriken);
-    return _callSuper(this, Shuriken, arguments);
+  width: 300,
+  height: 300
+}), StateNumber.define("iteration")];
+var _Explosion;
+var Explosion = /*#__PURE__*/function (_GameObject6) {
+  function Explosion() {
+    _classCallCheck(this, Explosion);
+    return _callSuper(this, Explosion, arguments);
   }
-  _inherits(Shuriken, _Projectile4);
-  return _createClass(Shuriken, [{
-    key: "init",
-    value: function init(kwargs) {
-      _superPropGet(Shuriken, "init", this, 3)([kwargs]);
-      if (this.owner) this.dirX = this.owner.dirX;
-      this.speedX = this.dirX * 500;
-      this.itToLive = 2 * this.game.fps;
-      this.attackDamages = 35;
-      this.game.audio.playSound(SlashAud);
-    }
-  }, {
-    key: "onGetBlocked",
-    value: function onGetBlocked() {
-      this.remove();
+  _inherits(Explosion, _GameObject6);
+  return _createClass(Explosion, [{
+    key: "getAttackProps",
+    value: function getAttackProps(obj) {
+      var props = AttackMixin.getAttackProps.call(this, obj);
+      props.attacker = this.owner || this;
+      return props;
     }
   }, {
     key: "update",
     value: function update() {
-      this.angle += 30;
-      this.itToLive -= 1;
-      if (this.itToLive <= 0) this.remove();
+      _superPropGet(Explosion, "update", this, 3)([]);
+      var age = this.iteration / this.game.fps;
+      if (age >= 1) return this.remove();
+      this.iteration += 1;
+    }
+  }, {
+    key: "getGraphicsProps",
+    value: function getGraphicsProps() {
+      var props = _superPropGet(Explosion, "getGraphicsProps", this, 3)([]);
+      if (!props) return null;
+      props.width = 500;
+      props.height = 500;
+      return props;
     }
   }, {
     key: "getBaseImg",
     value: function getBaseImg() {
-      return ShurikenImg;
+      return ExplosionSpriteSheet.get(floor(this.iteration / this.game.fps * 15));
     }
   }]);
-}(_Projectile3 = _Projectile);
-_Shuriken2 = Shuriken;
-var _applyDecs$c1 = _slicedToArray(_applyDecs(_Shuriken2, [], _classDecs11, 0, void 0, _Projectile3).c, 2);
-_Shuriken = _applyDecs$c1[0];
-_initClass11 = _applyDecs$c1[1];
-_initClass11();
-export { _Shuriken as Shuriken };
+}(GameObject);
+_Explosion2 = Explosion;
+var _applyDecs$c10 = _slicedToArray(_applyDecs(_Explosion2, [], _classDecs12, 0, void 0, GameObject).c, 2);
+_Explosion = _applyDecs$c10[0];
+_initClass12 = _applyDecs$c10[1];
+_initClass12();
+export { _Explosion as Explosion };
 var BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png");
-var BombSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png"), 2, 1);
-_classDecs12 = [MOD_CATALOG.registerObject({
+var BombSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png");
+var BombSpriteSheet = new SpriteSheet(BombSpriteSheetImg, 2, 1);
+_classDecs13 = [CATALOG.registerObject(CATCTX, {
   label: "Bomb",
   icon: BombImg
-}), PhysicsMixin.add({
+}), Dependencies.add(BombSpriteSheetImg, _Explosion), PhysicsMixin.add({
   affectedByGravity: false,
   physicsBounciness: .5,
   physicsStaticFriction: 100,
@@ -1254,76 +1315,19 @@ var Bomb = /*#__PURE__*/function (_Extra8) {
   }]);
 }(_Extra7 = _Extra);
 _Bomb2 = Bomb;
-var _applyDecs$c10 = _slicedToArray(_applyDecs(_Bomb2, [], _classDecs12, 0, void 0, _Extra7).c, 2);
-_Bomb = _applyDecs$c10[0];
-_initClass12 = _applyDecs$c10[1];
-_initClass12();
-export { _Bomb as Bomb };
-var ExplosionSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png"), 4, 2);
-_classDecs13 = [MOD_CATALOG.registerObject({
-  showInBuilder: false
-}), AttackMixin.add({
-  canAttack: true,
-  canGetAttacked: false,
-  attackDamages: 100,
-  attackPeriod: Infinity
-}), OwnerableMixin.add({
-  removedWithOwner: false
-}), BodyMixin.add({
-  width: 300,
-  height: 300
-}), StateNumber.define("iteration")];
-var _Explosion;
-var Explosion = /*#__PURE__*/function (_GameObject6) {
-  function Explosion() {
-    _classCallCheck(this, Explosion);
-    return _callSuper(this, Explosion, arguments);
-  }
-  _inherits(Explosion, _GameObject6);
-  return _createClass(Explosion, [{
-    key: "getAttackProps",
-    value: function getAttackProps(obj) {
-      var props = AttackMixin.getAttackProps.call(this, obj);
-      props.attacker = this.owner || this;
-      return props;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      _superPropGet(Explosion, "update", this, 3)([]);
-      var age = this.iteration / this.game.fps;
-      if (age >= 1) return this.remove();
-      this.iteration += 1;
-    }
-  }, {
-    key: "getGraphicsProps",
-    value: function getGraphicsProps() {
-      var props = _superPropGet(Explosion, "getGraphicsProps", this, 3)([]);
-      if (!props) return null;
-      props.width = 500;
-      props.height = 500;
-      return props;
-    }
-  }, {
-    key: "getBaseImg",
-    value: function getBaseImg() {
-      return ExplosionSpriteSheet.get(floor(this.iteration / this.game.fps * 15));
-    }
-  }]);
-}(GameObject);
-_Explosion2 = Explosion;
-var _applyDecs$c11 = _slicedToArray(_applyDecs(_Explosion2, [], _classDecs13, 0, void 0, GameObject).c, 2);
-_Explosion = _applyDecs$c11[0];
+var _applyDecs$c11 = _slicedToArray(_applyDecs(_Bomb2, [], _classDecs13, 0, void 0, _Extra7).c, 2);
+_Bomb = _applyDecs$c11[0];
 _initClass13 = _applyDecs$c11[1];
 _initClass13();
-export { _Explosion as Explosion };
+export { _Bomb as Bomb };
 var JetPackImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack.png");
-var JetPackSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png"), 2, 1);
+var JetPackSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png");
+var JetPackSpriteSheet = new SpriteSheet(JetPackSpriteSheetImg, 2, 1);
 var JetPackAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jetpack.opus");
-_classDecs14 = [MOD_CATALOG.registerObject({
+_classDecs14 = [CATALOG.registerObject(CATCTX, {
   label: "JetPack",
   icon: JetPackImg
-}), BodyMixin.add({
+}), Dependencies.add(JetPackSpriteSheetImg, JetPackAud), BodyMixin.add({
   width: 20,
   height: 50
 }), StateNumber.define("duration", {
@@ -1452,7 +1456,7 @@ _initClass15 = _applyDecs$c13[1];
 _initClass15();
 export { _Enemy as Enemy };
 var SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png");
-_classDecs16 = [MOD_CATALOG.registerObject({
+_classDecs16 = [CATALOG.registerObject(CATCTX, {
   label: "Spiky",
   icon: SpikyImg
 }), Dependencies.add(SpikyImg), AttackMixin.modify({
@@ -1502,7 +1506,7 @@ _initClass16 = _applyDecs$c14[1];
 _initClass16();
 export { _Spiky as Spiky };
 var BlobImg = new Img("/static/catalogs/std/v1/2Dside/assets/blob.png");
-_classDecs17 = [MOD_CATALOG.registerObject({
+_classDecs17 = [CATALOG.registerObject(CATCTX, {
   label: "Blob",
   icon: BlobImg
 }), Dependencies.add(BlobImg), StateProperty.modify("dirX", {
@@ -1662,7 +1666,7 @@ _BlobEnemyBlockChecke = _applyDecs$c29[0];
 _initClass18 = _applyDecs$c29[1];
 _initClass18();
 var GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png");
-_classDecs19 = [MOD_CATALOG.registerObject({
+_classDecs19 = [CATALOG.registerObject(CATCTX, {
   label: "Ghost",
   icon: GhostImg
 }), Dependencies.add(GhostImg), StateProperty.modify("dirX", {
@@ -1746,10 +1750,10 @@ _initClass19 = _applyDecs$c16[1];
 _initClass19();
 export { _Ghost as Ghost };
 var HeartImg = new Img("/static/catalogs/std/v1/2Dside/assets/heart.png");
-_classDecs20 = [MOD_CATALOG.registerObject({
+_classDecs20 = [CATALOG.registerObject(CATCTX, {
   label: "Heart",
   icon: HeartImg
-}), CollectMixin.add({
+}), Dependencies.add(HeartImg), CollectMixin.add({
   canCollect: false,
   canGetCollected: true
 })];
@@ -1803,10 +1807,10 @@ _initClass20 = _applyDecs$c17[1];
 _initClass20();
 export { _Heart as Heart };
 var StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png");
-_classDecs21 = [MOD_CATALOG.registerObject({
+_classDecs21 = [CATALOG.registerObject(CATCTX, {
   label: "Star",
   icon: StarImg
-}), PhysicsMixin.add({
+}), Dependencies.add(StarImg), PhysicsMixin.add({
   affectedByGravity: false,
   canGetBlocked: true,
   physicsBounciness: 1,
@@ -1881,10 +1885,10 @@ _initClass21 = _applyDecs$c18[1];
 _initClass21();
 export { _Star as Star };
 var CheckpointImg = new Img("/static/catalogs/std/v1/2Dside/assets/checkpoint.png");
-_classDecs22 = [MOD_CATALOG.registerObject({
+_classDecs22 = [CATALOG.registerObject(CATCTX, {
   label: "CheckPoint",
   icon: CheckpointImg
-}), CollectMixin.add({
+}), Dependencies.add(CheckpointImg), CollectMixin.add({
   canGetCollected: true
 }), BodyMixin.add({
   width: 40,
@@ -1919,10 +1923,10 @@ _initClass22();
 export { _Checkpoint as Checkpoint };
 var PortalImg = new Img("/static/catalogs/std/v1/2Dside/assets/portal.png");
 var PortalJumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus");
-_classDecs23 = [MOD_CATALOG.registerObject({
+_classDecs23 = [CATALOG.registerObject(CATCTX, {
   label: "Portal",
   icon: PortalImg
-}), ActivableMixin.add(), StateBool.define("isOutput", {
+}), Dependencies.add(PortalImg, PortalJumpAud), ActivableMixin.add(), StateBool.define("isOutput", {
   "default": true,
   showInBuilder: true
 }), StateBool.define("isInput", {
@@ -1993,7 +1997,7 @@ _Portal = _applyDecs$c20[0];
 _initClass23 = _applyDecs$c20[1];
 _initClass23();
 export { _Portal as Portal };
-_classDecs24 = [MOD_CATALOG.registerObject({
+_classDecs24 = [CATALOG.registerObject(CATCTX, {
   label: "Hero",
   icon: PopImg
 })];
@@ -2023,10 +2027,10 @@ _HeroSpawnPoint = _applyDecs$c21[0];
 _initClass24 = _applyDecs$c21[1];
 _initClass24();
 export { _HeroSpawnPoint as HeroSpawnPoint };
-_classDecs25 = [MOD_CATALOG.registerObject({
+_classDecs25 = [CATALOG.registerObject(CATCTX, {
   label: "ObjectSpawner",
   icon: PopImg
-}), ActivableMixin.add(), BodyMixin.add({
+}), Dependencies.add(_Pop), ActivableMixin.add(), BodyMixin.add({
   width: 50,
   height: 50
 }), ObjectRefs.StateProperty.define("spawnedObjects"), StateNumber.define("lastSpawnAge", {
@@ -2147,7 +2151,7 @@ _ObjectSpawner = _applyDecs$c22[0];
 _initClass25 = _applyDecs$c22[1];
 _initClass25();
 export { _ObjectSpawner as ObjectSpawner };
-_classDecs26 = [MOD_CATALOG.registerObject({
+_classDecs26 = [CATALOG.registerObject(CATCTX, {
   stateful: false
 }), Category.append("wall"), PhysicsMixin.add({
   canMove: false,
@@ -2268,7 +2272,7 @@ _Wall = _applyDecs$c23[0];
 _initClass26 = _applyDecs$c23[1];
 _initClass26();
 export { _Wall as Wall };
-_classDecs27 = [MOD_CATALOG.registerObject({
+_classDecs27 = [CATALOG.registerObject(CATCTX, {
   stateful: false
 })];
 var _PlatformWall;
@@ -2307,7 +2311,7 @@ _PlatformWall = _applyDecs$c24[0];
 _initClass27 = _applyDecs$c24[1];
 _initClass27();
 export { _PlatformWall as PlatformWall };
-_classDecs28 = [MOD_CATALOG.registerObject({
+_classDecs28 = [CATALOG.registerObject(CATCTX, {
   stateful: false
 })];
 var _BouncingWall;
@@ -2332,7 +2336,7 @@ _BouncingWall = _applyDecs$c25[0];
 _initClass28 = _applyDecs$c25[1];
 _initClass28();
 export { _BouncingWall as BouncingWall };
-_classDecs29 = [MOD_CATALOG.registerObject({
+_classDecs29 = [CATALOG.registerObject(CATCTX, {
   stateful: false
 })];
 var _GlidingWall;

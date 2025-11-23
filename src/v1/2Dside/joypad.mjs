@@ -4,11 +4,11 @@ const { assign } = Object
 import {
     cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas,
     GraphicsEngine, GraphicsProps,
-    CATALOG,
+    CatalogContext, CATALOG,
     Dependencies, GameObject, Text, GameObjectGroup, Img,
 } from "../../../../core/v1/index.mjs"
 
-const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+const CATCTX = new CatalogContext(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
@@ -26,7 +26,7 @@ export class JoypadScene {
         this.syncPosSize()
         this.backgroundColor = "black"
         this.backgroundAlpha = 1
-        if(!this.game.isServerEnv) {
+        if (!this.game.isServerEnv) {
             this.canvas = document.createElement("canvas")
             this.canvas.width = this.width
             this.canvas.height = this.height
@@ -41,7 +41,7 @@ export class JoypadScene {
     }
 
     pause(val) {
-        if(!this.isPausable()) return
+        if (!this.isPausable()) return
         this.paused = val
     }
 
@@ -58,7 +58,7 @@ export class JoypadScene {
     onTouch() {
         this.buttons.forEach(but => but.checkClick())
     }
- 
+
     addButton(kwargs) {
         return this.buttons.add(JoypadButton, kwargs)
     }
@@ -79,7 +79,7 @@ export class JoypadScene {
         this.buttons.draw(drawer)
         return can
     }
-    
+
     drawBackground(drawer) {
         drawer.draw(this.getBackgroundGraphicsProps())
     }
@@ -87,8 +87,8 @@ export class JoypadScene {
     getBackgroundGraphicsProps() {
         const props = this._backgroundGraphicsProps ||= new GraphicsProps()
         props.color = this.backgroundColor
-        props.x = this.viewWidth/2
-        props.y = this.viewHeight/2
+        props.x = this.viewWidth / 2
+        props.y = this.viewHeight / 2
         props.width = this.viewWidth
         props.height = this.viewHeight
         props.visibility = this.backgroundAlpha
@@ -106,16 +106,16 @@ export class JoypadGameScene extends JoypadScene {
 
     syncLocalPlayerButtons() {
         const hero = this.game.scenes.game.getHero(this.game.localPlayerId)
-        if(hero && hero == this._lastHeroSynced) return
+        if (hero && hero == this._lastHeroSynced) return
         this.buttons.clear()
-        if(!hero) return
+        if (!hero) return
         this.addPauseButton()
         hero.initJoypadButtons(this)
         this._lastHeroSynced = hero
     }
 
     addPauseButton() {
-        this.pauseButton = this.addButton({ x:this.width/2, y:40, width: 200, height: 60, text: "PAUSE" })
+        this.pauseButton = this.addButton({ x: this.width / 2, y: 40, width: 200, height: 60, text: "PAUSE" })
         this.pauseButton.onClickUp = () => this.game.pause(true)
     }
 
@@ -134,8 +134,8 @@ export class JoypadWaitingScene extends JoypadScene {
 
     initStartButton() {
         const { game, width, height } = this, { localPlayerId } = game
-        if(!localPlayerId || !game.players[localPlayerId] || this.startButton) return
-        this.startButton = this.addButton({ x:width/2, y:height/2, width: 300, height: 100, text: "START" })
+        if (!localPlayerId || !game.players[localPlayerId] || this.startButton) return
+        this.startButton = this.addButton({ x: width / 2, y: height / 2, width: 300, height: 100, text: "START" })
         this.startButton.onClickUp = () => this.game.startGame()
     }
 }
@@ -172,9 +172,9 @@ class JoypadPauseScene extends JoypadScene {
 
     syncObjectsPos() {
         const { width, height } = this
-        assign(this.pauseText, { x: floor(width/2), y: floor(height/6) })
-        assign(this.resumeButton, { x: floor(width/2), y:floor(height/2) })
-        assign(this.restartButton, { x: floor(width/2), y:floor(height/2)+120 })
+        assign(this.pauseText, { x: floor(width / 2), y: floor(height / 6) })
+        assign(this.resumeButton, { x: floor(width / 2), y: floor(height / 2) })
+        assign(this.restartButton, { x: floor(width / 2), y: floor(height / 2) + 120 })
     }
 
     draw() {
@@ -202,83 +202,83 @@ class JoypadButton extends GameObject {
     }
 
     checkClick() {
-        if(this.disabled) return
+        if (this.disabled) return
         const isDown = this.checkHitTouches()
-        if(isDown != this.isDown) {
+        if (isDown != this.isDown) {
             this.isDown = isDown
-            if(isDown) this.onClickDown()
+            if (isDown) this.onClickDown()
             else this.onClickUp()
         }
     }
 
     onClickDown() {
-        if(this.inputKey) this.game.setInputKey(this.inputKey, true)
+        if (this.inputKey) this.game.setInputKey(this.inputKey, true)
     }
 
     onClickUp() {
-        if(this.inputKey) this.game.setInputKey(this.inputKey, false)
+        if (this.inputKey) this.game.setInputKey(this.inputKey, false)
     }
 
     draw(drawer) {
-        if(this.disabled) return
+        if (this.disabled) return
         super.draw(drawer)
-        if(this.icon) {
+        if (this.icon) {
             const iconProps = this._iconGraphicsProps ||= new GraphicsProps()
             iconProps.img = this.icon
             iconProps.x = this.x
             iconProps.y = this.y
-            iconProps.width = this.width*.5
-            iconProps.height = this.height*.5
+            iconProps.width = this.width * .5
+            iconProps.height = this.height * .5
             iconProps.draw(drawer)
         }
-        if(this.text) {
+        if (this.text) {
             const textProps = this._textGraphicsProps ||= new GraphicsProps({
                 img: this.createTextImg(this.text)
             })
             textProps.x = this.x
             textProps.y = this.y
-            textProps.width = this.width*.5
-            textProps.height = this.width*.5/textProps.img.width*textProps.img.height,
-            textProps.draw(drawer)
+            textProps.width = this.width * .5
+            textProps.height = this.width * .5 / textProps.img.width * textProps.img.height,
+                textProps.draw(drawer)
         }
     }
 
     getBaseImg() {
         const { game } = this
-        if(ButtonSpriteSheetImg.unloaded || ButtonColorableSpriteSheetImg.unloaded) return
+        if (ButtonSpriteSheetImg.unloaded || ButtonColorableSpriteSheetImg.unloaded) return
         let img = ButtonSpriteSheetImg, colorImg = ButtonColorableSpriteSheetImg
         const localPlayer = game.players[game.localPlayerId]
         const color = localPlayer ? localPlayer.color : null
         const numCol = this.isDown ? 1 : 0
         colorImg = cachedTransform(colorImg, numCol, () => {
-            return cloneCanvas(colorImg, { col:[numCol,2] })
+            return cloneCanvas(colorImg, { col: [numCol, 2] })
         })
         colorImg = cachedTransform(colorImg, color, () => {
             const res = cloneCanvas(colorImg)
             return color ? colorizeCanvas(res, color) : res
         })
         img = cachedTransform(img, numCol, () => {
-            const res = cloneCanvas(img, { col:[numCol,2] })
+            const res = cloneCanvas(img, { col: [numCol, 2] })
             const ctx = res.getContext("2d")
             ctx.drawImage(colorImg, 0, 0, res.width, res.height)
             return res
         })
-        const sizeRatio = this.width/this.height
+        const sizeRatio = this.width / this.height
         img = cachedTransform(img, sizeRatio, () => {
-            if(sizeRatio == 1) return cloneCanvas(img)
-            const { width:iw, height:ih } = img, iw2 = ceil(iw/2)
+            if (sizeRatio == 1) return cloneCanvas(img)
+            const { width: iw, height: ih } = img, iw2 = ceil(iw / 2)
             const rw = ceil(ih * sizeRatio), rh = ih
             const res = newCanvas(rw, rh), ctx = res.getContext("2d")
             ctx.drawImage(img, 0, 0, iw2, ih, 0, 0, iw2, ih)
-            ctx.drawImage(img, iw2, 0, iw2, ih, rw-iw2, 0, iw2, ih)
-            for(let x=iw2; x<rw-iw2; ++x) ctx.drawImage(img, iw2, 0, 1, ih, x, 0, 1, ih)
+            ctx.drawImage(img, iw2, 0, iw2, ih, rw - iw2, 0, iw2, ih)
+            for (let x = iw2; x < rw - iw2; ++x) ctx.drawImage(img, iw2, 0, 1, ih, x, 0, 1, ih)
             return res
         })
         return img
     }
-    
+
     createTextImg(text) {
-        const fontSize = floor(this.height/2)
+        const fontSize = floor(this.height / 2)
         return newTextCanvas(text, {
             fillStyle: "white",
             font: `bold ${fontSize}px serif`,

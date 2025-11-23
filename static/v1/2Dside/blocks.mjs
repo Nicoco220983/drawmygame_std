@@ -40,8 +40,8 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { cachedTransform, cloneCanvas, colorizeCanvas, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
-var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+import { cachedTransform, cloneCanvas, colorizeCanvas, CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
+var CATCTX = new CatalogContext(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
@@ -118,7 +118,7 @@ new (_BackgroundBlock2 = (_BackgroundBlock3 = /*#__PURE__*/function (_GameObject
 }(_identity), _defineProperty(_Class2, _BackgroundBlock2, void 0), _Class2)();
 export { _BackgroundBlock as BackgroundBlock };
 var DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png");
-_classDecs3 = [MOD_CATALOG.registerObject({
+_classDecs3 = [CATALOG.registerObject(CATCTX, {
   label: "Dirt",
   icon: DirtImg
 }), Dependencies.add(DirtImg), StateString.define("color", {
@@ -152,7 +152,7 @@ _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _DirtBlock as DirtBlock };
 var StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png");
-_classDecs4 = [MOD_CATALOG.registerObject({
+_classDecs4 = [CATALOG.registerObject(CATCTX, {
   label: "Stone",
   icon: StoneImg
 }), Dependencies.add(StoneImg), StateString.define("color", {
@@ -186,7 +186,7 @@ _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _StoneBlock as StoneBlock };
 var BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png");
-_classDecs5 = [MOD_CATALOG.registerObject({
+_classDecs5 = [CATALOG.registerObject(CATCTX, {
   label: "Background Stone",
   icon: BackgroundStoneImg
 }), Dependencies.add(BackgroundStoneImg), StateString.define("color", {
@@ -220,7 +220,7 @@ _initClass5 = _applyDecs$c5[1];
 _initClass5();
 export { _BackgroundStoneBlock as BackgroundStoneBlock };
 var BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png");
-_classDecs6 = [MOD_CATALOG.registerObject({
+_classDecs6 = [CATALOG.registerObject(CATCTX, {
   label: "Bricks",
   icon: BricksImg
 }), Dependencies.add(BricksImg), StateString.define("color", {
@@ -254,7 +254,7 @@ _initClass6 = _applyDecs$c6[1];
 _initClass6();
 export { _BricksBlock as BricksBlock };
 var BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png");
-_classDecs7 = [MOD_CATALOG.registerObject({
+_classDecs7 = [CATALOG.registerObject(CATCTX, {
   label: "Background Bricks",
   icon: BackgroundBricksImg
 }), Dependencies.add(BackgroundBricksImg), StateString.define("color", {
@@ -288,7 +288,7 @@ _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _BackgroundBricksBloc as BackgroundBricksBlock };
 var WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png");
-_classDecs8 = [MOD_CATALOG.registerObject({
+_classDecs8 = [CATALOG.registerObject(CATCTX, {
   label: "Wood",
   icon: WoodImg
 }), Dependencies.add(WoodImg), StateString.define("color", {
@@ -322,7 +322,7 @@ _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _WoodBlock as WoodBlock };
 var BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png");
-_classDecs9 = [MOD_CATALOG.registerObject({
+_classDecs9 = [CATALOG.registerObject(CATCTX, {
   label: "Background Wood",
   icon: BackgroundWoodImg
 }), Dependencies.add(BackgroundWoodImg), StateString.define("color", {
@@ -356,7 +356,7 @@ _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _BackgroundWoodBlock as BackgroundWoodBlock };
 var PlatformImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png");
-_classDecs0 = [MOD_CATALOG.registerObject({
+_classDecs0 = [CATALOG.registerObject(CATCTX, {
   label: "Platform",
   icon: PlatformImg
 }), Dependencies.add(PlatformImg), StateString.define("color", {
@@ -415,12 +415,13 @@ _initClass0 = _applyDecs$c0[1];
 _initClass0();
 export { _PlatformBlock as PlatformBlock };
 var DoorImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door.png");
-var DoorSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png"), 2, 1);
-_classDecs1 = [MOD_CATALOG.registerObject({
+var DoorSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png");
+var DoorSpriteSheet = new SpriteSheet(DoorSpriteSheetImg, 2, 1);
+_classDecs1 = [CATALOG.registerObject(CATCTX, {
   label: "Door",
   icon: DoorImg,
   showInBuilder: true
-}), Dependencies.add(DoorSpriteSheet), LinkReaction.add("reactToggle", {
+}), Dependencies.add(DoorSpriteSheetImg), LinkReaction.add("reactToggle", {
   label: "toggle",
   isDefault: true
 }), StateBool.define("closed", {
@@ -474,7 +475,7 @@ _initClass1 = _applyDecs$c1[1];
 _initClass1();
 export { _Door as Door };
 var CloudImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png");
-_classDecs10 = [MOD_CATALOG.registerObject({
+_classDecs10 = [CATALOG.registerObject(CATCTX, {
   label: "Cloud",
   icon: CloudImg,
   showInBuilder: true
@@ -695,7 +696,7 @@ _initClass12 = _applyDecs$c11[1];
 _initClass12();
 export { _Trap as Trap };
 var BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
-_classDecs13 = [MOD_CATALOG.registerObject({
+_classDecs13 = [CATALOG.registerObject(CATCTX, {
   label: "Boxing Trap",
   icon: BoxingGloveImg,
   showInBuilder: true
@@ -728,7 +729,7 @@ _initClass13 = _applyDecs$c12[1];
 _initClass13();
 export { _BoxingTrap as BoxingTrap };
 var BouncingBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png");
-_classDecs14 = [MOD_CATALOG.registerObject({
+_classDecs14 = [CATALOG.registerObject(CATCTX, {
   label: "Bouncing Block",
   icon: BouncingBlockImg,
   showInBuilder: true
@@ -760,7 +761,7 @@ _initClass14 = _applyDecs$c13[1];
 _initClass14();
 export { _BouncingBlock as BouncingBlock };
 var IceBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png");
-_classDecs15 = [MOD_CATALOG.registerObject({
+_classDecs15 = [CATALOG.registerObject(CATCTX, {
   label: "Ice Block",
   icon: IceBlockImg,
   showInBuilder: true

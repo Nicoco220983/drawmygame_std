@@ -44,8 +44,8 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
-var MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+import { CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
+var CATCTX = new CatalogContext(import.meta.url, {
   version: "v1",
   perspective: "2Dside"
 });
@@ -79,11 +79,12 @@ _initClass = _applyDecs$c[1];
 _initClass();
 export { _Trigger as Trigger };
 var BurronImg = new Img("/static/catalogs/std/v1/2Dside/assets/button.png");
-var ButtonSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png"), 2, 1);
-_classDecs2 = [MOD_CATALOG.registerObject({
+var ButtonSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png");
+var ButtonSpriteSheet = new SpriteSheet(ButtonSpriteSheetImg, 2, 1);
+_classDecs2 = [CATALOG.registerObject(CATCTX, {
   label: "Button",
   icon: BurronImg
-}), Dependencies.add(ButtonSpriteSheet), Category.append("engine/trigger"), StateNumber.define("pushAge", {
+}), Dependencies.add(ButtonSpriteSheetImg), Category.append("engine/trigger"), StateNumber.define("pushAge", {
   "default": null,
   nullableWith: null
 }), StateNumber.define("duration", {
@@ -147,7 +148,7 @@ _initClass2 = _applyDecs$c2[1];
 _initClass2();
 export { _Button as Button };
 var ClockImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/clock.png");
-_classDecs3 = [MOD_CATALOG.registerObject({
+_classDecs3 = [CATALOG.registerObject(CATCTX, {
   label: "Clock",
   icon: ClockImg,
   showInBuilder: true
@@ -199,7 +200,7 @@ _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _Clock as Clock };
 var WatcherImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/watcher.png");
-_classDecs4 = [MOD_CATALOG.registerObject({
+_classDecs4 = [CATALOG.registerObject(CATCTX, {
   label: "Watcher",
   icon: WatcherImg,
   showInBuilder: true
@@ -262,7 +263,7 @@ _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _Viewer as Viewer };
 var InvertTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/invert_trigger.png");
-_classDecs5 = [MOD_CATALOG.registerObject({
+_classDecs5 = [CATALOG.registerObject(CATCTX, {
   label: "Invert (NOT)",
   icon: InvertTriggerImg,
   showInBuilder: true
@@ -371,7 +372,7 @@ _initClass6 = _applyDecs$c6[1];
 _initClass6();
 export { _AggregatorTrigger as AggregatorTrigger };
 var MinTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/min_trigger.png");
-_classDecs7 = [MOD_CATALOG.registerObject({
+_classDecs7 = [CATALOG.registerObject(CATCTX, {
   label: "Min (AND)",
   icon: MinTriggerImg,
   showInBuilder: true
@@ -408,7 +409,7 @@ _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _MinTrigger as MinTrigger };
 var MaxTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/max_trigger.png");
-_classDecs8 = [MOD_CATALOG.registerObject({
+_classDecs8 = [CATALOG.registerObject(CATCTX, {
   label: "Max (OR)",
   icon: MaxTriggerImg,
   showInBuilder: true
@@ -445,7 +446,7 @@ _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _MaxTrigger as MaxTrigger };
 var XorTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/xor_trigger.png");
-_classDecs9 = [MOD_CATALOG.registerObject({
+_classDecs9 = [CATALOG.registerObject(CATCTX, {
   label: "Xor",
   icon: XorTriggerImg,
   showInBuilder: true
@@ -495,7 +496,7 @@ _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _XorTrigger as XorTrigger };
 var DelayTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/delay_trigger.png");
-_classDecs0 = [MOD_CATALOG.registerObject({
+_classDecs0 = [CATALOG.registerObject(CATCTX, {
   label: "Delay",
   icon: DelayTriggerImg,
   showInBuilder: true

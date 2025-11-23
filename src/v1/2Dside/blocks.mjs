@@ -1,12 +1,12 @@
 const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypot } = Math
 import {
     cachedTransform, cloneCanvas, colorizeCanvas,
-    CATALOG,
+    CatalogContext, CATALOG,
     StateProperty, StateBool, StateNumber, StateString, StateEnum,
     Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
 } from '../../../../core/v1/index.mjs'
 
-const MOD_CATALOG = CATALOG.getModuleCatalog(import.meta.url, {
+const CATCTX = new CatalogContext(import.meta.url, {
     version: "v1",
     perspective: "2Dside",
 })
@@ -58,7 +58,7 @@ export class BackgroundBlock extends GameObject {
 
 const DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Dirt",
     icon: DirtImg,
 })
@@ -67,7 +67,7 @@ const DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png")
 export class DirtBlock extends Block {
     getBaseImg() {
         let img = DirtImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#6f911b")
             })
@@ -80,7 +80,7 @@ export class DirtBlock extends Block {
 
 const StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Stone",
     icon: StoneImg,
 })
@@ -89,7 +89,7 @@ const StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png
 export class StoneBlock extends Block {
     getBaseImg() {
         let img = StoneImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#877d71")
             })
@@ -101,7 +101,7 @@ export class StoneBlock extends Block {
 
 const BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Background Stone",
     icon: BackgroundStoneImg,
 })
@@ -110,7 +110,7 @@ const BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks
 export class BackgroundStoneBlock extends BackgroundBlock {
     getBaseImg() {
         let img = BackgroundStoneImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#877d71")
             })
@@ -123,7 +123,7 @@ export class BackgroundStoneBlock extends BackgroundBlock {
 
 const BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Bricks",
     icon: BricksImg,
 })
@@ -132,7 +132,7 @@ const BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.p
 export class BricksBlock extends Block {
     getBaseImg() {
         let img = BricksImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#b6a88e")
             })
@@ -145,7 +145,7 @@ export class BricksBlock extends Block {
 
 const BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Background Bricks",
     icon: BackgroundBricksImg,
 })
@@ -154,7 +154,7 @@ const BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/block
 export class BackgroundBricksBlock extends BackgroundBlock {
     getBaseImg() {
         let img = BackgroundBricksImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#b6a88e")
             })
@@ -167,7 +167,7 @@ export class BackgroundBricksBlock extends BackgroundBlock {
 
 const WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Wood",
     icon: WoodImg,
 })
@@ -176,7 +176,7 @@ const WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png")
 export class WoodBlock extends Block {
     getBaseImg() {
         let img = WoodImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#9b5f21")
             })
@@ -189,7 +189,7 @@ export class WoodBlock extends Block {
 
 const BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Background Wood",
     icon: BackgroundWoodImg,
 })
@@ -198,7 +198,7 @@ const BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/
 export class BackgroundWoodBlock extends BackgroundBlock {
     getBaseImg() {
         let img = BackgroundWoodImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#9b5f21")
             })
@@ -211,7 +211,7 @@ export class BackgroundWoodBlock extends BackgroundBlock {
 
 const PlatformImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Platform",
     icon: PlatformImg,
 })
@@ -230,8 +230,8 @@ export class PlatformBlock extends Block {
         const pol = this._bodyPolygons ||= []
         pol.length = 0
         const { x, y, width, height } = this
-        const hWidth = width/2, hHeight = height/2
-        const xMin = x-hWidth, yMin = y-hHeight, xMax = x+hWidth
+        const hWidth = width / 2, hHeight = height / 2
+        const xMin = x - hWidth, yMin = y - hHeight, xMax = x + hWidth
         pol.push(
             xMin, yMin,
             xMax, yMin,
@@ -240,7 +240,7 @@ export class PlatformBlock extends Block {
     }
     getBaseImg() {
         let img = PlatformImg
-        if(this.color) {
+        if (this.color) {
             img = cachedTransform(img, this.color, () => {
                 return colorizeCanvas(cloneCanvas(img), this.color, "#9b5f21")
             })
@@ -251,15 +251,16 @@ export class PlatformBlock extends Block {
 
 
 const DoorImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door.png")
-const DoorSpriteSheet = new SpriteSheet(new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png"), 2, 1)
+const DoorSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png")
+const DoorSpriteSheet = new SpriteSheet(DoorSpriteSheetImg, 2, 1)
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Door",
     icon: DoorImg,
     showInBuilder: true,
 })
-@Dependencies.add(DoorSpriteSheet)
-@LinkReaction.add("reactToggle", { label:"toggle", isDefault: true })
+@Dependencies.add(DoorSpriteSheetImg)
+@LinkReaction.add("reactToggle", { label: "toggle", isDefault: true })
 @StateBool.define("closed", { default: true, showInBuilder: true })
 @Category.append("engine")
 export class Door extends Block {
@@ -294,7 +295,7 @@ export class Door extends Block {
 
 const CloudImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Cloud",
     icon: CloudImg,
     showInBuilder: true,
@@ -313,7 +314,7 @@ export class Cloud extends Block {
 
     onBlock(obj, details) {
         super.onBlock(obj, details)
-        if(this.blockAge === Infinity) this.blockAge = 0
+        if (this.blockAge === Infinity) this.blockAge = 0
         this.lastBlockIt = this.scene.iteration
     }
 
@@ -321,11 +322,11 @@ export class Cloud extends Block {
         const { blockAge, timeToDisappear, timeToReappear } = this
         const { fps } = this.game
         this.initBlockChecker()
-        if(blockAge === Infinity) this.step = 0
-        else if(blockAge < (timeToDisappear * fps)) this.step = 1
-        else if(blockAge < ((timeToDisappear + timeToReappear) * fps)) {
+        if (blockAge === Infinity) this.step = 0
+        else if (blockAge < (timeToDisappear * fps)) this.step = 1
+        else if (blockAge < ((timeToDisappear + timeToReappear) * fps)) {
             this.step = 2
-        } else if(this.lastBlockIt < this.scene.iteration) {
+        } else if (this.lastBlockIt < this.scene.iteration) {
             this.step = 0
             this.blockAge = Infinity
         }
@@ -340,8 +341,8 @@ export class Cloud extends Block {
     getGraphicsProps() {
         const { step } = this
         const props = super.getGraphicsProps()
-        if(step == 0) props.visibility = 1
-        else if(step == 1) props.visibility = .75
+        if (step == 0) props.visibility = 1
+        else if (step == 1) props.visibility = .75
         else props.visibility = .5
         return props
     }
@@ -372,7 +373,7 @@ class CloudBlockChecker extends GameObject {
 
     update() {
         super.update()
-        if(this.owner.removed) this.remove()
+        if (this.owner.removed) this.remove()
     }
 }
 
@@ -383,11 +384,11 @@ const DetectAud = new Aud("/static/catalogs/std/v1/2Dside/assets/detect.wav")
 
 @Dependencies.add(DetectAud)
 @AttackMixin.add()
-@LinkReaction.add("reactTrigger", { label:"trigger", isDefault: true })
+@LinkReaction.add("reactTrigger", { label: "trigger", isDefault: true })
 @StateNumber.define("lastDetectAge", { default: Infinity, nulableWith: Infinity })
-@StateNumber.define("duration", { default: 2, precision:.1, showInBuilder: true })
-@StateNumber.define("countdown", { default: .5, precision:.1, showInBuilder: true })
-@StateEnum.define("dir", { default: "right", options: { "up": "Up", "down": "Down", "left": "Left", "right": "Right"}, showInBuilder: true })
+@StateNumber.define("duration", { default: 2, precision: .1, showInBuilder: true })
+@StateNumber.define("countdown", { default: .5, precision: .1, showInBuilder: true })
+@StateEnum.define("dir", { default: "right", options: { "up": "Up", "down": "Down", "left": "Left", "right": "Right" }, showInBuilder: true })
 export class Trap extends Block {
 
     init(kwargs) {
@@ -400,15 +401,15 @@ export class Trap extends Block {
 
     getAngle() {
         const { dir } = this
-        if(dir == "right") return 0
-        if(dir == "down") return 90
-        if(dir == "left") return 180
-        if(dir == "up") return 270
+        if (dir == "right") return 0
+        if (dir == "down") return 90
+        if (dir == "left") return 180
+        if (dir == "up") return 270
     }
 
     onBlock(obj, details) {
         super.onBlock(obj, details)
-        if(this.lastDetectAge == Infinity) {
+        if (this.lastDetectAge == Infinity) {
             this.lastDetectAge = 0
             this.game.audio.playSound(DetectAud)
         }
@@ -420,7 +421,7 @@ export class Trap extends Block {
         super.update()
         this.canAttack = this.lastDetectAge > countdown * fps && this.lastDetectAge < (countdown + duration) * fps
         this.lastDetectAge += 1
-        if(this.lastDetectAge > (countdown + duration) * fps) this.lastDetectAge = Infinity
+        if (this.lastDetectAge > (countdown + duration) * fps) this.lastDetectAge = Infinity
     }
 
     getAttackProps(obj) {
@@ -430,7 +431,7 @@ export class Trap extends Block {
     }
 
     reactTrigger(msg) {
-        if(msg.value >= .5 && this.lastDetectAge == Infinity) this.lastDetectAge = this.countdown * this.game.fps
+        if (msg.value >= .5 && this.lastDetectAge == Infinity) this.lastDetectAge = this.countdown * this.game.fps
     }
 
     getGraphicsProps() {
@@ -444,7 +445,7 @@ export class Trap extends Block {
 
 const BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Boxing Trap",
     icon: BoxingGloveImg,
     showInBuilder: true,
@@ -466,7 +467,7 @@ export class BoxingTrap extends Trap {
 
 const BouncingBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Bouncing Block",
     icon: BouncingBlockImg,
     showInBuilder: true,
@@ -487,7 +488,7 @@ export class BouncingBlock extends Block {
 
 const IceBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png")
 
-@MOD_CATALOG.registerObject({
+@CATALOG.registerObject(CATCTX, {
     label: "Ice Block",
     icon: IceBlockImg,
     showInBuilder: true,
