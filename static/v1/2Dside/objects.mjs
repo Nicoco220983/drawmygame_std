@@ -2,7 +2,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 var _SmokeExplosion2, _Pop2, _Class, _Hero3, _applyDecs$c2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Weapon3, _NicoHand2, _Hero4, _Nico2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Projectile3, _Shuriken2, _Extra5, _ShurikenPack2, _Explosion2, _Extra7, _Bomb2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
 var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _Hero2, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22, _initClass23, _classDecs23, _initClass24, _classDecs24, _initClass25, _classDecs25, _initClass26, _classDecs26, _initClass27, _classDecs27, _initClass28, _classDecs28, _initClass29, _classDecs29;
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _identity(t) { return t; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -10,6 +9,9 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -42,17 +44,18 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/index.mjs';
-var CATCTX = new CatalogContext(import.meta.url, {
+import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod } from '../../../../core/v1/index.mjs';
+var REGISTER_COMMON_ARGS = {
+  url: import.meta.url,
   version: "v1",
   perspective: "2Dside"
-});
+};
 export var PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus");
 var SmokeExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png");
 var SmokeExplosionSpriteSheet = new SpriteSheet(SmokeExplosionSpriteSheetImg, 4, 1);
-_classDecs = [CATALOG.registerObject(CATCTX, {
+_classDecs = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   showInBuilder: false
-}), Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud), StateNumber.define("iteration")];
+})), Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud), StateNumber.define("iteration")];
 var _SmokeExplosion;
 var SmokeExplosion = /*#__PURE__*/function (_GameObject) {
   function SmokeExplosion() {
@@ -659,10 +662,10 @@ var NicoSpriteSheets = {
     }(), 4, 1));
   }
 };
-_classDecs9 = [CATALOG.registerObject(CATCTX, {
+_classDecs9 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Nico",
   icon: NicoImg
-}), Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, JumpAud, ArrowsSpriteSheetImg, _NicoHand), _JumpMixin.add({
+})), Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, JumpAud, ArrowsSpriteSheetImg, _NicoHand), _JumpMixin.add({
   jumpSpeed: 500,
   nullJumpSpeed: 800,
   maxJumpBlockAngle: 90
@@ -858,10 +861,10 @@ var SwordImg = new Img("/static/catalogs/std/v1/2Dside/assets/sword.png");
 var SwordSlashSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/slash.png");
 var SwordSlashSpriteSheet = new SpriteSheet(SwordSlashSpriteSheetImg, 3, 2);
 var SwordHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus");
-_classDecs0 = [CATALOG.registerObject(CATCTX, {
+_classDecs0 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Sword",
   icon: SwordImg
-}), Dependencies.add(SwordImg, SwordSlashSpriteSheetImg, SlashAud, SwordHitAud), BodyMixin.add({
+})), Dependencies.add(SwordImg, SwordSlashSpriteSheetImg, SlashAud, SwordHitAud), BodyMixin.add({
   width: 40,
   height: 40
 }), StateNumber.define("lastAttackAge", {
@@ -948,10 +951,10 @@ _initClass0 = _applyDecs$c8[1];
 _initClass0();
 export { _Sword as Sword };
 var BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
-_classDecs1 = [CATALOG.registerObject(CATCTX, {
+_classDecs1 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Boxing Glove",
   icon: BoxingGloveImg
-}), Dependencies.add(BoxingGloveImg), BodyMixin.add({
+})), Dependencies.add(BoxingGloveImg), BodyMixin.add({
   width: 25,
   height: 20
 }), StateNumber.define("lastAttackAge", {
@@ -1043,11 +1046,11 @@ _initClass1 = _applyDecs$c9[1];
 _initClass1();
 export { _BoxingGlove as BoxingGlove };
 var ShurikenImg = new Img("/static/catalogs/std/v1/2Dside/assets/shuriken.png");
-_classDecs10 = [CATALOG.registerObject(CATCTX, {
+_classDecs10 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Shuriken",
   icon: ShurikenImg,
   showInBuilder: false
-}), Dependencies.add(ShurikenImg), BodyMixin.add({
+})), Dependencies.add(ShurikenImg), BodyMixin.add({
   width: 30,
   height: 30
 }), StateNumber.define("itToLive", {
@@ -1095,10 +1098,10 @@ _Shuriken = _applyDecs$c0[0];
 _initClass10 = _applyDecs$c0[1];
 _initClass10();
 export { _Shuriken as Shuriken };
-_classDecs11 = [CATALOG.registerObject(CATCTX, {
+_classDecs11 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "ShurikenPack",
   icon: ShurikenImg
-}), Dependencies.add(ShurikenImg, _Shuriken), BodyMixin.add({
+})), Dependencies.add(ShurikenImg, _Shuriken), BodyMixin.add({
   width: 30,
   height: 30
 }), StateNumber.define("nb", {
@@ -1174,9 +1177,9 @@ _initClass11();
 export { _ShurikenPack as ShurikenPack };
 var ExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png");
 var ExplosionSpriteSheet = new SpriteSheet(ExplosionSpriteSheetImg, 4, 2);
-_classDecs12 = [CATALOG.registerObject(CATCTX, {
+_classDecs12 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   showInBuilder: false
-}), Dependencies.add(ExplosionSpriteSheetImg), AttackMixin.add({
+})), Dependencies.add(ExplosionSpriteSheetImg), AttackMixin.add({
   canAttack: true,
   canGetAttacked: false,
   attackDamages: 100,
@@ -1234,10 +1237,10 @@ export { _Explosion as Explosion };
 var BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png");
 var BombSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png");
 var BombSpriteSheet = new SpriteSheet(BombSpriteSheetImg, 2, 1);
-_classDecs13 = [CATALOG.registerObject(CATCTX, {
+_classDecs13 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Bomb",
   icon: BombImg
-}), Dependencies.add(BombSpriteSheetImg, _Explosion), PhysicsMixin.add({
+})), Dependencies.add(BombSpriteSheetImg, _Explosion), PhysicsMixin.add({
   affectedByGravity: false,
   physicsBounciness: .5,
   physicsStaticFriction: 100,
@@ -1324,10 +1327,10 @@ var JetPackImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack.png");
 var JetPackSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/jetpack_spritesheet.png");
 var JetPackSpriteSheet = new SpriteSheet(JetPackSpriteSheetImg, 2, 1);
 var JetPackAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jetpack.opus");
-_classDecs14 = [CATALOG.registerObject(CATCTX, {
+_classDecs14 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "JetPack",
   icon: JetPackImg
-}), Dependencies.add(JetPackSpriteSheetImg, JetPackAud), BodyMixin.add({
+})), Dependencies.add(JetPackSpriteSheetImg, JetPackAud), BodyMixin.add({
   width: 20,
   height: 50
 }), StateNumber.define("duration", {
@@ -1456,10 +1459,10 @@ _initClass15 = _applyDecs$c13[1];
 _initClass15();
 export { _Enemy as Enemy };
 var SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png");
-_classDecs16 = [CATALOG.registerObject(CATCTX, {
+_classDecs16 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Spiky",
   icon: SpikyImg
-}), Dependencies.add(SpikyImg), AttackMixin.modify({
+})), Dependencies.add(SpikyImg), AttackMixin.modify({
   canAttack: true,
   maxHealth: 100,
   attackDamages: 10,
@@ -1506,10 +1509,10 @@ _initClass16 = _applyDecs$c14[1];
 _initClass16();
 export { _Spiky as Spiky };
 var BlobImg = new Img("/static/catalogs/std/v1/2Dside/assets/blob.png");
-_classDecs17 = [CATALOG.registerObject(CATCTX, {
+_classDecs17 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Blob",
   icon: BlobImg
-}), Dependencies.add(BlobImg), StateProperty.modify("dirX", {
+})), Dependencies.add(BlobImg), StateProperty.modify("dirX", {
   showInBuilder: true
 }), AttackMixin.modify({
   canAttack: true,
@@ -1666,10 +1669,10 @@ _BlobEnemyBlockChecke = _applyDecs$c29[0];
 _initClass18 = _applyDecs$c29[1];
 _initClass18();
 var GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png");
-_classDecs19 = [CATALOG.registerObject(CATCTX, {
+_classDecs19 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Ghost",
   icon: GhostImg
-}), Dependencies.add(GhostImg), StateProperty.modify("dirX", {
+})), Dependencies.add(GhostImg), StateProperty.modify("dirX", {
   showInBuilder: true
 }), AttackMixin.modify({
   canAttack: true,
@@ -1750,10 +1753,10 @@ _initClass19 = _applyDecs$c16[1];
 _initClass19();
 export { _Ghost as Ghost };
 var HeartImg = new Img("/static/catalogs/std/v1/2Dside/assets/heart.png");
-_classDecs20 = [CATALOG.registerObject(CATCTX, {
+_classDecs20 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Heart",
   icon: HeartImg
-}), Dependencies.add(HeartImg), CollectMixin.add({
+})), Dependencies.add(HeartImg), CollectMixin.add({
   canCollect: false,
   canGetCollected: true
 })];
@@ -1807,10 +1810,10 @@ _initClass20 = _applyDecs$c17[1];
 _initClass20();
 export { _Heart as Heart };
 var StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png");
-_classDecs21 = [CATALOG.registerObject(CATCTX, {
+_classDecs21 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Star",
   icon: StarImg
-}), Dependencies.add(StarImg), PhysicsMixin.add({
+})), Dependencies.add(StarImg), PhysicsMixin.add({
   affectedByGravity: false,
   canGetBlocked: true,
   physicsBounciness: 1,
@@ -1885,10 +1888,10 @@ _initClass21 = _applyDecs$c18[1];
 _initClass21();
 export { _Star as Star };
 var CheckpointImg = new Img("/static/catalogs/std/v1/2Dside/assets/checkpoint.png");
-_classDecs22 = [CATALOG.registerObject(CATCTX, {
+_classDecs22 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "CheckPoint",
   icon: CheckpointImg
-}), Dependencies.add(CheckpointImg), CollectMixin.add({
+})), Dependencies.add(CheckpointImg), CollectMixin.add({
   canGetCollected: true
 }), BodyMixin.add({
   width: 40,
@@ -1923,10 +1926,10 @@ _initClass22();
 export { _Checkpoint as Checkpoint };
 var PortalImg = new Img("/static/catalogs/std/v1/2Dside/assets/portal.png");
 var PortalJumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus");
-_classDecs23 = [CATALOG.registerObject(CATCTX, {
+_classDecs23 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Portal",
   icon: PortalImg
-}), Dependencies.add(PortalImg, PortalJumpAud), ActivableMixin.add(), StateBool.define("isOutput", {
+})), Dependencies.add(PortalImg, PortalJumpAud), ActivableMixin.add(), StateBool.define("isOutput", {
   "default": true,
   showInBuilder: true
 }), StateBool.define("isInput", {
@@ -1997,10 +2000,10 @@ _Portal = _applyDecs$c20[0];
 _initClass23 = _applyDecs$c20[1];
 _initClass23();
 export { _Portal as Portal };
-_classDecs24 = [CATALOG.registerObject(CATCTX, {
+_classDecs24 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Hero",
   icon: PopImg
-})];
+}))];
 var _HeroSpawnPoint;
 var HeroSpawnPoint = /*#__PURE__*/function (_GameObject10) {
   function HeroSpawnPoint() {
@@ -2027,10 +2030,10 @@ _HeroSpawnPoint = _applyDecs$c21[0];
 _initClass24 = _applyDecs$c21[1];
 _initClass24();
 export { _HeroSpawnPoint as HeroSpawnPoint };
-_classDecs25 = [CATALOG.registerObject(CATCTX, {
+_classDecs25 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "ObjectSpawner",
   icon: PopImg
-}), Dependencies.add(_Pop), ActivableMixin.add(), BodyMixin.add({
+})), Dependencies.add(_Pop), ActivableMixin.add(), BodyMixin.add({
   width: 50,
   height: 50
 }), ObjectRefs.StateProperty.define("spawnedObjects"), StateNumber.define("lastSpawnAge", {
@@ -2151,9 +2154,9 @@ _ObjectSpawner = _applyDecs$c22[0];
 _initClass25 = _applyDecs$c22[1];
 _initClass25();
 export { _ObjectSpawner as ObjectSpawner };
-_classDecs26 = [CATALOG.registerObject(CATCTX, {
+_classDecs26 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
-}), Category.append("wall"), PhysicsMixin.add({
+})), Category.append("wall"), PhysicsMixin.add({
   canMove: false,
   canBlock: true
 })];
@@ -2272,9 +2275,9 @@ _Wall = _applyDecs$c23[0];
 _initClass26 = _applyDecs$c23[1];
 _initClass26();
 export { _Wall as Wall };
-_classDecs27 = [CATALOG.registerObject(CATCTX, {
+_classDecs27 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
-})];
+}))];
 var _PlatformWall;
 var PlatformWall = /*#__PURE__*/function (_Wall4) {
   function PlatformWall() {
@@ -2311,9 +2314,9 @@ _PlatformWall = _applyDecs$c24[0];
 _initClass27 = _applyDecs$c24[1];
 _initClass27();
 export { _PlatformWall as PlatformWall };
-_classDecs28 = [CATALOG.registerObject(CATCTX, {
+_classDecs28 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
-})];
+}))];
 var _BouncingWall;
 var BouncingWall = /*#__PURE__*/function (_Wall6) {
   function BouncingWall() {
@@ -2336,9 +2339,9 @@ _BouncingWall = _applyDecs$c25[0];
 _initClass28 = _applyDecs$c25[1];
 _initClass28();
 export { _BouncingWall as BouncingWall };
-_classDecs29 = [CATALOG.registerObject(CATCTX, {
+_classDecs29 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
-})];
+}))];
 var _GlidingWall;
 var GlidingWall = /*#__PURE__*/function (_Wall8) {
   function GlidingWall() {

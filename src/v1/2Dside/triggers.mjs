@@ -1,15 +1,16 @@
 const { assign } = Object
 const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypot } = Math
 import {
-    CatalogContext, CATALOG,
+    CATALOG,
     StateProperty, StateBool, StateNumber,
     Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
 } from '../../../../core/v1/index.mjs'
 
-const CATCTX = new CatalogContext(import.meta.url, {
+const REGISTER_COMMON_ARGS = {
+    url: import.meta.url,
     version: "v1",
     perspective: "2Dside",
-})
+}
 
 
 @LinkTrigger.add("isTriggered", { isDefault: true })
@@ -30,7 +31,8 @@ const BurronImg = new Img("/static/catalogs/std/v1/2Dside/assets/button.png")
 const ButtonSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png")
 const ButtonSpriteSheet = new SpriteSheet(ButtonSpriteSheetImg, 2, 1)
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Button",
     icon: BurronImg,
 })
@@ -81,7 +83,8 @@ export class Button extends Trigger {
 
 const ClockImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/clock.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Clock",
     icon: ClockImg,
     showInBuilder: true,
@@ -114,7 +117,8 @@ export class Clock extends Trigger {
 
 const WatcherImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/watcher.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Watcher",
     icon: WatcherImg,
     showInBuilder: true,
@@ -149,7 +153,8 @@ export class Viewer extends Trigger {
 
 const InvertTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/invert_trigger.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Invert (NOT)",
     icon: InvertTriggerImg,
     showInBuilder: true,
@@ -220,7 +225,8 @@ export class AggregatorTrigger extends Trigger {
 
 const MinTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/min_trigger.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Min (AND)",
     icon: MinTriggerImg,
     showInBuilder: true,
@@ -245,7 +251,8 @@ export class MinTrigger extends AggregatorTrigger {
 
 const MaxTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/max_trigger.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Max (OR)",
     icon: MaxTriggerImg,
     showInBuilder: true,
@@ -270,7 +277,8 @@ export class MaxTrigger extends AggregatorTrigger {
 
 const XorTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/xor_trigger.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Xor",
     icon: XorTriggerImg,
     showInBuilder: true,
@@ -298,7 +306,8 @@ export class XorTrigger extends AggregatorTrigger {
 
 const DelayTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/delay_trigger.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Delay",
     icon: DelayTriggerImg,
     showInBuilder: true,

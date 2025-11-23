@@ -6,6 +6,9 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -44,11 +47,12 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
-var CATCTX = new CatalogContext(import.meta.url, {
+import { CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
+var REGISTER_COMMON_ARGS = {
+  url: import.meta.url,
   version: "v1",
   perspective: "2Dside"
-});
+};
 _classDecs = [LinkTrigger.add("isTriggered", {
   isDefault: true
 })];
@@ -81,10 +85,10 @@ export { _Trigger as Trigger };
 var BurronImg = new Img("/static/catalogs/std/v1/2Dside/assets/button.png");
 var ButtonSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png");
 var ButtonSpriteSheet = new SpriteSheet(ButtonSpriteSheetImg, 2, 1);
-_classDecs2 = [CATALOG.registerObject(CATCTX, {
+_classDecs2 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Button",
   icon: BurronImg
-}), Dependencies.add(ButtonSpriteSheetImg), Category.append("engine/trigger"), StateNumber.define("pushAge", {
+})), Dependencies.add(ButtonSpriteSheetImg), Category.append("engine/trigger"), StateNumber.define("pushAge", {
   "default": null,
   nullableWith: null
 }), StateNumber.define("duration", {
@@ -148,11 +152,11 @@ _initClass2 = _applyDecs$c2[1];
 _initClass2();
 export { _Button as Button };
 var ClockImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/clock.png");
-_classDecs3 = [CATALOG.registerObject(CATCTX, {
+_classDecs3 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Clock",
   icon: ClockImg,
   showInBuilder: true
-}), Dependencies.add(ClockImg), StateNumber.define("iteration"), StateNumber.define("triggered_period", {
+})), Dependencies.add(ClockImg), StateNumber.define("iteration"), StateNumber.define("triggered_period", {
   "default": 1,
   precision: .1,
   showInBuilder: true
@@ -200,11 +204,11 @@ _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _Clock as Clock };
 var WatcherImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/watcher.png");
-_classDecs4 = [CATALOG.registerObject(CATCTX, {
+_classDecs4 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Watcher",
   icon: WatcherImg,
   showInBuilder: true
-}), Dependencies.add(WatcherImg), StateBool.define("watchHeros", {
+})), Dependencies.add(WatcherImg), StateBool.define("watchHeros", {
   "default": true,
   showInBuilder: true
 }), StateNumber.define("watchDistance", {
@@ -263,11 +267,11 @@ _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _Viewer as Viewer };
 var InvertTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/invert_trigger.png");
-_classDecs5 = [CATALOG.registerObject(CATCTX, {
+_classDecs5 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Invert (NOT)",
   icon: InvertTriggerImg,
   showInBuilder: true
-}), Dependencies.add(InvertTriggerImg), LinkReaction.add("reactInvert", {
+})), Dependencies.add(InvertTriggerImg), LinkReaction.add("reactInvert", {
   label: "Invert",
   isDefault: true
 })];
@@ -372,11 +376,11 @@ _initClass6 = _applyDecs$c6[1];
 _initClass6();
 export { _AggregatorTrigger as AggregatorTrigger };
 var MinTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/min_trigger.png");
-_classDecs7 = [CATALOG.registerObject(CATCTX, {
+_classDecs7 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Min (AND)",
   icon: MinTriggerImg,
   showInBuilder: true
-}), Dependencies.add(MinTriggerImg)];
+})), Dependencies.add(MinTriggerImg)];
 var _MinTrigger;
 var MinTrigger = /*#__PURE__*/function (_AggregatorTrigger4) {
   function MinTrigger() {
@@ -409,11 +413,11 @@ _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _MinTrigger as MinTrigger };
 var MaxTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/max_trigger.png");
-_classDecs8 = [CATALOG.registerObject(CATCTX, {
+_classDecs8 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Max (OR)",
   icon: MaxTriggerImg,
   showInBuilder: true
-}), Dependencies.add(MaxTriggerImg)];
+})), Dependencies.add(MaxTriggerImg)];
 var _MaxTrigger;
 var MaxTrigger = /*#__PURE__*/function (_AggregatorTrigger6) {
   function MaxTrigger() {
@@ -446,11 +450,11 @@ _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _MaxTrigger as MaxTrigger };
 var XorTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/xor_trigger.png");
-_classDecs9 = [CATALOG.registerObject(CATCTX, {
+_classDecs9 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Xor",
   icon: XorTriggerImg,
   showInBuilder: true
-}), Dependencies.add(XorTriggerImg)];
+})), Dependencies.add(XorTriggerImg)];
 var _XorTrigger;
 var XorTrigger = /*#__PURE__*/function (_AggregatorTrigger8) {
   function XorTrigger() {
@@ -496,11 +500,11 @@ _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _XorTrigger as XorTrigger };
 var DelayTriggerImg = new Img("/static/catalogs/std/v1/2Dside/assets/triggers/delay_trigger.png");
-_classDecs0 = [CATALOG.registerObject(CATCTX, {
+_classDecs0 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Delay",
   icon: DelayTriggerImg,
   showInBuilder: true
-}), Dependencies.add(DelayTriggerImg), LinkReaction.add("reactDelay", {
+})), Dependencies.add(DelayTriggerImg), LinkReaction.add("reactDelay", {
   label: "delay",
   isDefault: true
 }), StateProperty.define(), StateNumber.define("delay", {

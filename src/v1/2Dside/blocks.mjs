@@ -1,15 +1,17 @@
 const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypot } = Math
 import {
     cachedTransform, cloneCanvas, colorizeCanvas,
-    CatalogContext, CATALOG,
+    CATALOG,
     StateProperty, StateBool, StateNumber, StateString, StateEnum,
     Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
 } from '../../../../core/v1/index.mjs'
 
-const CATCTX = new CatalogContext(import.meta.url, {
+
+const REGISTER_COMMON_ARGS = {
+    url: import.meta.url,
     version: "v1",
     perspective: "2Dside",
-})
+}
 
 
 @Category.append("block")
@@ -58,7 +60,8 @@ export class BackgroundBlock extends GameObject {
 
 const DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Dirt",
     icon: DirtImg,
 })
@@ -80,7 +83,8 @@ export class DirtBlock extends Block {
 
 const StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Stone",
     icon: StoneImg,
 })
@@ -101,7 +105,8 @@ export class StoneBlock extends Block {
 
 const BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Background Stone",
     icon: BackgroundStoneImg,
 })
@@ -123,7 +128,8 @@ export class BackgroundStoneBlock extends BackgroundBlock {
 
 const BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Bricks",
     icon: BricksImg,
 })
@@ -145,7 +151,8 @@ export class BricksBlock extends Block {
 
 const BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Background Bricks",
     icon: BackgroundBricksImg,
 })
@@ -167,7 +174,8 @@ export class BackgroundBricksBlock extends BackgroundBlock {
 
 const WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Wood",
     icon: WoodImg,
 })
@@ -189,7 +197,8 @@ export class WoodBlock extends Block {
 
 const BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Background Wood",
     icon: BackgroundWoodImg,
 })
@@ -211,7 +220,8 @@ export class BackgroundWoodBlock extends BackgroundBlock {
 
 const PlatformImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Platform",
     icon: PlatformImg,
 })
@@ -254,7 +264,8 @@ const DoorImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door.png")
 const DoorSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png")
 const DoorSpriteSheet = new SpriteSheet(DoorSpriteSheetImg, 2, 1)
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Door",
     icon: DoorImg,
     showInBuilder: true,
@@ -295,7 +306,8 @@ export class Door extends Block {
 
 const CloudImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Cloud",
     icon: CloudImg,
     showInBuilder: true,
@@ -445,7 +457,8 @@ export class Trap extends Block {
 
 const BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Boxing Trap",
     icon: BoxingGloveImg,
     showInBuilder: true,
@@ -467,7 +480,8 @@ export class BoxingTrap extends Trap {
 
 const BouncingBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Bouncing Block",
     icon: BouncingBlockImg,
     showInBuilder: true,
@@ -488,7 +502,8 @@ export class BouncingBlock extends Block {
 
 const IceBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Ice Block",
     icon: IceBlockImg,
     showInBuilder: true,

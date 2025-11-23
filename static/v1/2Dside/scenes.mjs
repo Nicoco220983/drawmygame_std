@@ -38,12 +38,13 @@ var floor = Math.floor,
   ceil = Math.ceil,
   min = Math.min,
   max = Math.max;
-import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/index.mjs';
+import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/index.mjs';
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs';
-var CATCTX = new CatalogContext(import.meta.url, {
+var REGISTER_COMMON_ARGS = {
+  url: import.meta.url,
   version: "v1",
   perspective: "2Dside"
-});
+};
 var IS_SERVER_ENV = typeof window === 'undefined';
 _classDecs = [StateNumber.undefine("z"), StateNumber.undefine("y"), StateNumber.undefine("x"), Category.append("manager")];
 var _Manager;
@@ -77,10 +78,10 @@ _BorderManager = _applyDecs$c2[0];
 _initClass2 = _applyDecs$c2[1];
 _initClass2();
 export { _BorderManager as BorderManager };
-_classDecs3 = [CATALOG.registerObject(CATCTX, {
+_classDecs3 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Block Border",
   showInBuilder: true
-})];
+}))];
 var _BlockBorderManager;
 var BlockBorderManager = /*#__PURE__*/function (_BorderManager4) {
   function BlockBorderManager() {
@@ -139,10 +140,10 @@ _BlockBorderManager = _applyDecs$c3[0];
 _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _BlockBorderManager as BlockBorderManager };
-_classDecs4 = [CATALOG.registerObject(CATCTX, {
+_classDecs4 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Damage Border",
   showInBuilder: true
-}), StateNumber.define("heroOutDamages", {
+})), StateNumber.define("heroOutDamages", {
   "default": 10,
   nullableWith: Infinity,
   showInBuilder: true
@@ -193,10 +194,10 @@ _DamageBorderManager = _applyDecs$c4[0];
 _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _DamageBorderManager as DamageBorderManager };
-_classDecs5 = [CATALOG.registerObject(CATCTX, {
+_classDecs5 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Loop Border",
   showInBuilder: true
-})];
+}))];
 var _LoopBorderManager;
 var LoopBorderManager = /*#__PURE__*/function (_BorderManager8) {
   function LoopBorderManager() {
@@ -226,10 +227,10 @@ _LoopBorderManager = _applyDecs$c5[0];
 _initClass5 = _applyDecs$c5[1];
 _initClass5();
 export { _LoopBorderManager as LoopBorderManager };
-_classDecs6 = [CATALOG.registerObject(CATCTX, {
+_classDecs6 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Hero Lives",
   showInBuilder: true
-}), Category.append("heroslives"), StateProperty.define("deathsIts"), StateNumber.define("delay", {
+})), Category.append("heroslives"), StateProperty.define("deathsIts"), StateNumber.define("delay", {
   "default": 1,
   precision: .5,
   showInBuilder: true
@@ -305,10 +306,10 @@ _ViewManager = _applyDecs$c7[0];
 _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _ViewManager as ViewManager };
-_classDecs8 = [CATALOG.registerObject(CATCTX, {
+_classDecs8 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "View Heros Center",
   showInBuilder: true
-})];
+}))];
 var _ViewHerosCenterManag;
 var ViewHerosCenterManager = /*#__PURE__*/function (_ViewManager4) {
   function ViewHerosCenterManager() {
@@ -354,10 +355,10 @@ _ViewHerosCenterManag = _applyDecs$c8[0];
 _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _ViewHerosCenterManag as ViewHerosCenterManager };
-_classDecs9 = [CATALOG.registerObject(CATCTX, {
+_classDecs9 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "View First Hero",
   showInBuilder: true
-})];
+}))];
 var _ViewFirstHeroManager;
 var ViewFirstHeroManager = /*#__PURE__*/function (_ViewManager6) {
   function ViewFirstHeroManager() {
@@ -444,9 +445,9 @@ _ViewFirstHeroManager = _applyDecs$c9[0];
 _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _ViewFirstHeroManager as ViewFirstHeroManager };
-_classDecs0 = [CATALOG.registerObject(CATCTX, {
+_classDecs0 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Physics"
-}), StateNumber.define("gravityAcc", {
+})), StateNumber.define("gravityAcc", {
   "default": 1000,
   precision: 100
 }), StateNumber.define("gravityMaxSpeed", {
@@ -468,9 +469,9 @@ _PhysicsManager = _applyDecs$c0[0];
 _initClass0 = _applyDecs$c0[1];
 _initClass0();
 export { _PhysicsManager as PhysicsManager };
-_classDecs1 = [CATALOG.registerObject(CATCTX, {
+_classDecs1 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Attack"
-}), Category.append("attack")];
+})), Category.append("attack")];
 var _AttackManager;
 var AttackManager = /*#__PURE__*/function (_Manager10) {
   function AttackManager() {
@@ -742,9 +743,9 @@ _initClass10 = _applyDecs$c10[1];
 _initClass10();
 export { _Background as Background };
 var GreenLandscapeImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg");
-_classDecs11 = [CATALOG.registerObject(CATCTX, {
+_classDecs11 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Green Landscape"
-}), Dependencies.add(GreenLandscapeImg)];
+})), Dependencies.add(GreenLandscapeImg)];
 var _GreenLandscapeBackgr;
 var GreenLandscapeBackground = /*#__PURE__*/function (_Background4) {
   function GreenLandscapeBackground() {
@@ -766,9 +767,9 @@ _initClass11 = _applyDecs$c11[1];
 _initClass11();
 export { _GreenLandscapeBackgr as GreenLandscapeBackground };
 var RockMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg");
-_classDecs12 = [CATALOG.registerObject(CATCTX, {
+_classDecs12 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Rock Mountains"
-}), Dependencies.add(RockMountainsImg)];
+})), Dependencies.add(RockMountainsImg)];
 var _RockMountainsBackgro;
 var RockMountainsBackground = /*#__PURE__*/function (_Background6) {
   function RockMountainsBackground() {
@@ -790,9 +791,9 @@ _initClass12 = _applyDecs$c12[1];
 _initClass12();
 export { _RockMountainsBackgro as RockMountainsBackground };
 var SnowMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg");
-_classDecs13 = [CATALOG.registerObject(CATCTX, {
+_classDecs13 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Snow Mountains"
-}), Dependencies.add(SnowMountainsImg)];
+})), Dependencies.add(SnowMountainsImg)];
 var _SnowMountainsBackgro;
 var SnowMountainsBackground = /*#__PURE__*/function (_Background8) {
   function SnowMountainsBackground() {
@@ -814,9 +815,9 @@ _initClass13 = _applyDecs$c13[1];
 _initClass13();
 export { _SnowMountainsBackgro as SnowMountainsBackground };
 var DarkForestImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg");
-_classDecs14 = [CATALOG.registerObject(CATCTX, {
+_classDecs14 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Dark Forest"
-}), Dependencies.add(DarkForestImg)];
+})), Dependencies.add(DarkForestImg)];
 var _DarkForestBackground;
 var DarkForestBackground = /*#__PURE__*/function (_Background0) {
   function DarkForestBackground() {
@@ -838,9 +839,9 @@ _initClass14 = _applyDecs$c14[1];
 _initClass14();
 export { _DarkForestBackground as DarkForestBackground };
 var DarkCityImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg");
-_classDecs15 = [CATALOG.registerObject(CATCTX, {
+_classDecs15 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Dark City"
-}), Dependencies.add(DarkCityImg)];
+})), Dependencies.add(DarkCityImg)];
 var _DarkCityBackground;
 var DarkCityBackground = /*#__PURE__*/function (_Background10) {
   function DarkCityBackground() {
@@ -861,7 +862,7 @@ _DarkCityBackground = _applyDecs$c15[0];
 _initClass15 = _applyDecs$c15[1];
 _initClass15();
 export { _DarkCityBackground as DarkCityBackground };
-_classDecs16 = [CATALOG.registerScene(CATCTX), Dependencies.add(_GreenLandscapeBackgr), StateBool.define("killAllEnemies", {
+_classDecs16 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_GreenLandscapeBackgr), StateBool.define("killAllEnemies", {
   "default": false,
   showInBuilder: true
 }), StateBool.define("catchAllStars", {
@@ -1010,7 +1011,7 @@ _StandardScene = _applyDecs$c16[0];
 _initClass16 = _applyDecs$c16[1];
 _initClass16();
 export { _StandardScene as StandardScene };
-_classDecs17 = [CATALOG.registerScene(CATCTX), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("duration", {
+_classDecs17 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("duration", {
   "default": 3 * 60,
   precision: 30,
   showInBuilder: true
@@ -1240,9 +1241,9 @@ _initClass17 = _applyDecs$c17[1];
 _initClass17();
 export { _TagScene as TagScene };
 var TagImg = new Img("/static/catalogs/std/v1/2Dside/assets/tag.png");
-_classDecs18 = [CATALOG.registerObject(CATCTX, {
+_classDecs18 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   showInBuilder: false
-}), Dependencies.add(TagImg), OwnerableMixin.add({
+})), Dependencies.add(TagImg), OwnerableMixin.add({
   removedWithOwner: false
 })];
 var _Tag;
@@ -1288,7 +1289,7 @@ _Tag = _applyDecs$c18[0];
 _initClass18 = _applyDecs$c18[1];
 _initClass18();
 export { _Tag as Tag };
-_classDecs19 = [CATALOG.registerScene(CATCTX), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("duration", {
+_classDecs19 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("duration", {
   "default": 3 * 60,
   precision: 30,
   showInBuilder: true
@@ -1512,9 +1513,9 @@ function countStarExtras(hero) {
 }
 
 // WAIGTING
-_classDecs21 = [CATALOG.registerScene(CATCTX, {
+_classDecs21 = [CATALOG.registerScene(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   showInBuilder: false
-})];
+}))];
 var _WaitingScene;
 var WaitingScene = /*#__PURE__*/function (_SceneCommon) {
   function WaitingScene() {

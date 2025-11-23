@@ -3,16 +3,17 @@ const { floor, round, ceil, min, max } = Math
 import {
     sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys,
     GraphicsProps,
-    CatalogContext, CATALOG,
+    CATALOG,
     StateProperty, StateBool, StateNumber,
     Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
 } from '../../../../core/v1/index.mjs'
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs'
 
-const CATCTX = new CatalogContext(import.meta.url, {
+const REGISTER_COMMON_ARGS = {
+    url: import.meta.url,
     version: "v1",
     perspective: "2Dside",
-})
+}
 
 
 const IS_SERVER_ENV = (typeof window === 'undefined')
@@ -29,7 +30,8 @@ export class Manager extends GameObject { }
 export class BorderManager extends Manager { }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Block Border",
     showInBuilder: true,
 })
@@ -52,7 +54,8 @@ export class BlockBorderManager extends BorderManager {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Damage Border",
     showInBuilder: true,
 })
@@ -83,7 +86,8 @@ export class DamageBorderManager extends BorderManager {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Loop Border",
     showInBuilder: true,
 })
@@ -103,7 +107,8 @@ export class LoopBorderManager extends BorderManager {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Hero Lives",
     showInBuilder: true,
 })
@@ -148,7 +153,8 @@ export class HerosLivesManager extends Manager {
 export class ViewManager extends Manager { }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "View Heros Center",
     showInBuilder: true
 })
@@ -185,7 +191,8 @@ export class ViewHerosCenterManager extends ViewManager {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "View First Hero",
     showInBuilder: true
 })
@@ -257,7 +264,8 @@ export class ViewFirstHeroManager extends ViewManager {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Physics",
 })
 @StateNumber.define("gravityAcc", { default: 1000, precision: 100 })
@@ -266,7 +274,8 @@ export class ViewFirstHeroManager extends ViewManager {
 export class PhysicsManager extends Manager { }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Attack",
 })
 @Category.append("attack")
@@ -451,7 +460,8 @@ export class Background extends GameObject {
 
 const GreenLandscapeImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/green_landscape.jpg")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Green Landscape",
 })
 @Dependencies.add(GreenLandscapeImg)
@@ -464,7 +474,8 @@ export class GreenLandscapeBackground extends Background {
 
 const RockMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/rock_mountains.jpg")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Rock Mountains",
 })
 @Dependencies.add(RockMountainsImg)
@@ -477,7 +488,8 @@ export class RockMountainsBackground extends Background {
 
 const SnowMountainsImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/snow_mountains.jpg")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Snow Mountains",
 })
 @Dependencies.add(SnowMountainsImg)
@@ -490,7 +502,8 @@ export class SnowMountainsBackground extends Background {
 
 const DarkForestImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_forest.jpg")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Dark Forest",
 })
 @Dependencies.add(DarkForestImg)
@@ -503,7 +516,8 @@ export class DarkForestBackground extends Background {
 
 const DarkCityImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/dark_city.jpg")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Dark City",
 })
 @Dependencies.add(DarkCityImg)
@@ -516,7 +530,7 @@ export class DarkCityBackground extends Background {
 
 // Standard
 
-@CATALOG.registerScene(CATCTX)
+@CATALOG.registerScene(REGISTER_COMMON_ARGS)
 @Dependencies.add(GreenLandscapeBackground)
 @StateBool.define("killAllEnemies", { default: false, showInBuilder: true })
 @StateBool.define("catchAllStars", { default: false, showInBuilder: true })
@@ -607,7 +621,7 @@ export class StandardScene extends GameScene {
 
 // TAG
 
-@CATALOG.registerScene(CATCTX)
+@CATALOG.registerScene(REGISTER_COMMON_ARGS)
 @Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
@@ -775,7 +789,8 @@ export class TagScene extends GameScene {
 
 const TagImg = new Img("/static/catalogs/std/v1/2Dside/assets/tag.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     showInBuilder: false
 })
 @Dependencies.add(TagImg)
@@ -810,7 +825,7 @@ export class Tag extends GameObject {
 }
 
 
-@CATALOG.registerScene(CATCTX)
+@CATALOG.registerScene(REGISTER_COMMON_ARGS)
 @Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
 @GameObject.StateProperty.define("attackManager", {
@@ -972,7 +987,8 @@ function countStarExtras(hero) {
 
 // WAIGTING
 
-@CATALOG.registerScene(CATCTX, {
+@CATALOG.registerScene({
+    ...REGISTER_COMMON_ARGS,
     showInBuilder: false,
 })
 export class WaitingScene extends SceneCommon {

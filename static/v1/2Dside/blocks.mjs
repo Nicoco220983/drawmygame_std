@@ -1,6 +1,8 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _Class, _Block3, _applyDecs$c, _Class2, _BackgroundBlock3, _applyDecs$c2, _Block4, _DirtBlock2, _Block6, _StoneBlock2, _BackgroundBlock4, _BackgroundStoneBlock2, _Block8, _BricksBlock2, _BackgroundBlock6, _BackgroundBricksBlock, _Block0, _WoodBlock2, _BackgroundBlock8, _BackgroundWoodBlock2, _Block10, _PlatformBlock2, _Block12, _Door2, _Block14, _Cloud2, _CloudBlockChecker2, _Block16, _Trap2, _Trap3, _BoxingTrap2, _Block18, _BouncingBlock2, _Block20, _IceBlock2;
 var _initClass, _classDecs, _Block2, _initClass2, _classDecs2, _BackgroundBlock2, _initClass3, _classDecs3, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15;
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -40,11 +42,12 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { cachedTransform, cloneCanvas, colorizeCanvas, CatalogContext, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
-var CATCTX = new CatalogContext(import.meta.url, {
+import { cachedTransform, cloneCanvas, colorizeCanvas, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
+var REGISTER_COMMON_ARGS = {
+  url: import.meta.url,
   version: "v1",
   perspective: "2Dside"
-});
+};
 _classDecs = [Category.append("block"), PhysicsMixin.add({
   canMove: false,
   canBlock: true
@@ -118,10 +121,10 @@ new (_BackgroundBlock2 = (_BackgroundBlock3 = /*#__PURE__*/function (_GameObject
 }(_identity), _defineProperty(_Class2, _BackgroundBlock2, void 0), _Class2)();
 export { _BackgroundBlock as BackgroundBlock };
 var DirtImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/dirt.png");
-_classDecs3 = [CATALOG.registerObject(CATCTX, {
+_classDecs3 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Dirt",
   icon: DirtImg
-}), Dependencies.add(DirtImg), StateString.define("color", {
+})), Dependencies.add(DirtImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _DirtBlock;
@@ -152,10 +155,10 @@ _initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _DirtBlock as DirtBlock };
 var StoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/stone.png");
-_classDecs4 = [CATALOG.registerObject(CATCTX, {
+_classDecs4 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Stone",
   icon: StoneImg
-}), Dependencies.add(StoneImg), StateString.define("color", {
+})), Dependencies.add(StoneImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _StoneBlock;
@@ -186,10 +189,10 @@ _initClass4 = _applyDecs$c4[1];
 _initClass4();
 export { _StoneBlock as StoneBlock };
 var BackgroundStoneImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_stone.png");
-_classDecs5 = [CATALOG.registerObject(CATCTX, {
+_classDecs5 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Background Stone",
   icon: BackgroundStoneImg
-}), Dependencies.add(BackgroundStoneImg), StateString.define("color", {
+})), Dependencies.add(BackgroundStoneImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BackgroundStoneBlock;
@@ -220,10 +223,10 @@ _initClass5 = _applyDecs$c5[1];
 _initClass5();
 export { _BackgroundStoneBlock as BackgroundStoneBlock };
 var BricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bricks.png");
-_classDecs6 = [CATALOG.registerObject(CATCTX, {
+_classDecs6 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Bricks",
   icon: BricksImg
-}), Dependencies.add(BricksImg), StateString.define("color", {
+})), Dependencies.add(BricksImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BricksBlock;
@@ -254,10 +257,10 @@ _initClass6 = _applyDecs$c6[1];
 _initClass6();
 export { _BricksBlock as BricksBlock };
 var BackgroundBricksImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_bricks.png");
-_classDecs7 = [CATALOG.registerObject(CATCTX, {
+_classDecs7 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Background Bricks",
   icon: BackgroundBricksImg
-}), Dependencies.add(BackgroundBricksImg), StateString.define("color", {
+})), Dependencies.add(BackgroundBricksImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BackgroundBricksBloc;
@@ -288,10 +291,10 @@ _initClass7 = _applyDecs$c7[1];
 _initClass7();
 export { _BackgroundBricksBloc as BackgroundBricksBlock };
 var WoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/wood.png");
-_classDecs8 = [CATALOG.registerObject(CATCTX, {
+_classDecs8 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Wood",
   icon: WoodImg
-}), Dependencies.add(WoodImg), StateString.define("color", {
+})), Dependencies.add(WoodImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _WoodBlock;
@@ -322,10 +325,10 @@ _initClass8 = _applyDecs$c8[1];
 _initClass8();
 export { _WoodBlock as WoodBlock };
 var BackgroundWoodImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/background_wood.png");
-_classDecs9 = [CATALOG.registerObject(CATCTX, {
+_classDecs9 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Background Wood",
   icon: BackgroundWoodImg
-}), Dependencies.add(BackgroundWoodImg), StateString.define("color", {
+})), Dependencies.add(BackgroundWoodImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _BackgroundWoodBlock;
@@ -356,10 +359,10 @@ _initClass9 = _applyDecs$c9[1];
 _initClass9();
 export { _BackgroundWoodBlock as BackgroundWoodBlock };
 var PlatformImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/platform.png");
-_classDecs0 = [CATALOG.registerObject(CATCTX, {
+_classDecs0 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Platform",
   icon: PlatformImg
-}), Dependencies.add(PlatformImg), StateString.define("color", {
+})), Dependencies.add(PlatformImg), StateString.define("color", {
   showInBuilder: true
 })];
 var _PlatformBlock;
@@ -417,11 +420,11 @@ export { _PlatformBlock as PlatformBlock };
 var DoorImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door.png");
 var DoorSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/door_spritesheet.png");
 var DoorSpriteSheet = new SpriteSheet(DoorSpriteSheetImg, 2, 1);
-_classDecs1 = [CATALOG.registerObject(CATCTX, {
+_classDecs1 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Door",
   icon: DoorImg,
   showInBuilder: true
-}), Dependencies.add(DoorSpriteSheetImg), LinkReaction.add("reactToggle", {
+})), Dependencies.add(DoorSpriteSheetImg), LinkReaction.add("reactToggle", {
   label: "toggle",
   isDefault: true
 }), StateBool.define("closed", {
@@ -475,11 +478,11 @@ _initClass1 = _applyDecs$c1[1];
 _initClass1();
 export { _Door as Door };
 var CloudImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/cloud.png");
-_classDecs10 = [CATALOG.registerObject(CATCTX, {
+_classDecs10 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Cloud",
   icon: CloudImg,
   showInBuilder: true
-}), Dependencies.add(CloudImg), StateNumber.define("blockAge", {
+})), Dependencies.add(CloudImg), StateNumber.define("blockAge", {
   "default": Infinity,
   nullableWith: Infinity
 }), StateNumber.define("timeToDisappear", {
@@ -696,11 +699,11 @@ _initClass12 = _applyDecs$c11[1];
 _initClass12();
 export { _Trap as Trap };
 var BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png");
-_classDecs13 = [CATALOG.registerObject(CATCTX, {
+_classDecs13 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Boxing Trap",
   icon: BoxingGloveImg,
   showInBuilder: true
-}), Dependencies.add(BoxingGloveImg)];
+})), Dependencies.add(BoxingGloveImg)];
 var _BoxingTrap;
 var BoxingTrap = /*#__PURE__*/function (_Trap4) {
   function BoxingTrap() {
@@ -729,11 +732,11 @@ _initClass13 = _applyDecs$c12[1];
 _initClass13();
 export { _BoxingTrap as BoxingTrap };
 var BouncingBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/bouncing_block.png");
-_classDecs14 = [CATALOG.registerObject(CATCTX, {
+_classDecs14 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Bouncing Block",
   icon: BouncingBlockImg,
   showInBuilder: true
-}), Dependencies.add(BouncingBlockImg)];
+})), Dependencies.add(BouncingBlockImg)];
 var _BouncingBlock;
 var BouncingBlock = /*#__PURE__*/function (_Block19) {
   function BouncingBlock() {
@@ -761,11 +764,11 @@ _initClass14 = _applyDecs$c13[1];
 _initClass14();
 export { _BouncingBlock as BouncingBlock };
 var IceBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/ice.png");
-_classDecs15 = [CATALOG.registerObject(CATCTX, {
+_classDecs15 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Ice Block",
   icon: IceBlockImg,
   showInBuilder: true
-}), Dependencies.add(IceBlockImg)];
+})), Dependencies.add(IceBlockImg)];
 var _IceBlock;
 var IceBlock = /*#__PURE__*/function (_Block21) {
   function IceBlock() {

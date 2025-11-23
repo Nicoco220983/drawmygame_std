@@ -35,11 +35,7 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random;
 var assign = Object.assign;
-import { cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas, GraphicsEngine, GraphicsProps, CatalogContext, CATALOG, Dependencies, GameObject, Text, GameObjectGroup, Img } from "../../../../core/v1/index.mjs";
-var CATCTX = new CatalogContext(import.meta.url, {
-  version: "v1",
-  perspective: "2Dside"
-});
+import { cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas, GraphicsEngine, GraphicsProps, Dependencies, GameObject, Text, GameObjectGroup, Img } from "../../../../core/v1/index.mjs";
 export var JoypadScene = /*#__PURE__*/function () {
   function JoypadScene(game) {
     _classCallCheck(this, JoypadScene);

@@ -4,14 +4,8 @@ const { assign } = Object
 import {
     cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas,
     GraphicsEngine, GraphicsProps,
-    CatalogContext, CATALOG,
     Dependencies, GameObject, Text, GameObjectGroup, Img,
 } from "../../../../core/v1/index.mjs"
-
-const CATCTX = new CatalogContext(import.meta.url, {
-    version: "v1",
-    perspective: "2Dside",
-})
 
 
 export class JoypadScene {

@@ -3,16 +3,17 @@ const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypo
 import {
     sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys,
     GraphicsProps,
-    CatalogContext, CATALOG,
+    CATALOG,
     StateProperty, StateBool, StateNumber,
     GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod,
 } from '../../../../core/v1/index.mjs'
 
 
-const CATCTX = new CatalogContext(import.meta.url, {
+const REGISTER_COMMON_ARGS = {
+    url: import.meta.url,
     version: "v1",
     perspective: "2Dside",
-})
+}
 
 
 export const PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus")
@@ -21,7 +22,8 @@ export const PuffAud = new Aud("/static/catalogs/std/v1/2Dside/assets/puff.opus"
 const SmokeExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/smoke_explosion.png")
 const SmokeExplosionSpriteSheet = new SpriteSheet(SmokeExplosionSpriteSheetImg, 4, 1)
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     showInBuilder: false
 })
 @Dependencies.add(SmokeExplosionSpriteSheetImg, PuffAud)
@@ -474,7 +476,8 @@ const NicoSpriteSheets = {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Nico",
     icon: NicoImg,
 })
@@ -636,7 +639,8 @@ const SwordSlashSpriteSheet = new SpriteSheet(SwordSlashSpriteSheetImg, 3, 2)
 
 const SwordHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/sword_hit.opus")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Sword",
     icon: SwordImg,
 })
@@ -709,7 +713,8 @@ export class Sword extends Weapon {
 
 const BoxingGloveImg = new Img("/static/catalogs/std/v1/2Dside/assets/boxing_glove.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Boxing Glove",
     icon: BoxingGloveImg,
 })
@@ -787,7 +792,8 @@ export class BoxingGlove extends Weapon {
 const ShurikenImg = new Img("/static/catalogs/std/v1/2Dside/assets/shuriken.png")
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Shuriken",
     icon: ShurikenImg,
     showInBuilder: false,
@@ -825,7 +831,8 @@ export class Shuriken extends Projectile {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "ShurikenPack",
     icon: ShurikenImg,
 })
@@ -884,7 +891,8 @@ export class ShurikenPack extends Extra {
 const ExplosionSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/explosion.png")
 const ExplosionSpriteSheet = new SpriteSheet(ExplosionSpriteSheetImg, 4, 2)
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     showInBuilder: false
 })
 @Dependencies.add(ExplosionSpriteSheetImg)
@@ -937,7 +945,8 @@ const BombImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb.png")
 const BombSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/bomb_spritesheet.png")
 const BombSpriteSheet = new SpriteSheet(BombSpriteSheetImg, 2, 1)
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Bomb",
     icon: BombImg
 })
@@ -1005,7 +1014,8 @@ const JetPackSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/jet
 const JetPackSpriteSheet = new SpriteSheet(JetPackSpriteSheetImg, 2, 1)
 const JetPackAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jetpack.opus")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "JetPack",
     icon: JetPackImg,
 })
@@ -1104,7 +1114,8 @@ export class Enemy extends GameObject {
 
 const SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Spiky",
     icon: SpikyImg,
 })
@@ -1142,7 +1153,8 @@ export class Spiky extends Enemy {
 
 const BlobImg = new Img("/static/catalogs/std/v1/2Dside/assets/blob.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Blob",
     icon: BlobImg,
 })
@@ -1271,7 +1283,8 @@ class BlobEnemyBlockChecker extends GameObject {
 
 const GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Ghost",
     icon: GhostImg,
 })
@@ -1343,7 +1356,8 @@ export class Ghost extends Enemy {
 
 const HeartImg = new Img("/static/catalogs/std/v1/2Dside/assets/heart.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Heart",
     icon: HeartImg,
 })
@@ -1385,7 +1399,8 @@ export class Heart extends GameObject {
 
 const StarImg = new Img("/static/catalogs/std/v1/2Dside/assets/star.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Star",
     icon: StarImg,
 })
@@ -1447,7 +1462,8 @@ export class Star extends Extra {
 
 const CheckpointImg = new Img("/static/catalogs/std/v1/2Dside/assets/checkpoint.png")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "CheckPoint",
     icon: CheckpointImg,
 })
@@ -1476,7 +1492,8 @@ export class Checkpoint extends GameObject {
 const PortalImg = new Img("/static/catalogs/std/v1/2Dside/assets/portal.png")
 const PortalJumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/portal_jump.opus")
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Portal",
     icon: PortalImg,
 })
@@ -1528,7 +1545,8 @@ export class Portal extends GameObject {
 
 // SPAWNER
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "Hero",
     icon: PopImg,
 })
@@ -1545,7 +1563,8 @@ export class HeroSpawnPoint extends GameObject {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     label: "ObjectSpawner",
     icon: PopImg,
 })
@@ -1640,7 +1659,8 @@ export class ObjectSpawner extends GameObject {
 
 // WALL
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     stateful: false,
 })
 @Category.append("wall")
@@ -1717,7 +1737,8 @@ export class Wall extends GameObject {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     stateful: false,
 })
 export class PlatformWall extends Wall {
@@ -1738,7 +1759,8 @@ export class PlatformWall extends Wall {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     stateful: false,
 })
 export class BouncingWall extends Wall {
@@ -1751,7 +1773,8 @@ export class BouncingWall extends Wall {
 }
 
 
-@CATALOG.registerObject(CATCTX, {
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
     stateful: false,
 })
 export class GlidingWall extends Wall {
