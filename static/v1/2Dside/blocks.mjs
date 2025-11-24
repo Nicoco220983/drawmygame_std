@@ -1,6 +1,6 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _Class, _Block3, _applyDecs$c, _Class2, _BackgroundBlock3, _applyDecs$c2, _Block4, _DirtBlock2, _Block6, _StoneBlock2, _BackgroundBlock4, _BackgroundStoneBlock2, _Block8, _BricksBlock2, _BackgroundBlock6, _BackgroundBricksBlock, _Block0, _WoodBlock2, _BackgroundBlock8, _BackgroundWoodBlock2, _Block10, _PlatformBlock2, _Block12, _Door2, _Block14, _Cloud2, _CloudBlockChecker2, _Block16, _Trap2, _Trap3, _BoxingTrap2, _Block18, _BouncingBlock2, _Block20, _IceBlock2;
-var _initClass, _classDecs, _Block2, _initClass2, _classDecs2, _BackgroundBlock2, _initClass3, _classDecs3, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15;
+var _Class, _Block3, _applyDecs$c, _Class2, _BackgroundBlock3, _applyDecs$c2, _Block4, _DirtBlock2, _Block6, _StoneBlock2, _BackgroundBlock4, _BackgroundStoneBlock2, _Block8, _BricksBlock2, _BackgroundBlock6, _BackgroundBricksBlock, _Block0, _WoodBlock2, _BackgroundBlock8, _BackgroundWoodBlock2, _Block10, _PlatformBlock2, _Block12, _Door2, _Block14, _Cloud2, _CloudBlockChecker2, _Block16, _Trap2, _Trap3, _BoxingTrap2, _Block18, _BouncingBlock2, _Block20, _IceBlock2, _Block22, _SpiderWebBlock2;
+var _initClass, _classDecs, _Block2, _initClass2, _classDecs2, _BackgroundBlock2, _initClass3, _classDecs3, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16;
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -42,7 +42,7 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { cachedTransform, cloneCanvas, colorizeCanvas, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
+import { sign, cachedTransform, cloneCanvas, colorizeCanvas, CATALOG, StateProperty, StateBool, StateNumber, StateString, StateEnum, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",
@@ -596,9 +596,9 @@ var CloudBlockChecker = /*#__PURE__*/function (_GameObject3) {
   }]);
 }(GameObject);
 _CloudBlockChecker2 = CloudBlockChecker;
-var _applyDecs$c15 = _slicedToArray(_applyDecs(_CloudBlockChecker2, [], _classDecs11, 0, void 0, GameObject).c, 2);
-_CloudBlockChecker = _applyDecs$c15[0];
-_initClass11 = _applyDecs$c15[1];
+var _applyDecs$c16 = _slicedToArray(_applyDecs(_CloudBlockChecker2, [], _classDecs11, 0, void 0, GameObject).c, 2);
+_CloudBlockChecker = _applyDecs$c16[0];
+_initClass11 = _applyDecs$c16[1];
 _initClass11();
 var DetectAud = new Aud("/static/catalogs/std/v1/2Dside/assets/detect.wav");
 _classDecs12 = [Dependencies.add(DetectAud), AttackMixin.add(), LinkReaction.add("reactTrigger", {
@@ -796,3 +796,45 @@ _IceBlock = _applyDecs$c14[0];
 _initClass15 = _applyDecs$c14[1];
 _initClass15();
 export { _IceBlock as IceBlock };
+var SpiderWebBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/spider_web.png");
+_classDecs16 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+  label: "Spider Web",
+  icon: SpiderWebBlockImg,
+  showInBuilder: true
+})), Dependencies.add(SpiderWebBlockImg)];
+var _SpiderWebBlock;
+var SpiderWebBlock = /*#__PURE__*/function (_Block23) {
+  function SpiderWebBlock() {
+    _classCallCheck(this, SpiderWebBlock);
+    return _callSuper(this, SpiderWebBlock, arguments);
+  }
+  _inherits(SpiderWebBlock, _Block23);
+  return _createClass(SpiderWebBlock, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(SpiderWebBlock, "init", this, 3)([kwargs]);
+      this.canBlock = false;
+      this.checkBlockAnyway = true;
+      this.targetMaxSpeed = 50;
+    }
+  }, {
+    key: "onBlock",
+    value: function onBlock(obj, details) {
+      var targetMaxSpeed = this.targetMaxSpeed;
+      _superPropGet(SpiderWebBlock, "onBlock", this, 3)([obj, details]);
+      if (abs(obj.speedX) > targetMaxSpeed) obj.speedX = sign(obj.speedX) * targetMaxSpeed;
+      if (abs(obj.speedY) > targetMaxSpeed) obj.speedY = sign(obj.speedY) * targetMaxSpeed;
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      return SpiderWebBlockImg;
+    }
+  }]);
+}(_Block22 = _Block);
+_SpiderWebBlock2 = SpiderWebBlock;
+var _applyDecs$c15 = _slicedToArray(_applyDecs(_SpiderWebBlock2, [], _classDecs16, 0, void 0, _Block22).c, 2);
+_SpiderWebBlock = _applyDecs$c15[0];
+_initClass16 = _applyDecs$c15[1];
+_initClass16();
+export { _SpiderWebBlock as SpiderWebBlock };

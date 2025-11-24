@@ -1,6 +1,6 @@
 const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypot } = Math
 import {
-    cachedTransform, cloneCanvas, colorizeCanvas,
+    sign, cachedTransform, cloneCanvas, colorizeCanvas,
     CATALOG,
     StateProperty, StateBool, StateNumber, StateString, StateEnum,
     Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
@@ -519,5 +519,36 @@ export class IceBlock extends Block {
 
     getBaseImg() {
         return IceBlockImg
+    }
+}
+
+
+const SpiderWebBlockImg = new Img("/static/catalogs/std/v1/2Dside/assets/blocks/spider_web.png")
+
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
+    label: "Spider Web",
+    icon: SpiderWebBlockImg,
+    showInBuilder: true,
+})
+@Dependencies.add(SpiderWebBlockImg)
+export class SpiderWebBlock extends Block {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.canBlock = false
+        this.checkBlockAnyway = true
+        this.targetMaxSpeed = 50
+    }
+
+    onBlock(obj, details) {
+        const { targetMaxSpeed } = this
+        super.onBlock(obj, details)
+        if(abs(obj.speedX) > targetMaxSpeed) obj.speedX = sign(obj.speedX) * targetMaxSpeed
+        if(abs(obj.speedY) > targetMaxSpeed) obj.speedY = sign(obj.speedY) * targetMaxSpeed
+    }
+
+    getBaseImg() {
+        return SpiderWebBlockImg
     }
 }
