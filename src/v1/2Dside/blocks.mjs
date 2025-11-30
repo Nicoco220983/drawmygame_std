@@ -3,8 +3,11 @@ import {
     sign, cachedTransform, cloneCanvas, colorizeCanvas,
     CATALOG,
     StateProperty, StateBool, StateNumber, StateString, StateEnum,
-    Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
+    Dependencies, GameObject, Category, LinkTrigger, LinkReaction, Img, SpriteSheet, Aud, ObjectRefs,
 } from '../../../../core/v1/index.mjs'
+import {
+    ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
+} from '../mixins.mjs'
 
 
 const REGISTER_COMMON_ARGS = {

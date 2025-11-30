@@ -5,8 +5,11 @@ import {
     GraphicsProps,
     CATALOG,
     StateProperty, StateBool, StateNumber,
-    Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, OwnerableMixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
+    Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
 } from '../../../../core/v1/index.mjs'
+import {
+    ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
+} from '../mixins.mjs'
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs'
 
 const REGISTER_COMMON_ARGS = {

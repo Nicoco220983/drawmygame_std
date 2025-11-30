@@ -47,7 +47,8 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random,
   hypot = Math.hypot;
-import { CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin } from '../../../../core/v1/index.mjs';
+import { CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, Img, SpriteSheet, Aud, ObjectRefs } from '../../../../core/v1/index.mjs';
+import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",

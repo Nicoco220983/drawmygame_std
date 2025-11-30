@@ -5,8 +5,11 @@ import {
     GraphicsProps,
     CATALOG,
     StateProperty, StateBool, StateNumber,
-    GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, BodyMixin, PhysicsMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin, now, hackMethod,
+    GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, Img, SpriteSheet, Aud, ObjectRefs, now, hackMethod,
 } from '../../../../core/v1/index.mjs'
+import {
+    ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
+} from '../mixins.mjs'
 
 
 const REGISTER_COMMON_ARGS = {

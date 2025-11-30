@@ -3,8 +3,11 @@ const { abs, floor, ceil, min, max, pow, sqrt, cos, sin, atan2, PI, random, hypo
 import {
     CATALOG,
     StateProperty, StateBool, StateNumber,
-    Dependencies, GameObject, Category, LinkTrigger, LinkReaction, BodyMixin, AttackMixin, Img, SpriteSheet, Aud, ObjectRefs, ActivableMixin, CollectMixin, OwnerableMixin,
+    Dependencies, GameObject, Category, LinkTrigger, LinkReaction, Img, SpriteSheet, Aud, ObjectRefs,
 } from '../../../../core/v1/index.mjs'
+import {
+    ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
+} from '../mixins.mjs'
 
 const REGISTER_COMMON_ARGS = {
     url: import.meta.url,
