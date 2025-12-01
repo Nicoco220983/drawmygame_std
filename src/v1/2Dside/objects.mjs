@@ -8,7 +8,8 @@ import {
     GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, Img, SpriteSheet, Aud, ObjectRefs, now, hackMethod,
 } from '../../../../core/v1/index.mjs'
 import {
-    ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
+    ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin,
+    applyForce,
 } from '../mixins.mjs'
 
 
@@ -1542,6 +1543,37 @@ export class Portal extends GameObject {
 
     getBaseImg() {
         return PortalImg
+    }
+}
+
+
+const BallImg = new Img("/static/catalogs/std/v1/2Dside/assets/ball.png")
+
+@CATALOG.registerObject({
+    ...REGISTER_COMMON_ARGS,
+    label: "Ball",
+    icon: BallImg,
+})
+@Dependencies.add(BallImg)
+@AttackMixin.add({
+    canAttack: false,
+    canGetAttacked: true,
+    maxHealth: Infinity,
+})
+@PhysicsMixin.add({
+    physicsBounciness: .8,
+    physicsWeight: 50,
+    physicsStaticFriction: 100,
+    physicsDynamicFriction: 1,
+})
+@BodyMixin.add({
+    width: 30,
+    height: 30,
+})
+export class Ball extends GameObject {
+
+    getBaseImg() {
+        return BallImg
     }
 }
 

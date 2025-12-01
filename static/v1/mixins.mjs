@@ -198,6 +198,7 @@ new (_PhysicsMixin2 = (_PhysicsMixin3 = /*#__PURE__*/function (_Mixin4) {
       proto.physicsBounciness = kwargs?.physicsBounciness ?? 0;
       proto.physicsStaticFriction = kwargs?.physicsStaticFriction ?? Infinity;
       proto.physicsDynamicFriction = kwargs?.physicsDynamicFriction ?? Infinity;
+      proto.physicsWeight = kwargs?.physicsWeight ?? 100;
       proto.onBlock || (proto.onBlock = function (obj, details) {});
       proto.onGetBlocked || (proto.onGetBlocked = function (obj, details) {});
       var origCanHitGroup = proto.canHitGroup;
@@ -249,6 +250,11 @@ new (_PhysicsMixin2 = (_PhysicsMixin3 = /*#__PURE__*/function (_Mixin4) {
   return _createClass(_Class3);
 }(_identity), _defineProperty(_Class3, _PhysicsMixin2, void 0), _Class3)();
 export { _PhysicsMixin as PhysicsMixin };
+export function applyForce(obj, forceX, forceY) {
+  var weight = obj.physicsWeight ?? 100;
+  obj.speedX += forceX * 100 / weight;
+  obj.speedY += forceY * 100 / weight;
+}
 _classDecs4 = [StateObjectRef.define("owner")];
 var _OwnerableMixin;
 new (_OwnerableMixin2 = (_OwnerableMixin3 = /*#__PURE__*/function (_Mixin5) {
@@ -422,8 +428,7 @@ new (_AttackMixin2 = (_AttackMixin3 = /*#__PURE__*/function (_Mixin6) {
       var knockback = props?.knockback;
       if (knockback) {
         var knockbackAngle = props.knockbackAngle * PI / 180;
-        this.speedX = knockback * cos(knockbackAngle);
-        this.speedY = knockback * sin(knockbackAngle);
+        applyForce(this, knockback * cos(knockbackAngle), knockback * sin(knockbackAngle));
       }
       this.onGetAttacked(props);
     }

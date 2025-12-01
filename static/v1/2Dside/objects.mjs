@@ -1,6 +1,6 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _SmokeExplosion2, _Pop2, _Class, _Hero3, _applyDecs$c2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Weapon3, _NicoHand2, _Hero4, _Nico2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Projectile3, _Shuriken2, _Extra5, _ShurikenPack2, _Explosion2, _Extra7, _Bomb2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
-var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _Hero2, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22, _initClass23, _classDecs23, _initClass24, _classDecs24, _initClass25, _classDecs25, _initClass26, _classDecs26, _initClass27, _classDecs27, _initClass28, _classDecs28, _initClass29, _classDecs29;
+var _SmokeExplosion2, _Pop2, _Class, _Hero3, _applyDecs$c2, _Extra2, _Extra3, _Weapon2, _Projectile2, _JumpMixin2, _Weapon3, _NicoHand2, _Hero4, _Nico2, _Weapon5, _Sword2, _Weapon7, _BoxingGlove2, _Projectile3, _Shuriken2, _Extra5, _ShurikenPack2, _Explosion2, _Extra7, _Bomb2, _Extra9, _JetPack2, _Enemy2, _Enemy3, _Spiky2, _Enemy5, _BlobEnemy2, _BlobEnemyBlockChecker, _Enemy7, _Ghost2, _Heart2, _Extra1, _Star2, _Checkpoint2, _Portal2, _Ball2, _HeroSpawnPoint2, _ObjectSpawner2, _Wall2, _Wall3, _PlatformWall2, _Wall5, _BouncingWall2, _Wall7, _GlidingWall2;
+var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _Hero2, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22, _initClass23, _classDecs23, _initClass24, _classDecs24, _initClass25, _classDecs25, _initClass26, _classDecs26, _initClass27, _classDecs27, _initClass28, _classDecs28, _initClass29, _classDecs29, _initClass30, _classDecs30;
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _identity(t) { return t; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -45,7 +45,7 @@ var abs = Math.abs,
   random = Math.random,
   hypot = Math.hypot;
 import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, Img, SpriteSheet, Aud, ObjectRefs, now, hackMethod } from '../../../../core/v1/index.mjs';
-import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
+import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, applyForce } from '../mixins.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",
@@ -132,9 +132,9 @@ var Pop = /*#__PURE__*/function (_GameObject2) {
   }]);
 }(GameObject);
 _Pop2 = Pop;
-var _applyDecs$c27 = _slicedToArray(_applyDecs(_Pop2, [], _classDecs2, 0, void 0, GameObject).c, 2);
-_Pop = _applyDecs$c27[0];
-_initClass2 = _applyDecs$c27[1];
+var _applyDecs$c28 = _slicedToArray(_applyDecs(_Pop2, [], _classDecs2, 0, void 0, GameObject).c, 2);
+_Pop = _applyDecs$c28[0];
+_initClass2 = _applyDecs$c28[1];
 _initClass2();
 _classDecs3 = [Category.append("hero"), Dependencies.add(_SmokeExplosion, _Pop), CollectMixin.add({
   canCollect: true,
@@ -641,9 +641,9 @@ var NicoHand = /*#__PURE__*/function (_Weapon4) {
   }]);
 }(_Weapon3 = _Weapon);
 _NicoHand2 = NicoHand;
-var _applyDecs$c28 = _slicedToArray(_applyDecs(_NicoHand2, [], _classDecs8, 0, void 0, _Weapon3).c, 2);
-_NicoHand = _applyDecs$c28[0];
-_initClass8 = _applyDecs$c28[1];
+var _applyDecs$c29 = _slicedToArray(_applyDecs(_NicoHand2, [], _classDecs8, 0, void 0, _Weapon3).c, 2);
+_NicoHand = _applyDecs$c29[0];
+_initClass8 = _applyDecs$c29[1];
 _initClass8();
 var ArrowsSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/arrows.png");
 var ArrowsSpriteSheet = new SpriteSheet(ArrowsSpriteSheetImg, 4, 1);
@@ -1665,9 +1665,9 @@ var BlobEnemyBlockChecker = /*#__PURE__*/function (_GameObject8) {
   }]);
 }(GameObject);
 _BlobEnemyBlockChecker = BlobEnemyBlockChecker;
-var _applyDecs$c29 = _slicedToArray(_applyDecs(_BlobEnemyBlockChecker, [], _classDecs18, 0, void 0, GameObject).c, 2);
-_BlobEnemyBlockChecke = _applyDecs$c29[0];
-_initClass18 = _applyDecs$c29[1];
+var _applyDecs$c30 = _slicedToArray(_applyDecs(_BlobEnemyBlockChecker, [], _classDecs18, 0, void 0, GameObject).c, 2);
+_BlobEnemyBlockChecke = _applyDecs$c30[0];
+_initClass18 = _applyDecs$c30[1];
 _initClass18();
 var GhostImg = new Img("/static/catalogs/std/v1/2Dside/assets/ghost.png");
 _classDecs19 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
@@ -1994,24 +1994,61 @@ var Portal = /*#__PURE__*/function (_GameObject1) {
       return PortalImg;
     }
   }]);
-}(GameObject); // SPAWNER
+}(GameObject);
 _Portal2 = Portal;
 var _applyDecs$c20 = _slicedToArray(_applyDecs(_Portal2, [], _classDecs23, 0, void 0, GameObject).c, 2);
 _Portal = _applyDecs$c20[0];
 _initClass23 = _applyDecs$c20[1];
 _initClass23();
 export { _Portal as Portal };
+var BallImg = new Img("/static/catalogs/std/v1/2Dside/assets/ball.png");
 _classDecs24 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+  label: "Ball",
+  icon: BallImg
+})), Dependencies.add(BallImg), AttackMixin.add({
+  canAttack: false,
+  canGetAttacked: true,
+  maxHealth: Infinity
+}), PhysicsMixin.add({
+  physicsBounciness: .8,
+  physicsWeight: 50,
+  physicsStaticFriction: 100,
+  physicsDynamicFriction: 1
+}), BodyMixin.add({
+  width: 30,
+  height: 30
+})];
+var _Ball;
+var Ball = /*#__PURE__*/function (_GameObject10) {
+  function Ball() {
+    _classCallCheck(this, Ball);
+    return _callSuper(this, Ball, arguments);
+  }
+  _inherits(Ball, _GameObject10);
+  return _createClass(Ball, [{
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      return BallImg;
+    }
+  }]);
+}(GameObject); // SPAWNER
+_Ball2 = Ball;
+var _applyDecs$c21 = _slicedToArray(_applyDecs(_Ball2, [], _classDecs24, 0, void 0, GameObject).c, 2);
+_Ball = _applyDecs$c21[0];
+_initClass24 = _applyDecs$c21[1];
+_initClass24();
+export { _Ball as Ball };
+_classDecs25 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Hero",
   icon: PopImg
 }))];
 var _HeroSpawnPoint;
-var HeroSpawnPoint = /*#__PURE__*/function (_GameObject10) {
+var HeroSpawnPoint = /*#__PURE__*/function (_GameObject11) {
   function HeroSpawnPoint() {
     _classCallCheck(this, HeroSpawnPoint);
     return _callSuper(this, HeroSpawnPoint, arguments);
   }
-  _inherits(HeroSpawnPoint, _GameObject10);
+  _inherits(HeroSpawnPoint, _GameObject11);
   return _createClass(HeroSpawnPoint, [{
     key: "init",
     value: function init(kwargs) {
@@ -2026,12 +2063,12 @@ var HeroSpawnPoint = /*#__PURE__*/function (_GameObject10) {
   }]);
 }(GameObject);
 _HeroSpawnPoint2 = HeroSpawnPoint;
-var _applyDecs$c21 = _slicedToArray(_applyDecs(_HeroSpawnPoint2, [], _classDecs24, 0, void 0, GameObject).c, 2);
-_HeroSpawnPoint = _applyDecs$c21[0];
-_initClass24 = _applyDecs$c21[1];
-_initClass24();
+var _applyDecs$c22 = _slicedToArray(_applyDecs(_HeroSpawnPoint2, [], _classDecs25, 0, void 0, GameObject).c, 2);
+_HeroSpawnPoint = _applyDecs$c22[0];
+_initClass25 = _applyDecs$c22[1];
+_initClass25();
 export { _HeroSpawnPoint as HeroSpawnPoint };
-_classDecs25 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+_classDecs26 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "ObjectSpawner",
   icon: PopImg
 })), Dependencies.add(_Pop), ActivableMixin.add(), BodyMixin.add({
@@ -2071,12 +2108,12 @@ _classDecs25 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_
   }
 })];
 var _ObjectSpawner;
-var ObjectSpawner = /*#__PURE__*/function (_GameObject11) {
+var ObjectSpawner = /*#__PURE__*/function (_GameObject12) {
   function ObjectSpawner() {
     _classCallCheck(this, ObjectSpawner);
     return _callSuper(this, ObjectSpawner, arguments);
   }
-  _inherits(ObjectSpawner, _GameObject11);
+  _inherits(ObjectSpawner, _GameObject12);
   return _createClass(ObjectSpawner, [{
     key: "update",
     value: function update() {
@@ -2150,24 +2187,24 @@ var ObjectSpawner = /*#__PURE__*/function (_GameObject11) {
   }]);
 }(GameObject); // WALL
 _ObjectSpawner2 = ObjectSpawner;
-var _applyDecs$c22 = _slicedToArray(_applyDecs(_ObjectSpawner2, [], _classDecs25, 0, void 0, GameObject).c, 2);
-_ObjectSpawner = _applyDecs$c22[0];
-_initClass25 = _applyDecs$c22[1];
-_initClass25();
+var _applyDecs$c23 = _slicedToArray(_applyDecs(_ObjectSpawner2, [], _classDecs26, 0, void 0, GameObject).c, 2);
+_ObjectSpawner = _applyDecs$c23[0];
+_initClass26 = _applyDecs$c23[1];
+_initClass26();
 export { _ObjectSpawner as ObjectSpawner };
-_classDecs26 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+_classDecs27 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
 })), Category.append("wall"), PhysicsMixin.add({
   canMove: false,
   canBlock: true
 })];
 var _Wall;
-var Wall = /*#__PURE__*/function (_GameObject12) {
+var Wall = /*#__PURE__*/function (_GameObject13) {
   function Wall() {
     _classCallCheck(this, Wall);
     return _callSuper(this, Wall, arguments);
   }
-  _inherits(Wall, _GameObject12);
+  _inherits(Wall, _GameObject13);
   return _createClass(Wall, [{
     key: "init",
     value: function init(kwargs) {
@@ -2271,12 +2308,12 @@ var Wall = /*#__PURE__*/function (_GameObject12) {
   }]);
 }(GameObject);
 _Wall2 = Wall;
-var _applyDecs$c23 = _slicedToArray(_applyDecs(_Wall2, [], _classDecs26, 0, void 0, GameObject).c, 2);
-_Wall = _applyDecs$c23[0];
-_initClass26 = _applyDecs$c23[1];
-_initClass26();
+var _applyDecs$c24 = _slicedToArray(_applyDecs(_Wall2, [], _classDecs27, 0, void 0, GameObject).c, 2);
+_Wall = _applyDecs$c24[0];
+_initClass27 = _applyDecs$c24[1];
+_initClass27();
 export { _Wall as Wall };
-_classDecs27 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+_classDecs28 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
 }))];
 var _PlatformWall;
@@ -2310,12 +2347,12 @@ var PlatformWall = /*#__PURE__*/function (_Wall4) {
   }]);
 }(_Wall3 = _Wall);
 _PlatformWall2 = PlatformWall;
-var _applyDecs$c24 = _slicedToArray(_applyDecs(_PlatformWall2, [], _classDecs27, 0, void 0, _Wall3).c, 2);
-_PlatformWall = _applyDecs$c24[0];
-_initClass27 = _applyDecs$c24[1];
-_initClass27();
+var _applyDecs$c25 = _slicedToArray(_applyDecs(_PlatformWall2, [], _classDecs28, 0, void 0, _Wall3).c, 2);
+_PlatformWall = _applyDecs$c25[0];
+_initClass28 = _applyDecs$c25[1];
+_initClass28();
 export { _PlatformWall as PlatformWall };
-_classDecs28 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+_classDecs29 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
 }))];
 var _BouncingWall;
@@ -2335,12 +2372,12 @@ var BouncingWall = /*#__PURE__*/function (_Wall6) {
   }]);
 }(_Wall5 = _Wall);
 _BouncingWall2 = BouncingWall;
-var _applyDecs$c25 = _slicedToArray(_applyDecs(_BouncingWall2, [], _classDecs28, 0, void 0, _Wall5).c, 2);
-_BouncingWall = _applyDecs$c25[0];
-_initClass28 = _applyDecs$c25[1];
-_initClass28();
+var _applyDecs$c26 = _slicedToArray(_applyDecs(_BouncingWall2, [], _classDecs29, 0, void 0, _Wall5).c, 2);
+_BouncingWall = _applyDecs$c26[0];
+_initClass29 = _applyDecs$c26[1];
+_initClass29();
 export { _BouncingWall as BouncingWall };
-_classDecs29 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+_classDecs30 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   stateful: false
 }))];
 var _GlidingWall;
@@ -2361,8 +2398,8 @@ var GlidingWall = /*#__PURE__*/function (_Wall8) {
   }]);
 }(_Wall7 = _Wall);
 _GlidingWall2 = GlidingWall;
-var _applyDecs$c26 = _slicedToArray(_applyDecs(_GlidingWall2, [], _classDecs29, 0, void 0, _Wall7).c, 2);
-_GlidingWall = _applyDecs$c26[0];
-_initClass29 = _applyDecs$c26[1];
-_initClass29();
+var _applyDecs$c27 = _slicedToArray(_applyDecs(_GlidingWall2, [], _classDecs30, 0, void 0, _Wall7).c, 2);
+_GlidingWall = _applyDecs$c27[0];
+_initClass30 = _applyDecs$c27[1];
+_initClass30();
 export { _GlidingWall as GlidingWall };

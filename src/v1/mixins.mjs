@@ -114,6 +114,7 @@ export class PhysicsMixin extends Mixin {
         proto.physicsBounciness = kwargs?.physicsBounciness ?? 0
         proto.physicsStaticFriction = kwargs?.physicsStaticFriction ?? Infinity
         proto.physicsDynamicFriction = kwargs?.physicsDynamicFriction ?? Infinity
+        proto.physicsWeight = kwargs?.physicsWeight ?? 100
 
         proto.onBlock ||= function(obj, details) {}
         proto.onGetBlocked ||= function(obj, details) {}
@@ -158,6 +159,12 @@ export class PhysicsMixin extends Mixin {
     update() {
         // done by physics engine
     }
+}
+
+export function applyForce(obj, forceX, forceY) {
+    const weight = obj.physicsWeight ?? 100
+    obj.speedX += forceX * 100 / weight
+    obj.speedY += forceY * 100 / weight
 }
 
 
@@ -316,8 +323,11 @@ export class AttackMixin extends Mixin {
         const knockback = props?.knockback
         if(knockback) {
             const knockbackAngle = props.knockbackAngle * PI / 180
-            this.speedX = knockback * cos(knockbackAngle)
-            this.speedY = knockback * sin(knockbackAngle)
+            applyForce(
+                this,
+                knockback * cos(knockbackAngle),
+                knockback * sin(knockbackAngle),
+            )
         }
         this.onGetAttacked(props)
     }
