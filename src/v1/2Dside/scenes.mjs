@@ -4,8 +4,9 @@ import {
     sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys,
     GraphicsProps,
     CATALOG,
+    MODE_CLIENT,
     StateProperty, StateBool, StateNumber,
-    Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
+    Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
 } from '../../../../core/v1/index.mjs'
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
@@ -21,6 +22,8 @@ const REGISTER_COMMON_ARGS = {
 
 const IS_SERVER_ENV = (typeof window === 'undefined')
 
+
+// MANAGERS ///////////////////////////////////////
 
 @StateNumber.undefine("z")
 @StateNumber.undefine("y")
@@ -293,6 +296,8 @@ export class AttackManager extends Manager {
 }
 
 
+// NOTIFS ////////////////////////////////////////////
+
 export class HeadsUpDisplay extends GameObject {
     init(kwargs) {
         super.init(kwargs)
@@ -432,7 +437,7 @@ class PlayerScoreText extends Text {
 }
 
 
-// Background
+// BACKGROUND //////////////////////////////////////////////
 
 @Category.append("background")
 @StateNumber.undefine("z")
@@ -527,6 +532,210 @@ const DarkCityImg = new Img("/static/catalogs/std/v1/2Dside/assets/backgrounds/d
 export class DarkCityBackground extends Background {
     getBaseImg() {
         return DarkCityImg
+    }
+}
+
+
+// SCENES ///////////////////////////////////////
+
+export class GameScene extends Scene {
+    init(kwargs) {
+        super.init(kwargs)
+        this.step = "GAME"
+        this.herosSpawnX = 50
+        this.herosSpawnY = 50
+        this.scores = new Map()
+        this.isGameScene = true // TODO: remove me
+    }
+
+    isPausable() {
+        return true
+    }
+
+    loadMap(scnMapId) {
+        super.loadMap(scnMapId)
+        this.initHeros()
+        this.physics = new PhysicsEngine(this)
+    }
+
+    initHeros() {
+        this.initHerosSpawnPos()
+        if(this.game.mode == MODE_CLIENT) return  // objects are init by first full state
+        for(let playerId in this.game.players) this.addHero(playerId)
+    }
+
+    addHero(playerId) {
+        const player = this.game.players[playerId]
+        if(!player) return
+        const prevHero = this.getHero(playerId)
+        if(prevHero && !prevHero.removed) return
+        const { heroKey } = player
+        if(!heroKey) return
+        const hero = this.addObject(heroKey, { playerId })
+        this.spawnHero(hero)
+        return hero
+    }
+
+    getHero(playerId) {
+        return this.heros[playerId]
+    }
+
+    getFirstHero() {
+        const firstPlayerId = this.game.getFirstPlayerId()
+        if(firstPlayerId === null) return null
+        return this.heros[firstPlayerId]
+    }
+
+    rmHero(playerId) {
+        const hero = this.getHero(playerId)
+        if(hero) hero.remove()
+    }
+
+    spawnHero(hero) {
+        hero.spawn(this.herosSpawnX, this.herosSpawnY)
+    }
+
+    incrScore(playerId, val) {
+        const { scores } = this
+        scores.set(playerId, (scores.get(playerId) ?? 0) + val)
+   }
+
+    update() {
+        const { step } = this
+        this.iteration += 1
+        this.time = this.iteration * this.game.dt
+        if(step == "GAME") this.updateStepGame()
+        else if(step == "GAMEOVER") this.updateStepGameOver()
+        else if(step == "VICTORY") this.updateStepVictory()
+        this.notifs.update()
+    }
+
+    updateWorld() {
+        const { dt } = this.game
+        this.physics.apply(dt, this.objects)
+        super.updateWorld()
+    }
+
+    updateStepGame() {
+        this.updateWorld()
+    }
+
+    updateStepGameOver() {
+        this.updateWorld()
+        this.initGameOverNotifs()
+    }
+
+    updateStepVictory() {
+        this.initVictoryNotifs()
+    }
+
+    draw() {
+        const res = super.draw()
+        const drawer = this.graphicsEngine
+        this.notifs.draw(drawer)
+        if(this.step == "VICTORY" && this.victoryNotifs) this.victoryNotifs.draw(drawer)
+        if(this.step == "GAMEOVER" && this.gameOverNotifs) this.gameOverNotifs.draw(drawer)
+        return res
+    }
+
+    filterObjects(key, filter) {
+        const objsCache = this._filteredObjectsCache ||= new Map()
+        if(objsCache.iteration !== this.iteration) {
+            objsCache.clear()
+            objsCache.iteration = this.iteration
+        }
+        if(!objsCache.has(key)) {
+            const cache = []
+            this.objects.forEach(obj => {
+                if(filter(obj)) cache.push(obj)
+            })
+            objsCache.set(key, cache)
+        }
+        return objsCache.get(key)
+    }
+
+    initVictoryNotifs() {
+        if(this.victoryNotifs) return
+        this.victoryNotifs = new GameObjectGroup(this)
+        this.victoryNotifs.add(
+            CenteredText,
+            {
+                text: "VICTORY !",
+                font: "100px serif",
+            },
+        )
+    }
+
+    initGameOverNotifs() {
+        if(this.gameOverNotifs) return
+        this.gameOverNotifs = new GameObjectGroup(this)
+        this.gameOverNotifs.add(
+            CenteredText,
+            {
+                text: "GAME OVER",
+                font: "100px serif",
+            },
+        )
+    }
+
+    initHerosSpawnPos() {}
+
+    setHerosSpawnPos(x, y) {
+        this.herosSpawnX = floor(x)
+        this.herosSpawnY = floor(y)
+    }
+
+    getState(isInitState=false) {
+        const state = super.getState(isInitState)
+        if(isInitState) {
+            state.width = this.width
+            state.height = this.height
+        } else {
+            state.it = this.iteration
+            state.step = this.step
+            state.hsx = this.herosSpawnX
+            state.hsy = this.herosSpawnY
+            state.sco = {}
+            this.scores.forEach((val, pid) => state.sco[pid] = floor(val))
+        }
+        state.objects = this.objects.getState(isInitState)
+        if(isInitState) state.links = this.getObjectLinksState()
+        return state
+    }
+
+    getObjectLinksState() {
+        const res = []
+        this.objects.forEach(obj => {
+            const linksState = obj.getObjectLinksState()
+            if(linksState) for(let linkState of linksState) res.push(linkState)
+        })
+        return res
+    }
+
+    setState(state, isInitState=false) {
+        super.setState(state, isInitState)
+        if(!isInitState) {
+            this.iteration = state.it
+            this.step = state.step
+            this.setHerosSpawnPos(state.hsx, state.hsy)
+            this.scores.clear()
+            for(let pid in state.sco) this.scores.set(pid, state.sco[pid])
+        }
+        this.objects.setState(state.objects, isInitState)
+        if(isInitState) this.setObjectLinksFromState(state.links)
+    }
+
+    setObjectLinksFromState(state) {
+        if(!state) return
+        for(let linkState of state) {
+            const actionObjId = linkState[0]
+            const actionObj = this.objects.get(actionObjId)
+            actionObj.addObjectLinkFromState(linkState)
+        }
+    }
+
+    createPauseScene() {
+        return new PauseScene(this.game)
     }
 }
 
@@ -994,7 +1203,7 @@ function countStarExtras(hero) {
     ...REGISTER_COMMON_ARGS,
     showInBuilder: false,
 })
-export class WaitingScene extends SceneCommon {
+export class WaitingScene extends Scene {
 
     init(kwargs) {
         super.init(kwargs)

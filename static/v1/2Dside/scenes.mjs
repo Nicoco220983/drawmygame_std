@@ -5,6 +5,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -38,7 +39,7 @@ var floor = Math.floor,
   ceil = Math.ceil,
   min = Math.min,
   max = Math.max;
-import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, Dependencies, SceneCommon, GameScene, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/index.mjs';
+import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs';
 var REGISTER_COMMON_ARGS = {
@@ -47,6 +48,8 @@ var REGISTER_COMMON_ARGS = {
   perspective: "2Dside"
 };
 var IS_SERVER_ENV = typeof window === 'undefined';
+
+// MANAGERS ///////////////////////////////////////
 _classDecs = [StateNumber.undefine("z"), StateNumber.undefine("y"), StateNumber.undefine("x"), Category.append("manager")];
 var _Manager;
 var Manager = /*#__PURE__*/function (_GameObject) {
@@ -491,7 +494,7 @@ var AttackManager = /*#__PURE__*/function (_Manager10) {
       return team1 != team2;
     }
   }]);
-}(_Manager1 = _Manager);
+}(_Manager1 = _Manager); // NOTIFS ////////////////////////////////////////////
 _AttackManager2 = AttackManager;
 var _applyDecs$c1 = _slicedToArray(_applyDecs(_AttackManager2, [], _classDecs1, 0, void 0, _Manager1).c, 2);
 _AttackManager = _applyDecs$c1[0];
@@ -704,7 +707,7 @@ var PlayerScoreText = /*#__PURE__*/function (_Text) {
       this.updateText(floor(scores.get(this.playerId) ?? 0));
     }
   }]);
-}(Text); // Background
+}(Text); // BACKGROUND //////////////////////////////////////////////
 _classDecs10 = [Category.append("background"), StateNumber.undefine("z"), StateNumber.undefine("y"), StateNumber.undefine("x")];
 var _Background;
 var Background = /*#__PURE__*/function (_GameObject4) {
@@ -856,13 +859,268 @@ var DarkCityBackground = /*#__PURE__*/function (_Background10) {
       return DarkCityImg;
     }
   }]);
-}(_Background1 = _Background); // Standard
+}(_Background1 = _Background); // SCENES ///////////////////////////////////////
 _DarkCityBackground2 = DarkCityBackground;
 var _applyDecs$c15 = _slicedToArray(_applyDecs(_DarkCityBackground2, [], _classDecs15, 0, void 0, _Background1).c, 2);
 _DarkCityBackground = _applyDecs$c15[0];
 _initClass15 = _applyDecs$c15[1];
 _initClass15();
 export { _DarkCityBackground as DarkCityBackground };
+export var GameScene = /*#__PURE__*/function (_Scene) {
+  function GameScene() {
+    _classCallCheck(this, GameScene);
+    return _callSuper(this, GameScene, arguments);
+  }
+  _inherits(GameScene, _Scene);
+  return _createClass(GameScene, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(GameScene, "init", this, 3)([kwargs]);
+      this.step = "GAME";
+      this.herosSpawnX = 50;
+      this.herosSpawnY = 50;
+      this.scores = new Map();
+      this.isGameScene = true; // TODO: remove me
+    }
+  }, {
+    key: "isPausable",
+    value: function isPausable() {
+      return true;
+    }
+  }, {
+    key: "loadMap",
+    value: function loadMap(scnMapId) {
+      _superPropGet(GameScene, "loadMap", this, 3)([scnMapId]);
+      this.initHeros();
+      this.physics = new PhysicsEngine(this);
+    }
+  }, {
+    key: "initHeros",
+    value: function initHeros() {
+      this.initHerosSpawnPos();
+      if (this.game.mode == MODE_CLIENT) return; // objects are init by first full state
+      for (var playerId in this.game.players) this.addHero(playerId);
+    }
+  }, {
+    key: "addHero",
+    value: function addHero(playerId) {
+      var player = this.game.players[playerId];
+      if (!player) return;
+      var prevHero = this.getHero(playerId);
+      if (prevHero && !prevHero.removed) return;
+      var heroKey = player.heroKey;
+      if (!heroKey) return;
+      var hero = this.addObject(heroKey, {
+        playerId: playerId
+      });
+      this.spawnHero(hero);
+      return hero;
+    }
+  }, {
+    key: "getHero",
+    value: function getHero(playerId) {
+      return this.heros[playerId];
+    }
+  }, {
+    key: "getFirstHero",
+    value: function getFirstHero() {
+      var firstPlayerId = this.game.getFirstPlayerId();
+      if (firstPlayerId === null) return null;
+      return this.heros[firstPlayerId];
+    }
+  }, {
+    key: "rmHero",
+    value: function rmHero(playerId) {
+      var hero = this.getHero(playerId);
+      if (hero) hero.remove();
+    }
+  }, {
+    key: "spawnHero",
+    value: function spawnHero(hero) {
+      hero.spawn(this.herosSpawnX, this.herosSpawnY);
+    }
+  }, {
+    key: "incrScore",
+    value: function incrScore(playerId, val) {
+      var scores = this.scores;
+      scores.set(playerId, (scores.get(playerId) ?? 0) + val);
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      var step = this.step;
+      this.iteration += 1;
+      this.time = this.iteration * this.game.dt;
+      if (step == "GAME") this.updateStepGame();else if (step == "GAMEOVER") this.updateStepGameOver();else if (step == "VICTORY") this.updateStepVictory();
+      this.notifs.update();
+    }
+  }, {
+    key: "updateWorld",
+    value: function updateWorld() {
+      var dt = this.game.dt;
+      this.physics.apply(dt, this.objects);
+      _superPropGet(GameScene, "updateWorld", this, 3)([]);
+    }
+  }, {
+    key: "updateStepGame",
+    value: function updateStepGame() {
+      this.updateWorld();
+    }
+  }, {
+    key: "updateStepGameOver",
+    value: function updateStepGameOver() {
+      this.updateWorld();
+      this.initGameOverNotifs();
+    }
+  }, {
+    key: "updateStepVictory",
+    value: function updateStepVictory() {
+      this.initVictoryNotifs();
+    }
+  }, {
+    key: "draw",
+    value: function draw() {
+      var res = _superPropGet(GameScene, "draw", this, 3)([]);
+      var drawer = this.graphicsEngine;
+      this.notifs.draw(drawer);
+      if (this.step == "VICTORY" && this.victoryNotifs) this.victoryNotifs.draw(drawer);
+      if (this.step == "GAMEOVER" && this.gameOverNotifs) this.gameOverNotifs.draw(drawer);
+      return res;
+    }
+  }, {
+    key: "filterObjects",
+    value: function filterObjects(key, filter) {
+      var objsCache = this._filteredObjectsCache || (this._filteredObjectsCache = new Map());
+      if (objsCache.iteration !== this.iteration) {
+        objsCache.clear();
+        objsCache.iteration = this.iteration;
+      }
+      if (!objsCache.has(key)) {
+        var cache = [];
+        this.objects.forEach(function (obj) {
+          if (filter(obj)) cache.push(obj);
+        });
+        objsCache.set(key, cache);
+      }
+      return objsCache.get(key);
+    }
+  }, {
+    key: "initVictoryNotifs",
+    value: function initVictoryNotifs() {
+      if (this.victoryNotifs) return;
+      this.victoryNotifs = new GameObjectGroup(this);
+      this.victoryNotifs.add(CenteredText, {
+        text: "VICTORY !",
+        font: "100px serif"
+      });
+    }
+  }, {
+    key: "initGameOverNotifs",
+    value: function initGameOverNotifs() {
+      if (this.gameOverNotifs) return;
+      this.gameOverNotifs = new GameObjectGroup(this);
+      this.gameOverNotifs.add(CenteredText, {
+        text: "GAME OVER",
+        font: "100px serif"
+      });
+    }
+  }, {
+    key: "initHerosSpawnPos",
+    value: function initHerosSpawnPos() {}
+  }, {
+    key: "setHerosSpawnPos",
+    value: function setHerosSpawnPos(x, y) {
+      this.herosSpawnX = floor(x);
+      this.herosSpawnY = floor(y);
+    }
+  }, {
+    key: "getState",
+    value: function getState() {
+      var isInitState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var state = _superPropGet(GameScene, "getState", this, 3)([isInitState]);
+      if (isInitState) {
+        state.width = this.width;
+        state.height = this.height;
+      } else {
+        state.it = this.iteration;
+        state.step = this.step;
+        state.hsx = this.herosSpawnX;
+        state.hsy = this.herosSpawnY;
+        state.sco = {};
+        this.scores.forEach(function (val, pid) {
+          return state.sco[pid] = floor(val);
+        });
+      }
+      state.objects = this.objects.getState(isInitState);
+      if (isInitState) state.links = this.getObjectLinksState();
+      return state;
+    }
+  }, {
+    key: "getObjectLinksState",
+    value: function getObjectLinksState() {
+      var res = [];
+      this.objects.forEach(function (obj) {
+        var linksState = obj.getObjectLinksState();
+        if (linksState) {
+          var _iterator = _createForOfIteratorHelper(linksState),
+            _step;
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var linkState = _step.value;
+              res.push(linkState);
+            }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+        }
+      });
+      return res;
+    }
+  }, {
+    key: "setState",
+    value: function setState(state) {
+      var isInitState = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      _superPropGet(GameScene, "setState", this, 3)([state, isInitState]);
+      if (!isInitState) {
+        this.iteration = state.it;
+        this.step = state.step;
+        this.setHerosSpawnPos(state.hsx, state.hsy);
+        this.scores.clear();
+        for (var pid in state.sco) this.scores.set(pid, state.sco[pid]);
+      }
+      this.objects.setState(state.objects, isInitState);
+      if (isInitState) this.setObjectLinksFromState(state.links);
+    }
+  }, {
+    key: "setObjectLinksFromState",
+    value: function setObjectLinksFromState(state) {
+      if (!state) return;
+      var _iterator2 = _createForOfIteratorHelper(state),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var linkState = _step2.value;
+          var actionObjId = linkState[0];
+          var actionObj = this.objects.get(actionObjId);
+          actionObj.addObjectLinkFromState(linkState);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+    }
+  }, {
+    key: "createPauseScene",
+    value: function createPauseScene() {
+      return new PauseScene(this.game);
+    }
+  }]);
+}(Scene);
+
+// Standard
 _classDecs16 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_GreenLandscapeBackgr), StateBool.define("killAllEnemies", {
   "default": false,
   showInBuilder: true
@@ -1518,12 +1776,12 @@ _classDecs21 = [CATALOG.registerScene(_objectSpread(_objectSpread({}, REGISTER_C
   showInBuilder: false
 }))];
 var _WaitingScene;
-var WaitingScene = /*#__PURE__*/function (_SceneCommon) {
+var WaitingScene = /*#__PURE__*/function (_Scene2) {
   function WaitingScene() {
     _classCallCheck(this, WaitingScene);
     return _callSuper(this, WaitingScene, arguments);
   }
-  _inherits(WaitingScene, _SceneCommon);
+  _inherits(WaitingScene, _Scene2);
   return _createClass(WaitingScene, [{
     key: "init",
     value: function init(kwargs) {
@@ -1706,9 +1964,9 @@ var WaitingScene = /*#__PURE__*/function (_SceneCommon) {
       return loadJoypadScene;
     }()
   }]);
-}(SceneCommon); // UTILS
+}(Scene); // UTILS
 _WaitingScene2 = WaitingScene;
-var _applyDecs$c20 = _slicedToArray(_applyDecs(_WaitingScene2, [], _classDecs21, 0, void 0, SceneCommon).c, 2);
+var _applyDecs$c20 = _slicedToArray(_applyDecs(_WaitingScene2, [], _classDecs21, 0, void 0, Scene).c, 2);
 _WaitingScene = _applyDecs$c20[0];
 _initClass21 = _applyDecs$c20[1];
 _initClass21();
