@@ -38,8 +38,9 @@ var floor = Math.floor,
   round = Math.round,
   ceil = Math.ceil,
   min = Math.min,
-  max = Math.max;
-import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img } from '../../../../core/v1/index.mjs';
+  max = Math.max,
+  PI = Math.PI;
+import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, Img } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
 import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs';
 var REGISTER_COMMON_ARGS = {
@@ -1119,8 +1120,55 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
     }
   }]);
 }(Scene);
-
-// Standard
+var PauseScene = /*#__PURE__*/function (_Scene2) {
+  function PauseScene() {
+    _classCallCheck(this, PauseScene);
+    return _callSuper(this, PauseScene, arguments);
+  }
+  _inherits(PauseScene, _Scene2);
+  return _createClass(PauseScene, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(PauseScene, "init", this, 3)([kwargs]);
+      this.backgroundColor = "lightgrey";
+      this.backgroundAlpha = .5;
+      this.pauseText = this.addNotif(Text, {
+        text: "PAUSE",
+        font: "bold 50px arial",
+        fillStyle: "black"
+      });
+      this.syncPosSize();
+      this.syncTextPos();
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.syncPosSize();
+      this.syncTextPos();
+    }
+  }, {
+    key: "syncTextPos",
+    value: function syncTextPos() {
+      assign(this.pauseText, {
+        x: this.viewWidth / 2,
+        y: this.viewHeight / 2
+      });
+    }
+  }, {
+    key: "draw",
+    value: function draw() {
+      var can = this.canvas;
+      can.width = this.viewWidth;
+      can.height = this.viewHeight;
+      var ctx = can.getContext("2d");
+      ctx.reset();
+      var drawer = this.graphicsEngine;
+      this.drawBackground(drawer);
+      this.notifs.draw(drawer);
+      return this.canvas;
+    }
+  }]);
+}(Scene); // Standard
 _classDecs16 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_GreenLandscapeBackgr), StateBool.define("killAllEnemies", {
   "default": false,
   showInBuilder: true
@@ -1785,12 +1833,12 @@ _classDecs21 = [CATALOG.registerScene(_objectSpread(_objectSpread({}, REGISTER_C
   showInBuilder: false
 }))];
 var _WaitingScene;
-var WaitingScene = /*#__PURE__*/function (_Scene2) {
+var WaitingScene = /*#__PURE__*/function (_Scene3) {
   function WaitingScene() {
     _classCallCheck(this, WaitingScene);
     return _callSuper(this, WaitingScene, arguments);
   }
-  _inherits(WaitingScene, _Scene2);
+  _inherits(WaitingScene, _Scene3);
   return _createClass(WaitingScene, [{
     key: "init",
     value: function init(kwargs) {
@@ -1976,19 +2024,77 @@ var WaitingScene = /*#__PURE__*/function (_Scene2) {
       return loadJoypadScene;
     }()
   }]);
-}(Scene); // UTILS
+}(Scene);
 _WaitingScene2 = WaitingScene;
 var _applyDecs$c20 = _slicedToArray(_applyDecs(_WaitingScene2, [], _classDecs21, 0, void 0, Scene).c, 2);
 _WaitingScene = _applyDecs$c20[0];
 _initClass21 = _applyDecs$c20[1];
 _initClass21();
 export { _WaitingScene as WaitingScene };
-export var ScoresBoard = /*#__PURE__*/function (_GameObject7) {
+export var PlayerIcon = /*#__PURE__*/function (_GameObject7) {
+  function PlayerIcon() {
+    _classCallCheck(this, PlayerIcon);
+    return _callSuper(this, PlayerIcon, arguments);
+  }
+  _inherits(PlayerIcon, _GameObject7);
+  return _createClass(PlayerIcon, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(PlayerIcon, "init", this, 3)([kwargs]);
+      this.playerId = kwargs.playerId;
+      this.strokeColor = kwargs?.strokeColor ?? "black";
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      var baseImg = this._baseImg;
+      if (baseImg) return baseImg;
+      var playerId = this.playerId;
+      var player = this.game.players[playerId];
+      baseImg = this._baseImg = document.createElement("canvas");
+      baseImg.width = baseImg.height = 36;
+      var ctx = baseImg.getContext("2d");
+      ctx.beginPath();
+      ctx.arc(floor(baseImg.width / 2), floor(baseImg.height / 2), 15, 0, 2 * PI);
+      ctx.strokeStyle = this.strokeColor;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.fillStyle = player.color;
+      ctx.fill();
+      return baseImg;
+    }
+  }]);
+}(GameObject);
+export var PlayerText = /*#__PURE__*/function (_Text2) {
+  function PlayerText() {
+    _classCallCheck(this, PlayerText);
+    return _callSuper(this, PlayerText, arguments);
+  }
+  _inherits(PlayerText, _Text2);
+  return _createClass(PlayerText, [{
+    key: "init",
+    value: function init(kwargs) {
+      _superPropGet(PlayerText, "init", this, 3)([kwargs]);
+      this.playerId = kwargs.playerId;
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      var playerId = this.playerId;
+      var player = this.game.players[playerId];
+      if (player) this.text = player.name;
+    }
+  }]);
+}(Text);
+
+// UTILS
+
+export var ScoresBoard = /*#__PURE__*/function (_GameObject8) {
   function ScoresBoard() {
     _classCallCheck(this, ScoresBoard);
     return _callSuper(this, ScoresBoard, arguments);
   }
-  _inherits(ScoresBoard, _GameObject7);
+  _inherits(ScoresBoard, _GameObject8);
   return _createClass(ScoresBoard, [{
     key: "init",
     value: function init(kwargs) {
@@ -2057,12 +2163,12 @@ export var ScoresBoard = /*#__PURE__*/function (_GameObject7) {
     }
   }]);
 }(GameObject);
-export var CountDown = /*#__PURE__*/function (_Text2) {
+export var CountDown = /*#__PURE__*/function (_Text3) {
   function CountDown() {
     _classCallCheck(this, CountDown);
     return _callSuper(this, CountDown, arguments);
   }
-  _inherits(CountDown, _Text2);
+  _inherits(CountDown, _Text3);
   return _createClass(CountDown, [{
     key: "init",
     value: function init(kwargs) {

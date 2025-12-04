@@ -1,12 +1,12 @@
 const { assign } = Object
-const { floor, round, ceil, min, max } = Math
+const { floor, round, ceil, min, max, PI } = Math
 import {
     sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys,
     GraphicsProps,
     CATALOG,
     MODE_CLIENT,
     StateProperty, StateBool, StateNumber,
-    Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, PlayerIcon, PlayerText, Img,
+    Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, Img,
 } from '../../../../core/v1/index.mjs'
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
@@ -739,6 +739,43 @@ export class GameScene extends Scene {
     }
 }
 
+class PauseScene extends Scene {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.backgroundColor = "lightgrey"
+        this.backgroundAlpha = .5
+        this.pauseText = this.addNotif(Text, {
+            text: "PAUSE",
+            font: "bold 50px arial",
+            fillStyle: "black",
+        })
+        this.syncPosSize()
+        this.syncTextPos()
+    }
+
+    update() {
+        this.syncPosSize()
+        this.syncTextPos()
+    }
+
+    syncTextPos() {
+        assign(this.pauseText, { x: this.viewWidth/2, y: this.viewHeight/2 })
+    }
+
+    draw() {
+        const can = this.canvas
+        can.width = this.viewWidth
+        can.height = this.viewHeight
+        const ctx = can.getContext("2d")
+        ctx.reset()
+        const drawer = this.graphicsEngine
+        this.drawBackground(drawer)
+        this.notifs.draw(drawer)
+        return this.canvas
+    }
+}
+
 
 // Standard
 
@@ -1318,6 +1355,46 @@ export class WaitingScene extends Scene {
         const { JoypadWaitingScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
         await JoypadWaitingScene.load()
         return new JoypadWaitingScene(this.game)
+    }
+}
+
+
+export class PlayerIcon extends GameObject {
+    init(kwargs) {
+        super.init(kwargs)
+        this.playerId = kwargs.playerId
+        this.strokeColor = kwargs?.strokeColor ?? "black"
+    }
+
+    getBaseImg() {
+        let baseImg = this._baseImg
+        if(baseImg) return baseImg
+        const { playerId } = this
+        const player = this.game.players[playerId]
+        baseImg = this._baseImg = document.createElement("canvas")
+        baseImg.width = baseImg.height = 36
+        const ctx = baseImg.getContext("2d")
+        ctx.beginPath()
+        ctx.arc(floor(baseImg.width/2), floor(baseImg.height/2), 15, 0, 2 * PI)
+        ctx.strokeStyle = this.strokeColor
+        ctx.lineWidth = 3
+        ctx.stroke()
+        ctx.fillStyle = player.color
+        ctx.fill()
+        return baseImg
+    }
+}
+
+
+export class PlayerText extends Text {
+    init(kwargs) {
+        super.init(kwargs)
+        this.playerId = kwargs.playerId
+    }
+    update() {
+        const { playerId } = this
+        const player = this.game.players[playerId]
+        if(player) this.text = player.name
     }
 }
 
