@@ -815,6 +815,7 @@ export class StandardScene extends GameScene {
 
     async loadJoypadScene() {
         const { JoypadGameScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        await JoypadGameScene.load()
         return new JoypadGameScene(this.game)
     }
 
@@ -983,6 +984,7 @@ export class TagScene extends GameScene {
 
     async loadJoypadScene() {
         const { JoypadGameScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        await JoypadGameScene.load()
         return new JoypadGameScene(this.game)
     }
 
@@ -1137,6 +1139,7 @@ export class StealTreasures extends GameScene {
 
     async loadJoypadScene() {
         const { JoypadGameScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        await JoypadGameScene.load()
         return new JoypadGameScene(this.game)
     }
 
@@ -1313,6 +1316,7 @@ export class WaitingScene extends Scene {
 
     async loadJoypadScene() {
         const { JoypadWaitingScene } = await import("/static/catalogs/std/v1/2Dside/joypad.mjs")
+        await JoypadWaitingScene.load()
         return new JoypadWaitingScene(this.game)
     }
 }

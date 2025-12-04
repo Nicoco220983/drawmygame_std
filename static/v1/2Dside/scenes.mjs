@@ -1240,6 +1240,9 @@ var StandardScene = /*#__PURE__*/function (_GameScene) {
             case 1:
               _yield$import = _context.v;
               JoypadGameScene = _yield$import.JoypadGameScene;
+              _context.n = 2;
+              return JoypadGameScene.load();
+            case 2:
               return _context.a(2, new JoypadGameScene(this.game));
           }
         }, _callee, this);
@@ -1469,6 +1472,9 @@ var TagScene = /*#__PURE__*/function (_GameScene2) {
             case 1:
               _yield$import2 = _context2.v;
               JoypadGameScene = _yield$import2.JoypadGameScene;
+              _context2.n = 2;
+              return JoypadGameScene.load();
+            case 2:
               return _context2.a(2, new JoypadGameScene(this.game));
           }
         }, _callee2, this);
@@ -1688,6 +1694,9 @@ var StealTreasures = /*#__PURE__*/function (_GameScene3) {
             case 1:
               _yield$import3 = _context3.v;
               JoypadGameScene = _yield$import3.JoypadGameScene;
+              _context3.n = 2;
+              return JoypadGameScene.load();
+            case 2:
               return _context3.a(2, new JoypadGameScene(this.game));
           }
         }, _callee3, this);
@@ -1954,6 +1963,9 @@ var WaitingScene = /*#__PURE__*/function (_Scene2) {
             case 1:
               _yield$import4 = _context5.v;
               JoypadWaitingScene = _yield$import4.JoypadWaitingScene;
+              _context5.n = 2;
+              return JoypadWaitingScene.load();
+            case 2:
               return _context5.a(2, new JoypadWaitingScene(this.game));
           }
         }, _callee5, this);

@@ -8,178 +8,6 @@ import {
 } from "../../../../core/v1/index.mjs"
 
 
-export class JoypadScene {
-
-    constructor(game) {
-        this.scene = this
-        this.game = game
-        this.x = 0
-        this.y = 0
-        this.width = 800
-        this.height = floor(this.width * 9 / 16)
-        this.syncPosSize()
-        this.backgroundColor = "black"
-        this.backgroundAlpha = 1
-        if (!this.game.isServerEnv) {
-            this.canvas = document.createElement("canvas")
-            this.canvas.width = this.width
-            this.canvas.height = this.height
-            this.graphicsEngine = new GraphicsEngine(this)
-        }
-        this.game.initTouches()
-        this.buttons = new GameObjectGroup(this)
-    }
-
-    isPausable() {
-        return false
-    }
-
-    pause(val) {
-        if (!this.isPausable()) return
-        this.paused = val
-    }
-
-    update() {
-        this.syncPosSize()
-        this.buttons.update()
-    }
-
-    syncPosSize() {
-        const { visible, x, y, viewWidth, viewHeight } = this.game.scenesPosSizes.joypad
-        assign(this, { visible, x, y, viewWidth, viewHeight })
-    }
-
-    onTouch() {
-        this.buttons.forEach(but => but.checkClick())
-    }
-
-    addButton(kwargs) {
-        return this.buttons.add(JoypadButton, kwargs)
-    }
-
-    createPauseScene() {
-        return new JoypadPauseScene(this.game)
-    }
-
-    draw() {
-        const { viewWidth, viewHeight } = this
-        const can = this.canvas
-        can.width = viewWidth
-        can.height = viewHeight
-        const ctx = can.getContext("2d")
-        ctx.reset()
-        const drawer = this.graphicsEngine
-        this.drawBackground(drawer)
-        this.buttons.draw(drawer)
-        return can
-    }
-
-    drawBackground(drawer) {
-        drawer.draw(this.getBackgroundGraphicsProps())
-    }
-
-    getBackgroundGraphicsProps() {
-        const props = this._backgroundGraphicsProps ||= new GraphicsProps()
-        props.color = this.backgroundColor
-        props.x = this.viewWidth / 2
-        props.y = this.viewHeight / 2
-        props.width = this.viewWidth
-        props.height = this.viewHeight
-        props.visibility = this.backgroundAlpha
-        return props
-    }
-}
-
-
-export class JoypadGameScene extends JoypadScene {
-
-    update() {
-        super.update()
-        this.syncLocalPlayerButtons()
-    }
-
-    syncLocalPlayerButtons() {
-        const hero = this.game.scenes.game.getHero(this.game.localPlayerId)
-        if (hero && hero == this._lastHeroSynced) return
-        this.buttons.clear()
-        if (!hero) return
-        this.addPauseButton()
-        hero.initJoypadButtons(this)
-        this._lastHeroSynced = hero
-    }
-
-    addPauseButton() {
-        this.pauseButton = this.addButton({ x: this.width / 2, y: 40, width: 200, height: 60, text: "PAUSE" })
-        this.pauseButton.onClickUp = () => this.game.pause(true)
-    }
-
-    newPauseScene() {
-        return new JoypadPauseScene(this.game)
-    }
-}
-
-
-export class JoypadWaitingScene extends JoypadScene {
-
-    update() {
-        super.update()
-        this.initStartButton()
-    }
-
-    initStartButton() {
-        const { game, width, height } = this, { localPlayerId } = game
-        if (!localPlayerId || !game.players[localPlayerId] || this.startButton) return
-        this.startButton = this.addButton({ x: width / 2, y: height / 2, width: 300, height: 100, text: "START" })
-        this.startButton.onClickUp = () => this.game.startGame()
-    }
-}
-
-
-class JoypadPauseScene extends JoypadScene {
-
-    constructor(game) {
-        super(game)
-        this.backgroundColor = "lightgrey"
-        this.backgroundAlpha = .5
-        this.notifs = new GameObjectGroup(this)
-        this.pauseText = this.notifs.add(Text, {
-            text: "PAUSE",
-            font: "bold 50px arial",
-            fillStyle: "white",
-        })
-        this.syncPosSize()
-        this.initButtons()
-        this.syncObjectsPos()
-    }
-
-    initButtons() {
-        this.resumeButton = this.addButton({ width: 300, height: 100, text: "RESUME" })
-        this.resumeButton.onClickUp = () => this.game.pause(false)
-        this.restartButton = this.addButton({ width: 300, height: 100, text: "RESTART" })
-        this.restartButton.onClickUp = () => this.game.restartGame()
-    }
-
-    update() {
-        super.update()
-        this.syncObjectsPos()
-    }
-
-    syncObjectsPos() {
-        const { width, height } = this
-        assign(this.pauseText, { x: floor(width / 2), y: floor(height / 6) })
-        assign(this.resumeButton, { x: floor(width / 2), y: floor(height / 2) })
-        assign(this.restartButton, { x: floor(width / 2), y: floor(height / 2) + 120 })
-    }
-
-    draw() {
-        const res = super.draw()
-        const drawer = this.graphicsEngine
-        this.notifs.draw(drawer)
-        return res
-    }
-}
-
-
 const ButtonSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png")
 const ButtonColorableSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_colorable.png")
 
@@ -277,5 +105,181 @@ class JoypadButton extends GameObject {
             fillStyle: "white",
             font: `bold ${fontSize}px serif`,
         })
+    }
+}
+
+
+@Dependencies.add(JoypadButton)
+@Dependencies.init()
+export class JoypadScene {
+
+    constructor(game) {
+        this.scene = this
+        this.game = game
+        this.x = 0
+        this.y = 0
+        this.width = 800
+        this.height = floor(this.width * 9 / 16)
+        this.syncPosSize()
+        this.backgroundColor = "black"
+        this.backgroundAlpha = 1
+        if (!this.game.isServerEnv) {
+            this.canvas = document.createElement("canvas")
+            this.canvas.width = this.width
+            this.canvas.height = this.height
+            this.graphicsEngine = new GraphicsEngine(this)
+        }
+        this.game.initTouches()
+        this.buttons = new GameObjectGroup(this)
+    }
+
+    isPausable() {
+        return false
+    }
+
+    pause(val) {
+        if (!this.isPausable()) return
+        this.paused = val
+    }
+
+    update() {
+        this.syncPosSize()
+        this.buttons.update()
+    }
+
+    syncPosSize() {
+        const { visible, x, y, viewWidth, viewHeight } = this.game.scenesPosSizes.joypad
+        assign(this, { visible, x, y, viewWidth, viewHeight })
+    }
+
+    onTouch() {
+        this.buttons.forEach(but => but.checkClick())
+    }
+
+    addButton(kwargs) {
+        return this.buttons.add(JoypadButton, kwargs)
+    }
+
+    createPauseScene() {
+        return new JoypadPauseScene(this.game)
+    }
+
+    draw() {
+        const { viewWidth, viewHeight } = this
+        const can = this.canvas
+        can.width = viewWidth
+        can.height = viewHeight
+        const ctx = can.getContext("2d")
+        ctx.reset()
+        const drawer = this.graphicsEngine
+        this.drawBackground(drawer)
+        this.buttons.draw(drawer)
+        return can
+    }
+
+    drawBackground(drawer) {
+        drawer.draw(this.getBackgroundGraphicsProps())
+    }
+
+    getBackgroundGraphicsProps() {
+        const props = this._backgroundGraphicsProps ||= new GraphicsProps()
+        props.color = this.backgroundColor
+        props.x = this.viewWidth / 2
+        props.y = this.viewHeight / 2
+        props.width = this.viewWidth
+        props.height = this.viewHeight
+        props.visibility = this.backgroundAlpha
+        return props
+    }
+}
+
+
+@Dependencies.add(JoypadButton)
+@Dependencies.init()
+export class JoypadGameScene extends JoypadScene {
+
+    update() {
+        super.update()
+        this.syncLocalPlayerButtons()
+    }
+
+    syncLocalPlayerButtons() {
+        const hero = this.game.scenes.game.getHero(this.game.localPlayerId)
+        if (hero && hero == this._lastHeroSynced) return
+        this.buttons.clear()
+        if (!hero) return
+        this.addPauseButton()
+        hero.initJoypadButtons(this)
+        this._lastHeroSynced = hero
+    }
+
+    addPauseButton() {
+        this.pauseButton = this.addButton({ x: this.width / 2, y: 40, width: 200, height: 60, text: "PAUSE" })
+        this.pauseButton.onClickUp = () => this.game.pause(true)
+    }
+
+    newPauseScene() {
+        return new JoypadPauseScene(this.game)
+    }
+}
+
+
+export class JoypadWaitingScene extends JoypadScene {
+
+    update() {
+        super.update()
+        this.initStartButton()
+    }
+
+    initStartButton() {
+        const { game, width, height } = this, { localPlayerId } = game
+        if (!localPlayerId || !game.players[localPlayerId] || this.startButton) return
+        this.startButton = this.addButton({ x: width / 2, y: height / 2, width: 300, height: 100, text: "START" })
+        this.startButton.onClickUp = () => this.game.startGame()
+    }
+}
+
+
+class JoypadPauseScene extends JoypadScene {
+
+    constructor(game) {
+        super(game)
+        this.backgroundColor = "lightgrey"
+        this.backgroundAlpha = .5
+        this.notifs = new GameObjectGroup(this)
+        this.pauseText = this.notifs.add(Text, {
+            text: "PAUSE",
+            font: "bold 50px arial",
+            fillStyle: "white",
+        })
+        this.syncPosSize()
+        this.initButtons()
+        this.syncObjectsPos()
+    }
+
+    initButtons() {
+        this.resumeButton = this.addButton({ width: 300, height: 100, text: "RESUME" })
+        this.resumeButton.onClickUp = () => this.game.pause(false)
+        this.restartButton = this.addButton({ width: 300, height: 100, text: "RESTART" })
+        this.restartButton.onClickUp = () => this.game.restartGame()
+    }
+
+    update() {
+        super.update()
+        this.syncObjectsPos()
+    }
+
+    syncObjectsPos() {
+        const { width, height } = this
+        assign(this.pauseText, { x: floor(width / 2), y: floor(height / 6) })
+        assign(this.resumeButton, { x: floor(width / 2), y: floor(height / 2) })
+        assign(this.restartButton, { x: floor(width / 2), y: floor(height / 2) + 120 })
+    }
+
+    draw() {
+        const res = super.draw()
+        const drawer = this.graphicsEngine
+        this.notifs.draw(drawer)
+        return res
     }
 }
