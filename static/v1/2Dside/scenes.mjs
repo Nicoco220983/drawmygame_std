@@ -40,9 +40,9 @@ var floor = Math.floor,
   min = Math.min,
   max = Math.max,
   PI = Math.PI;
-import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, Img } from '../../../../core/v1/index.mjs';
+import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, CenteredText, hackMethod, GameObjectGroup, Img } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
-import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs';
+import { Hero, Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",
@@ -1262,7 +1262,7 @@ var StandardScene = /*#__PURE__*/function (_GameScene) {
         var allOk = null;
         if (allOk !== false && this.catchAllStars) {
           var stars = this.filterObjects("stars", function (obj) {
-            return obj instanceof Star;
+            return obj instanceof Star && !obj.owner;
           });
           allOk = stars.length == 0;
         }

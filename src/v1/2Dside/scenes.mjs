@@ -6,12 +6,12 @@ import {
     CATALOG,
     MODE_CLIENT,
     StateProperty, StateBool, StateNumber,
-    Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, hackMethod, GameObjectGroup, Img,
+    Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, CenteredText, hackMethod, GameObjectGroup, Img,
 } from '../../../../core/v1/index.mjs'
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
 } from '../mixins.mjs'
-import { Hero, Wall, Star, HeroSpawnPoint } from './objects.mjs'
+import { Hero, Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs'
 
 const REGISTER_COMMON_ARGS = {
     url: import.meta.url,
@@ -839,7 +839,7 @@ export class StandardScene extends GameScene {
         if (this.step == "GAME") {
             let allOk = null
             if (allOk !== false && this.catchAllStars) {
-                const stars = this.filterObjects("stars", obj => obj instanceof Star)
+                const stars = this.filterObjects("stars", obj => obj instanceof Star && !obj.owner)
                 allOk = (stars.length == 0)
             }
             if (allOk !== false && this.killAllEnemies) {
