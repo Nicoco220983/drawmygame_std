@@ -1631,6 +1631,13 @@ export class HeroSpawnPoint extends GameObject {
 })
 export class ObjectSpawner extends GameObject {
 
+    static async load(perspective, versions, initState) {
+        const loads = []
+        loads.push(super.load(initState))
+        if(initState.model) loads.push(CATALOG.loadObjects(perspective, versions, [initState.model]))
+        await Promise.all(loads)
+    }
+
     update() {
         super.update()
         this.spawnedObjects.update()
