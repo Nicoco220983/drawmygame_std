@@ -11,6 +11,9 @@ import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin,
     applyForce,
 } from '../mixins.mjs'
+import {
+    JumpMixin
+} from './mixins.mjs'
 
 
 const REGISTER_COMMON_ARGS = {
@@ -353,63 +356,6 @@ export class Projectile extends GameObject {
 
 // NICO
 
-@PhysicsMixin.addIfAbsent()
-export class JumpMixin extends Mixin {
-
-    initClass(cls, kwargs) {
-        super.initClass(cls, kwargs)
-        const proto = cls.prototype
-
-        proto.jumpSpeed = kwargs?.jumpSpeed ?? 500
-        proto.nullJumpSpeed = kwargs?.nullJumpSpeed ?? 800
-        proto.maxJumpBlockAngle = kwargs?.maxJumpBlockAngle ?? 70
-
-        proto.jumpBlockLastIt = -Infinity
-        proto.jumpBlockLastAngle = -90
-        proto.canJump = false
-        proto.onGetBlocked = this.onGetBlocked
-        proto.mayJump = this.mayJump
-        proto.jump = this.jump
-    }
-
-    onGetBlocked(obj, details) {
-        const { maxJumpBlockAngle } = this
-        const { angle } = details
-        if (angle <= -90 + maxJumpBlockAngle && angle >= -90 - maxJumpBlockAngle) {
-            this.jumpBlockLastIt = this.scene.iteration
-            this.jumpBlockLastAngle = angle
-        }
-    }
-
-    update() {
-        this.canJump = (this.jumpBlockLastIt == this.scene.iteration)
-    }
-
-    mayJump() {
-        if (this.canJump) {
-            this.jump()
-            return true
-        } else {
-            return false
-        }
-    }
-
-    jump() {
-        const { jumpSpeed, nullJumpSpeed, jumpBlockLastAngle } = this
-        const jumpAngle = -90 - (-90 - jumpBlockLastAngle) / 2
-        //const angleJumpSpeed = jumpSpeed*sin(jumpBlockLastAngle * PI / 180)  // < 0
-        if (jumpAngle != -90) {
-            const jumpSpeedX = jumpSpeed * cos(jumpAngle * PI / 180)
-            this.speedX += jumpSpeedX
-            this.dirX = sign(jumpSpeedX)
-        }
-        const jumpSpeedY = jumpSpeed * sin(jumpAngle * PI / 180) // < 0
-        this.speedY += max(jumpSpeedY, min(0, jumpSpeedY * (1 + this.speedY / nullJumpSpeed)))
-        this.game.audio.playSound(JumpAud)
-    }
-}
-
-
 const HandImg = new Img("/static/catalogs/std/v1/2Dside/assets/hand.png")
 const SlashAud = new Aud("/static/catalogs/std/v1/2Dside/assets/slash.opus")
 const HandHitAud = new Aud("/static/catalogs/std/v1/2Dside/assets/hand_hit.opus")
@@ -463,7 +409,6 @@ const ArrowsSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/arro
 const ArrowsSpriteSheet = new SpriteSheet(ArrowsSpriteSheetImg, 4, 1)
 
 const OuchAud = new Aud("/static/catalogs/std/v1/2Dside/assets/ouch.opus")
-const JumpAud = new Aud("/static/catalogs/std/v1/2Dside/assets/jump.opus")
 
 const NicoImg = new Img("/static/catalogs/std/v1/2Dside/assets/nico.png")
 const NicoBaseSpriteSheet = new Img("/static/catalogs/std/v1/2Dside/assets/nico_full.png")
@@ -485,7 +430,7 @@ const NicoSpriteSheets = {
     label: "Nico",
     icon: NicoImg,
 })
-@Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, JumpAud, ArrowsSpriteSheetImg, NicoHand)
+@Dependencies.add(NicoBaseSpriteSheet, NicoColorableSpriteSheet, OuchAud, ArrowsSpriteSheetImg, NicoHand)
 @JumpMixin.add({
     jumpSpeed: 500,
     nullJumpSpeed: 800,
@@ -613,7 +558,7 @@ export class Nico extends Hero {
         const player = players && players[this.playerId]
         const color = player && player.color
         const spriteSheet = NicoSpriteSheets.get(color)
-        if (iteration > 0 && (this.handRemIt || !this.canJump)) return spriteSheet.get(1)
+        if (iteration > 0 && (this.handRemIt || !this.canJump())) return spriteSheet.get(1)
         else if (this.speedX == 0) return spriteSheet.get(0)
         else return spriteSheet.get(1 + floor((iteration * dt * 6) % 3))
     }
