@@ -42,7 +42,8 @@ var floor = Math.floor,
   PI = Math.PI;
 import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, CenteredText, hackMethod, GameObjectGroup, Img } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
-import { Hero, Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs';
+import { Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs';
+import { Hero } from './heros.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",

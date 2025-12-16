@@ -11,7 +11,8 @@ import {
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
 } from '../mixins.mjs'
-import { Hero, Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs'
+import { Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs'
+import { Hero } from './heros.mjs'
 
 const REGISTER_COMMON_ARGS = {
     url: import.meta.url,
