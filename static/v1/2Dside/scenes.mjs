@@ -1285,7 +1285,7 @@ var StandardScene = /*#__PURE__*/function (_GameScene) {
           while (1) switch (_context.n) {
             case 0:
               _context.n = 1;
-              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/joypad.mjs");
             case 1:
               _yield$import = _context.v;
               JoypadGameScene = _yield$import.JoypadGameScene;
@@ -1517,7 +1517,7 @@ var TagScene = /*#__PURE__*/function (_GameScene2) {
           while (1) switch (_context2.n) {
             case 0:
               _context2.n = 1;
-              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/joypad.mjs");
             case 1:
               _yield$import2 = _context2.v;
               JoypadGameScene = _yield$import2.JoypadGameScene;
@@ -1739,7 +1739,7 @@ var StealTreasures = /*#__PURE__*/function (_GameScene3) {
           while (1) switch (_context3.n) {
             case 0:
               _context3.n = 1;
-              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/joypad.mjs");
             case 1:
               _yield$import3 = _context3.v;
               JoypadGameScene = _yield$import3.JoypadGameScene;
@@ -2008,7 +2008,7 @@ var WaitingScene = /*#__PURE__*/function (_Scene3) {
           while (1) switch (_context5.n) {
             case 0:
               _context5.n = 1;
-              return import("/static/catalogs/std/v1/2Dside/joypad.mjs");
+              return import("/static/catalogs/std/v1/joypad.mjs");
             case 1:
               _yield$import4 = _context5.v;
               JoypadWaitingScene = _yield$import4.JoypadWaitingScene;

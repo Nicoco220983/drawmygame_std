@@ -35,7 +35,7 @@ var abs = Math.abs,
   PI = Math.PI,
   random = Math.random;
 var assign = Object.assign;
-import { cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas, GraphicsEngine, GraphicsProps, Dependencies, GameObject, Text, GameObjectGroup, Img } from "../../../../core/v1/index.mjs";
+import { cachedTransform, newCanvas, cloneCanvas, colorizeCanvas, newTextCanvas, GraphicsEngine, GraphicsProps, Dependencies, GameObject, Text, GameObjectGroup, Img } from "../../../core/v1/index.mjs";
 var ButtonSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_spritesheet.png");
 var ButtonColorableSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_colorable.png");
 _classDecs = [Dependencies.add(ButtonSpriteSheetImg, ButtonColorableSpriteSheetImg)];
