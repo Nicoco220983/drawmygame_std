@@ -12,6 +12,9 @@ import {
     applyForce,
 } from '../mixins.mjs'
 import {
+    JoypadButton, StickButton
+} from '../joypad.mjs'
+import {
     JumpMixin
 } from './mixins.mjs'
 import {
@@ -323,17 +326,20 @@ export class Nico extends Hero {
     initJoypadButtons(joypadScn) {
         const { width, height } = joypadScn
         const size = height * .45
-        joypadScn.addButton({ inputKey: "ArrowLeft", x: width * .15, y: height * .27, size, icon: ArrowsSpriteSheet.get(3) })
-        joypadScn.addButton({ inputKey: "ArrowRight", x: width * .3, y: height * .73, size, icon: ArrowsSpriteSheet.get(1) })
-        joypadScn.addButton({ inputKey: "ArrowUp", x: width * .85, y: height * .27, size, icon: ArrowsSpriteSheet.get(0) })
-        joypadScn.actionButton = joypadScn.addButton({ inputKey: " ", x: width * .7, y: height * .73, size, icon: HandImg })
+        //joypadScn.addButton(JoypadButton, { inputKey: "ArrowLeft", x: width * .15, y: height * .27, size, icon: ArrowsSpriteSheet.get(3) })
+        //joypadScn.addButton(JoypadButton, { inputKey: "ArrowRight", x: width * .3, y: height * .73, size, icon: ArrowsSpriteSheet.get(1) })
+        const walkButton = joypadScn.addButton(StickButton, { x: width * .25, y: height * .5, size: height * .8 })
+        walkButton.onInput = pos => {
+            this.game.setInputKey("ArrowRight", (pos && pos.x > 10))
+            this.game.setInputKey("ArrowLeft", (pos && pos.x < -10))
+        }
+        joypadScn.addButton(JoypadButton, { inputKey: "ArrowUp", x: width * .85, y: height * .27, size, icon: ArrowsSpriteSheet.get(0) })
+        this.actionButton = joypadScn.addButton(JoypadButton, { inputKey: " ", x: width * .7, y: height * .73, size, icon: HandImg })
         this.syncJoypadActionButton()
     }
 
     syncJoypadActionButton() {
-        const { scenes } = this.game
-        const actionButton = scenes.joypad && scenes.joypad.actionButton
-        if (!actionButton) return
+        const { actionButton } = this
         const actionExtra = this.getActionExtra()
         actionButton.icon = actionExtra ? actionExtra.getBaseImg() : HandImg
     }
@@ -367,13 +373,16 @@ export class Nico extends Hero {
     getInputState() {
         const { game } = this
         const inputState = super.getInputState()
+        // walk
+        delete inputState.walkX
         if (game.isKeyPressed("ArrowRight")) inputState.walkX = 1
         else if (game.isKeyPressed("ArrowLeft")) inputState.walkX = -1
-        else delete inputState.walkX
+        // jump
+        delete inputState.jump
         if (game.isKeyPressed("ArrowUp")) inputState.jump = true
-        else delete inputState.jump
+        // action
+        delete inputState.obj
         if (game.isKeyPressed(" ")) inputState.obj = true
-        else delete inputState.obj
         return inputState
     }
 }

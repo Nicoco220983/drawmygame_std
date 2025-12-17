@@ -12,26 +12,44 @@ const ButtonSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/butt
 const ButtonColorableSpriteSheetImg = new Img("/static/catalogs/std/v1/2Dside/assets/button_colorable.png")
 
 @Dependencies.add(ButtonSpriteSheetImg, ButtonColorableSpriteSheetImg)
-class JoypadButton extends GameObject {
+export class JoypadButton extends GameObject {
 
     init(kwargs) {
         super.init(kwargs)
         this.inputKey = kwargs?.inputKey
-        this.isDown = false
         this.disabled = kwargs?.disabled
         this.text = kwargs?.text
         this.icon = kwargs?.icon
+        this.isDown = false
     }
 
-    checkClick() {
+    // checkClick() {
+    //     if (this.disabled) return
+    //     const isDown = Boolean(this.checkHitTouches())
+    //     if (isDown != this.isDown) {
+    //         this.isDown = isDown
+    //         if (isDown) this.onClickDown()
+    //         else this.onClickUp()
+    //     }
+    // }
+
+    update() {
+        super.update()
         if (this.disabled) return
-        const isDown = this.checkHitTouches()
+        const isDown = Boolean(this.checkHitTouches())
         if (isDown != this.isDown) {
             this.isDown = isDown
-            if (isDown) this.onClickDown()
-            else this.onClickUp()
+            if (isDown) {
+                if(this.onClickDown) this.onClickDown()
+            } else {
+                if(this.onClickUp) this.onClickUp()
+            }
         }
     }
+
+    // getValue() {
+    //     return !this.disabled && Boolean(this.checkHitTouches())
+    // }
 
     onClickDown() {
         if (this.inputKey) this.game.setInputKey(this.inputKey, true)
@@ -109,6 +127,104 @@ class JoypadButton extends GameObject {
 }
 
 
+export class StickButton extends GameObject {
+
+    // checkClick() {
+    //     if (this.disabled) return
+    //     const touch = this.checkHitTouches()
+    //     if (touch && this.startPos === null) {
+    //         this.startPos = {
+    //             x: touch.x,
+    //             y: touch.y,
+    //         }
+    //     }
+    // }
+
+    init(kwargs) {
+        super.init(kwargs)
+        //this.inputKey = kwargs?.inputKey
+        this.disabled = kwargs?.disabled
+        this.text = kwargs?.text
+        this.icon = kwargs?.icon
+        this.startPos = null
+        this.prevInput = null
+    }
+
+    update() {
+        super.update()
+        let input = null
+        if(!this.disabled) {
+            const touch = this.checkHitTouches()
+            if(this.startPos === null) {
+                if(touch) this.startPos = {
+                    x: touch.x,
+                    y: touch.y,
+                }
+            } else {
+                if(!touch) this.startPos = null
+            }
+            if(touch === null) input = null
+            else input = {
+                x: touch.x - this.startPos.x,
+                y: touch.y - this.startPos.y,
+            }
+        }
+        if(input || this.prevInput) {
+            if(this.onInput) this.onInput(input)
+        }
+        this.prevInput = input
+    }
+
+    draw(drawer) {
+        if (this.disabled) return
+        super.draw(drawer)
+        if (this.icon) {
+            const iconProps = this._iconGraphicsProps ||= new GraphicsProps()
+            iconProps.img = this.icon
+            iconProps.x = this.x
+            iconProps.y = this.y
+            iconProps.width = this.width * .5
+            iconProps.height = this.height * .5
+            iconProps.draw(drawer)
+        }
+    }
+
+    getBaseImg() {
+        const { game } = this
+        if (ButtonSpriteSheetImg.unloaded || ButtonColorableSpriteSheetImg.unloaded) return
+        let img = ButtonSpriteSheetImg, colorImg = ButtonColorableSpriteSheetImg
+        const localPlayer = game.players[game.localPlayerId]
+        const color = localPlayer ? localPlayer.color : null
+        const numCol = this.isDown ? 1 : 0
+        colorImg = cachedTransform(colorImg, numCol, () => {
+            return cloneCanvas(colorImg, { col: [numCol, 2] })
+        })
+        colorImg = cachedTransform(colorImg, color, () => {
+            const res = cloneCanvas(colorImg)
+            return color ? colorizeCanvas(res, color) : res
+        })
+        img = cachedTransform(img, numCol, () => {
+            const res = cloneCanvas(img, { col: [numCol, 2] })
+            const ctx = res.getContext("2d")
+            ctx.drawImage(colorImg, 0, 0, res.width, res.height)
+            return res
+        })
+        const sizeRatio = this.width / this.height
+        img = cachedTransform(img, sizeRatio, () => {
+            if (sizeRatio == 1) return cloneCanvas(img)
+            const { width: iw, height: ih } = img, iw2 = ceil(iw / 2)
+            const rw = ceil(ih * sizeRatio), rh = ih
+            const res = newCanvas(rw, rh), ctx = res.getContext("2d")
+            ctx.drawImage(img, 0, 0, iw2, ih, 0, 0, iw2, ih)
+            ctx.drawImage(img, iw2, 0, iw2, ih, rw - iw2, 0, iw2, ih)
+            for (let x = iw2; x < rw - iw2; ++x) ctx.drawImage(img, iw2, 0, 1, ih, x, 0, 1, ih)
+            return res
+        })
+        return img
+    }
+}
+
+
 @Dependencies.add(JoypadButton)
 @Dependencies.init()
 export class JoypadScene {
@@ -152,12 +268,13 @@ export class JoypadScene {
         assign(this, { visible, x, y, viewWidth, viewHeight })
     }
 
-    onTouch() {
-        this.buttons.forEach(but => but.checkClick())
-    }
+    onTouch() {} // TODO: remove
+    // onTouch() {
+    //     this.buttons.forEach(but => but.checkClick())
+    // }
 
-    addButton(kwargs) {
-        return this.buttons.add(JoypadButton, kwargs)
+    addButton(cls, kwargs) {
+        return this.buttons.add(cls, kwargs)
     }
 
     createPauseScene() {
@@ -214,7 +331,7 @@ export class JoypadGameScene extends JoypadScene {
     }
 
     addPauseButton() {
-        this.pauseButton = this.addButton({ x: this.width / 2, y: 40, width: 200, height: 60, text: "PAUSE" })
+        this.pauseButton = this.addButton(JoypadButton, { x: this.width / 2, y: 40, width: 200, height: 60, text: "PAUSE" })
         this.pauseButton.onClickUp = () => this.game.pause(true)
     }
 
@@ -234,7 +351,7 @@ export class JoypadWaitingScene extends JoypadScene {
     initStartButton() {
         const { game, width, height } = this, { localPlayerId } = game
         if (!localPlayerId || !game.players[localPlayerId] || this.startButton) return
-        this.startButton = this.addButton({ x: width / 2, y: height / 2, width: 300, height: 100, text: "START" })
+        this.startButton = this.addButton(JoypadButton, { x: width / 2, y: height / 2, width: 300, height: 100, text: "START" })
         this.startButton.onClickUp = () => this.game.startGame()
     }
 }
@@ -258,9 +375,9 @@ class JoypadPauseScene extends JoypadScene {
     }
 
     initButtons() {
-        this.resumeButton = this.addButton({ width: 300, height: 100, text: "RESUME" })
+        this.resumeButton = this.addButton(JoypadButton, { width: 300, height: 100, text: "RESUME" })
         this.resumeButton.onClickUp = () => this.game.pause(false)
-        this.restartButton = this.addButton({ width: 300, height: 100, text: "RESTART" })
+        this.restartButton = this.addButton(JoypadButton, { width: 300, height: 100, text: "RESTART" })
         this.restartButton.onClickUp = () => this.game.restartGame()
     }
 

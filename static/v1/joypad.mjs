@@ -51,21 +51,40 @@ var JoypadButton = /*#__PURE__*/function (_GameObject) {
     value: function init(kwargs) {
       _superPropGet(JoypadButton, "init", this, 3)([kwargs]);
       this.inputKey = kwargs?.inputKey;
-      this.isDown = false;
       this.disabled = kwargs?.disabled;
       this.text = kwargs?.text;
       this.icon = kwargs?.icon;
+      this.isDown = false;
     }
+
+    // checkClick() {
+    //     if (this.disabled) return
+    //     const isDown = Boolean(this.checkHitTouches())
+    //     if (isDown != this.isDown) {
+    //         this.isDown = isDown
+    //         if (isDown) this.onClickDown()
+    //         else this.onClickUp()
+    //     }
+    // }
   }, {
-    key: "checkClick",
-    value: function checkClick() {
+    key: "update",
+    value: function update() {
+      _superPropGet(JoypadButton, "update", this, 3)([]);
       if (this.disabled) return;
-      var isDown = this.checkHitTouches();
+      var isDown = Boolean(this.checkHitTouches());
       if (isDown != this.isDown) {
         this.isDown = isDown;
-        if (isDown) this.onClickDown();else this.onClickUp();
+        if (isDown) {
+          if (this.onClickDown) this.onClickDown();
+        } else {
+          if (this.onClickUp) this.onClickUp();
+        }
       }
     }
+
+    // getValue() {
+    //     return !this.disabled && Boolean(this.checkHitTouches())
+    // }
   }, {
     key: "onClickDown",
     value: function onClickDown() {
@@ -157,10 +176,127 @@ var JoypadButton = /*#__PURE__*/function (_GameObject) {
   }]);
 }(GameObject);
 _JoypadButton2 = JoypadButton;
-var _applyDecs$c3 = _slicedToArray(_applyDecs(_JoypadButton2, [], _classDecs, 0, void 0, GameObject).c, 2);
-_JoypadButton = _applyDecs$c3[0];
-_initClass = _applyDecs$c3[1];
+var _applyDecs$c = _slicedToArray(_applyDecs(_JoypadButton2, [], _classDecs, 0, void 0, GameObject).c, 2);
+_JoypadButton = _applyDecs$c[0];
+_initClass = _applyDecs$c[1];
 _initClass();
+export { _JoypadButton as JoypadButton };
+export var StickButton = /*#__PURE__*/function (_GameObject2) {
+  function StickButton() {
+    _classCallCheck(this, StickButton);
+    return _callSuper(this, StickButton, arguments);
+  }
+  _inherits(StickButton, _GameObject2);
+  return _createClass(StickButton, [{
+    key: "init",
+    value:
+    // checkClick() {
+    //     if (this.disabled) return
+    //     const touch = this.checkHitTouches()
+    //     if (touch && this.startPos === null) {
+    //         this.startPos = {
+    //             x: touch.x,
+    //             y: touch.y,
+    //         }
+    //     }
+    // }
+
+    function init(kwargs) {
+      _superPropGet(StickButton, "init", this, 3)([kwargs]);
+      //this.inputKey = kwargs?.inputKey
+      this.disabled = kwargs?.disabled;
+      this.text = kwargs?.text;
+      this.icon = kwargs?.icon;
+      this.startPos = null;
+      this.prevInput = null;
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      _superPropGet(StickButton, "update", this, 3)([]);
+      var input = null;
+      if (!this.disabled) {
+        var touch = this.checkHitTouches();
+        if (this.startPos === null) {
+          if (touch) this.startPos = {
+            x: touch.x,
+            y: touch.y
+          };
+        } else {
+          if (!touch) this.startPos = null;
+        }
+        if (touch === null) input = null;else input = {
+          x: touch.x - this.startPos.x,
+          y: touch.y - this.startPos.y
+        };
+      }
+      if (input || this.prevInput) {
+        if (this.onInput) this.onInput(input);
+      }
+      this.prevInput = input;
+    }
+  }, {
+    key: "draw",
+    value: function draw(drawer) {
+      if (this.disabled) return;
+      _superPropGet(StickButton, "draw", this, 3)([drawer]);
+      if (this.icon) {
+        var iconProps = this._iconGraphicsProps || (this._iconGraphicsProps = new GraphicsProps());
+        iconProps.img = this.icon;
+        iconProps.x = this.x;
+        iconProps.y = this.y;
+        iconProps.width = this.width * .5;
+        iconProps.height = this.height * .5;
+        iconProps.draw(drawer);
+      }
+    }
+  }, {
+    key: "getBaseImg",
+    value: function getBaseImg() {
+      var game = this.game;
+      if (ButtonSpriteSheetImg.unloaded || ButtonColorableSpriteSheetImg.unloaded) return;
+      var img = ButtonSpriteSheetImg,
+        colorImg = ButtonColorableSpriteSheetImg;
+      var localPlayer = game.players[game.localPlayerId];
+      var color = localPlayer ? localPlayer.color : null;
+      var numCol = this.isDown ? 1 : 0;
+      colorImg = cachedTransform(colorImg, numCol, function () {
+        return cloneCanvas(colorImg, {
+          col: [numCol, 2]
+        });
+      });
+      colorImg = cachedTransform(colorImg, color, function () {
+        var res = cloneCanvas(colorImg);
+        return color ? colorizeCanvas(res, color) : res;
+      });
+      img = cachedTransform(img, numCol, function () {
+        var res = cloneCanvas(img, {
+          col: [numCol, 2]
+        });
+        var ctx = res.getContext("2d");
+        ctx.drawImage(colorImg, 0, 0, res.width, res.height);
+        return res;
+      });
+      var sizeRatio = this.width / this.height;
+      img = cachedTransform(img, sizeRatio, function () {
+        if (sizeRatio == 1) return cloneCanvas(img);
+        var _img2 = img,
+          iw = _img2.width,
+          ih = _img2.height,
+          iw2 = ceil(iw / 2);
+        var rw = ceil(ih * sizeRatio),
+          rh = ih;
+        var res = newCanvas(rw, rh),
+          ctx = res.getContext("2d");
+        ctx.drawImage(img, 0, 0, iw2, ih, 0, 0, iw2, ih);
+        ctx.drawImage(img, iw2, 0, iw2, ih, rw - iw2, 0, iw2, ih);
+        for (var x = iw2; x < rw - iw2; ++x) ctx.drawImage(img, iw2, 0, 1, ih, x, 0, 1, ih);
+        return res;
+      });
+      return img;
+    }
+  }]);
+}(GameObject);
 _classDecs2 = [Dependencies.add(_JoypadButton), Dependencies.init()];
 var _JoypadScene;
 var JoypadScene = /*#__PURE__*/function () {
@@ -220,15 +356,14 @@ var JoypadScene = /*#__PURE__*/function () {
     }
   }, {
     key: "onTouch",
-    value: function onTouch() {
-      this.buttons.forEach(function (but) {
-        return but.checkClick();
-      });
-    }
+    value: function onTouch() {} // TODO: remove
+    // onTouch() {
+    //     this.buttons.forEach(but => but.checkClick())
+    // }
   }, {
     key: "addButton",
-    value: function addButton(kwargs) {
-      return this.buttons.add(_JoypadButton, kwargs);
+    value: function addButton(cls, kwargs) {
+      return this.buttons.add(cls, kwargs);
     }
   }, {
     key: "createPauseScene",
@@ -270,9 +405,9 @@ var JoypadScene = /*#__PURE__*/function () {
   }]);
 }();
 _JoypadScene2 = JoypadScene;
-var _applyDecs$c = _slicedToArray(_applyDecs(_JoypadScene2, [], _classDecs2).c, 2);
-_JoypadScene = _applyDecs$c[0];
-_initClass2 = _applyDecs$c[1];
+var _applyDecs$c2 = _slicedToArray(_applyDecs(_JoypadScene2, [], _classDecs2).c, 2);
+_JoypadScene = _applyDecs$c2[0];
+_initClass2 = _applyDecs$c2[1];
 _initClass2();
 export { _JoypadScene as JoypadScene };
 _classDecs3 = [Dependencies.add(_JoypadButton), Dependencies.init()];
@@ -304,7 +439,7 @@ var JoypadGameScene = /*#__PURE__*/function (_JoypadScene4) {
     key: "addPauseButton",
     value: function addPauseButton() {
       var _this = this;
-      this.pauseButton = this.addButton({
+      this.pauseButton = this.addButton(_JoypadButton, {
         x: this.width / 2,
         y: 40,
         width: 200,
@@ -323,9 +458,9 @@ var JoypadGameScene = /*#__PURE__*/function (_JoypadScene4) {
   }]);
 }(_JoypadScene3 = _JoypadScene);
 _JoypadGameScene2 = JoypadGameScene;
-var _applyDecs$c2 = _slicedToArray(_applyDecs(_JoypadGameScene2, [], _classDecs3, 0, void 0, _JoypadScene3).c, 2);
-_JoypadGameScene = _applyDecs$c2[0];
-_initClass3 = _applyDecs$c2[1];
+var _applyDecs$c3 = _slicedToArray(_applyDecs(_JoypadGameScene2, [], _classDecs3, 0, void 0, _JoypadScene3).c, 2);
+_JoypadGameScene = _applyDecs$c3[0];
+_initClass3 = _applyDecs$c3[1];
 _initClass3();
 export { _JoypadGameScene as JoypadGameScene };
 export var JoypadWaitingScene = /*#__PURE__*/function (_JoypadScene5) {
@@ -349,7 +484,7 @@ export var JoypadWaitingScene = /*#__PURE__*/function (_JoypadScene5) {
         height = this.height,
         localPlayerId = game.localPlayerId;
       if (!localPlayerId || !game.players[localPlayerId] || this.startButton) return;
-      this.startButton = this.addButton({
+      this.startButton = this.addButton(_JoypadButton, {
         x: width / 2,
         y: height / 2,
         width: 300,
@@ -385,7 +520,7 @@ var JoypadPauseScene = /*#__PURE__*/function (_JoypadScene6) {
     key: "initButtons",
     value: function initButtons() {
       var _this4 = this;
-      this.resumeButton = this.addButton({
+      this.resumeButton = this.addButton(_JoypadButton, {
         width: 300,
         height: 100,
         text: "RESUME"
@@ -393,7 +528,7 @@ var JoypadPauseScene = /*#__PURE__*/function (_JoypadScene6) {
       this.resumeButton.onClickUp = function () {
         return _this4.game.pause(false);
       };
-      this.restartButton = this.addButton({
+      this.restartButton = this.addButton(_JoypadButton, {
         width: 300,
         height: 100,
         text: "RESTART"

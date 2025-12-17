@@ -46,6 +46,7 @@ var abs = Math.abs,
   hypot = Math.hypot;
 import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, Img, SpriteSheet, Aud, ObjectRefs, now, hackMethod } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, applyForce } from '../mixins.mjs';
+import { JoypadButton, StickButton } from '../joypad.mjs';
 import { JumpMixin } from './mixins.mjs';
 import { SlashAud, HandHitAud, Pop, SmokeExplosion, Weapon } from './objects.mjs';
 var REGISTER_COMMON_ARGS = {
@@ -423,31 +424,29 @@ var Nico = /*#__PURE__*/function (_Hero5) {
   }, {
     key: "initJoypadButtons",
     value: function initJoypadButtons(joypadScn) {
+      var _this2 = this;
       var width = joypadScn.width,
         height = joypadScn.height;
       var size = height * .45;
-      joypadScn.addButton({
-        inputKey: "ArrowLeft",
-        x: width * .15,
-        y: height * .27,
-        size: size,
-        icon: ArrowsSpriteSheet.get(3)
+      //joypadScn.addButton(JoypadButton, { inputKey: "ArrowLeft", x: width * .15, y: height * .27, size, icon: ArrowsSpriteSheet.get(3) })
+      //joypadScn.addButton(JoypadButton, { inputKey: "ArrowRight", x: width * .3, y: height * .73, size, icon: ArrowsSpriteSheet.get(1) })
+      var walkButton = joypadScn.addButton(StickButton, {
+        x: width * .25,
+        y: height * .5,
+        size: height * .8
       });
-      joypadScn.addButton({
-        inputKey: "ArrowRight",
-        x: width * .3,
-        y: height * .73,
-        size: size,
-        icon: ArrowsSpriteSheet.get(1)
-      });
-      joypadScn.addButton({
+      walkButton.onInput = function (pos) {
+        _this2.game.setInputKey("ArrowRight", pos && pos.x > 10);
+        _this2.game.setInputKey("ArrowLeft", pos && pos.x < -10);
+      };
+      joypadScn.addButton(JoypadButton, {
         inputKey: "ArrowUp",
         x: width * .85,
         y: height * .27,
         size: size,
         icon: ArrowsSpriteSheet.get(0)
       });
-      joypadScn.actionButton = joypadScn.addButton({
+      this.actionButton = joypadScn.addButton(JoypadButton, {
         inputKey: " ",
         x: width * .7,
         y: height * .73,
@@ -459,9 +458,7 @@ var Nico = /*#__PURE__*/function (_Hero5) {
   }, {
     key: "syncJoypadActionButton",
     value: function syncJoypadActionButton() {
-      var scenes = this.game.scenes;
-      var actionButton = scenes.joypad && scenes.joypad.actionButton;
-      if (!actionButton) return;
+      var actionButton = this.actionButton;
       var actionExtra = this.getActionExtra();
       actionButton.icon = actionExtra ? actionExtra.getBaseImg() : HandImg;
     }
@@ -499,9 +496,15 @@ var Nico = /*#__PURE__*/function (_Hero5) {
     value: function getInputState() {
       var game = this.game;
       var inputState = _superPropGet(Nico, "getInputState", this, 3)([]);
-      if (game.isKeyPressed("ArrowRight")) inputState.walkX = 1;else if (game.isKeyPressed("ArrowLeft")) inputState.walkX = -1;else delete inputState.walkX;
-      if (game.isKeyPressed("ArrowUp")) inputState.jump = true;else delete inputState.jump;
-      if (game.isKeyPressed(" ")) inputState.obj = true;else delete inputState.obj;
+      // walk
+      delete inputState.walkX;
+      if (game.isKeyPressed("ArrowRight")) inputState.walkX = 1;else if (game.isKeyPressed("ArrowLeft")) inputState.walkX = -1;
+      // jump
+      delete inputState.jump;
+      if (game.isKeyPressed("ArrowUp")) inputState.jump = true;
+      // action
+      delete inputState.obj;
+      if (game.isKeyPressed(" ")) inputState.obj = true;
       return inputState;
     }
   }]);
