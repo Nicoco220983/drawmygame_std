@@ -8,6 +8,7 @@ import {
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
 } from '../mixins.mjs'
+import { Hero } from './heros.mjs'
 
 const REGISTER_COMMON_ARGS = {
     url: import.meta.url,
