@@ -48,7 +48,6 @@ var abs = Math.abs,
   hypot = Math.hypot;
 import { sign, sumTo, newCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, importJs, cachedTransform, hasKeys, GraphicsProps, CATALOG, StateProperty, StateBool, StateNumber, GameObject, Category, Dependencies, LinkTrigger, LinkReaction, Mixin, Img, SpriteSheet, Aud, ObjectRefs, now, hackMethod } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, applyForce } from '../mixins.mjs';
-import { JumpMixin } from './mixins.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",
@@ -953,7 +952,7 @@ var Spiky = /*#__PURE__*/function (_Enemy4) {
   return _createClass(Spiky, [{
     key: "canAttackObject",
     value: function canAttackObject(obj) {
-      return obj instanceof Hero;
+      return obj.constructor.IS_HERO;
     }
   }, {
     key: "getGraphicsProps",
@@ -1048,7 +1047,7 @@ var BlobEnemy = /*#__PURE__*/function (_Enemy6) {
   }, {
     key: "canAttackObject",
     value: function canAttackObject(obj) {
-      return obj instanceof Hero;
+      return obj.constructor.IS_HERO;
     }
   }, {
     key: "getAttackProps",
@@ -1187,7 +1186,7 @@ var Ghost = /*#__PURE__*/function (_Enemy8) {
   }, {
     key: "canAttackObject",
     value: function canAttackObject(obj) {
-      return obj instanceof Hero;
+      return obj.constructor.IS_HERO;
     }
   }, {
     key: "getBaseImg",
@@ -1248,7 +1247,7 @@ var Heart = /*#__PURE__*/function (_GameObject8) {
   }, {
     key: "canGetCollectedByObject",
     value: function canGetCollectedByObject(obj) {
-      return obj instanceof Hero;
+      return obj.constructor.IS_HERO;
     }
   }, {
     key: "onGetCollected",

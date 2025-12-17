@@ -11,9 +11,6 @@ import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin,
     applyForce,
 } from '../mixins.mjs'
-import {
-    JumpMixin
-} from './mixins.mjs'
 
 
 const REGISTER_COMMON_ARGS = {
@@ -730,7 +727,7 @@ const SpikyImg = new Img("/static/catalogs/std/v1/2Dside/assets/spiky.png")
 export class Spiky extends Enemy {
 
     canAttackObject(obj) {
-        return obj instanceof Hero
+        return obj.constructor.IS_HERO
     }
 
     getGraphicsProps() {
@@ -810,7 +807,7 @@ export class BlobEnemy extends Enemy {
     }
 
     canAttackObject(obj) {
-        return obj instanceof Hero
+        return obj.constructor.IS_HERO
     }
 
     getAttackProps(obj) {
@@ -922,7 +919,7 @@ export class Ghost extends Enemy {
     }
 
     canAttackObject(obj) {
-        return obj instanceof Hero
+        return obj.constructor.IS_HERO
     }
 
     getBaseImg() {
@@ -971,7 +968,7 @@ export class Heart extends GameObject {
     }
 
     canGetCollectedByObject(obj) {
-        return obj instanceof Hero
+        return obj.constructor.IS_HERO
     }
 
     onGetCollected(hero) {

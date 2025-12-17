@@ -49,7 +49,6 @@ var abs = Math.abs,
   hypot = Math.hypot;
 import { CATALOG, StateProperty, StateBool, StateNumber, Dependencies, GameObject, Category, LinkTrigger, LinkReaction, Img, SpriteSheet, Aud, ObjectRefs } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
-import { Hero } from './heros.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
   version: "v1",
@@ -238,7 +237,7 @@ var Viewer = /*#__PURE__*/function (_Trigger8) {
       this.triggerValue = 0;
       if (this.watchHeros) {
         var _iterator = _createForOfIteratorHelper(this.scene.filterObjects("heros", function (obj) {
-            return obj instanceof Hero;
+            return obj.constructor.IS_HERO;
           })),
           _step;
         try {

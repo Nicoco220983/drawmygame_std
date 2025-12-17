@@ -8,7 +8,6 @@ import {
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
 } from '../mixins.mjs'
-import { Hero } from './heros.mjs'
 
 const REGISTER_COMMON_ARGS = {
     url: import.meta.url,
@@ -141,7 +140,7 @@ export class Viewer extends Trigger {
         super.update()
         this.triggerValue = 0
         if (this.watchHeros) {
-            for (let hero of this.scene.filterObjects("heros", obj => obj instanceof Hero)) {
+            for (let hero of this.scene.filterObjects("heros", obj => obj.constructor.IS_HERO)) {
                 if (hypot(this.x - hero.x, this.y - hero.y) <= this.watchDistance) {
                     this.triggerValue = 1
                 }
