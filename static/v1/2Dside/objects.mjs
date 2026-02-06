@@ -896,7 +896,10 @@ export { _JetPack as JetPack };
 _classDecs11 = [AttackMixin.add({
   canAttack: false,
   canGetAttacked: true
-}), Category.append("npc/enemy")];
+}), Category.append("npc/enemy"), StateNumber.define("team", {
+  "default": -1,
+  nullableWith: -1
+})];
 var _Enemy;
 var Enemy = /*#__PURE__*/function (_GameObject6) {
   function Enemy() {
@@ -905,12 +908,6 @@ var Enemy = /*#__PURE__*/function (_GameObject6) {
   }
   _inherits(Enemy, _GameObject6);
   return _createClass(Enemy, [{
-    key: "init",
-    value: function init(kwargs) {
-      _superPropGet(Enemy, "init", this, 3)([kwargs]);
-      this.team = "enemy";
-    }
-  }, {
     key: "die",
     value: function die(killer) {
       this.remove();
@@ -1511,7 +1508,10 @@ export { _Ball as Ball };
 _classDecs21 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Hero",
   icon: PopImg
-}))];
+})), StateNumber.define("team", {
+  "default": null,
+  nullableWith: null
+})];
 var _HeroSpawnPoint;
 var HeroSpawnPoint = /*#__PURE__*/function (_GameObject10) {
   function HeroSpawnPoint() {

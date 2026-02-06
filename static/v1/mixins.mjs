@@ -342,7 +342,7 @@ new (_AttackMixin2 = (_AttackMixin3 = /*#__PURE__*/function (_Mixin6) {
       proto.getHealth || (proto.getHealth = this.getHealth);
       var canReallyAttackObject = function canReallyAttackObject(obj) {
         if (!this.canAttack) return false;
-        if (!this.scene.attackManager.canTeamAttack(this.team, obj.team)) return false;
+        if (!this.scene.teamsManager.canTeamAttack(this.team, obj.team)) return false;
         var attackPeriod = this.attackPeriod,
           attackAges = this.attackAges;
         if (attackPeriod != 0 && attackAges) {
@@ -422,7 +422,7 @@ new (_AttackMixin2 = (_AttackMixin3 = /*#__PURE__*/function (_Mixin6) {
       if (this.getHealth() <= 0) return;
       var attacker = props.attacker,
         damages = props.damages;
-      if (this.scene.attackManager.canTeamDamage(attacker.team, this.team)) {
+      if (this.scene.teamsManager.canTeamDamage(attacker.team, this.team)) {
         this.getDamaged(damages, props);
       }
       var knockback = props?.knockback;

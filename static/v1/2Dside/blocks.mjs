@@ -639,7 +639,7 @@ var Trap = /*#__PURE__*/function (_Block17) {
       _superPropGet(Trap, "init", this, 3)([kwargs]);
       this.canBlock = false;
       this.checkBlockAnyway = true;
-      this.team = "engine";
+      this.team = 0;
       this.attackPeriod = this.duration;
     }
   }, {

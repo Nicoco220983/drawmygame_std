@@ -63,6 +63,9 @@ _classDecs = [Category.append("hero"), Dependencies.add(SmokeExplosion, Pop), Co
 }), StateNumber.define("lastSpawnIt", {
   "default": -Infinity,
   nullableWith: -Infinity
+}), StateNumber.define("team", {
+  "default": null,
+  nullableWith: null
 })];
 var _Hero;
 new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject) {
@@ -75,7 +78,6 @@ new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject) {
     key: "init",
     value: function init(kwargs) {
       _superPropGet(Hero, "init", this, 3)([kwargs]);
-      this.team = "hero";
       if (kwargs && kwargs.playerId !== undefined) this.setPlayerId(kwargs.playerId);
     }
   }, {
@@ -112,8 +114,17 @@ new (_Hero2 = (_Hero3 = /*#__PURE__*/function (_GameObject) {
     key: "update",
     value: function update() {
       _superPropGet(Hero, "update", this, 3)([]);
+      //this.initTeam()
       this.updateSpawnEffect();
     }
+
+    // initTeam() {
+    //     if(this._initTeamDone) return
+    //     this._initTeamDone = true
+    //     if(this.scene.teamsManager) {
+    //         this.scene.teamsManager.assignHeroTeam(this)
+    //     }
+    // }
   }, {
     key: "updateSpawnEffect",
     value: function updateSpawnEffect() {

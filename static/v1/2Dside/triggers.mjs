@@ -118,7 +118,7 @@ var Button = /*#__PURE__*/function (_Trigger4) {
     key: "init",
     value: function init(kwargs) {
       _superPropGet(Button, "init", this, 3)([kwargs]);
-      this.team = "engine";
+      this.team = 0;
     }
   }, {
     key: "onGetAttacked",

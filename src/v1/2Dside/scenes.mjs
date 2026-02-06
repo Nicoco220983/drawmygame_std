@@ -1,5 +1,5 @@
 const { assign } = Object
-const { floor, round, ceil, min, max, PI } = Math
+const { floor, round, ceil, min, max, hypot, PI } = Math
 import {
     sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys,
     GraphicsProps,
@@ -11,7 +11,7 @@ import {
 import {
     ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin, 
 } from '../mixins.mjs'
-import { Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs'
+import { Enemy, Wall, Star, HeroSpawnPoint, Ball } from './objects.mjs'
 import { Hero } from './heros.mjs'
 
 const REGISTER_COMMON_ARGS = {
@@ -175,7 +175,7 @@ export class ViewHerosCenterManager extends ViewManager {
     updateSceneView() {
         const scn = this.scene
         const { heros, localHero, viewWidth, viewHeight } = scn
-        if (!hasKeys(heros)) return
+        if (heros.size===0) return
         if (localHero) {
             scn.setView(
                 localHero.x - viewWidth / 2,
@@ -183,12 +183,11 @@ export class ViewHerosCenterManager extends ViewManager {
             )
         } else {
             let sumX = 0, sumY = 0, nbHeros = 0
-            for (let playerId in heros) {
-                const hero = heros[playerId]
+            heros.forEach(hero => {
                 sumX += hero.x
                 sumY += hero.y
                 nbHeros += 1
-            }
+            })
             scn.setView(
                 sumX / nbHeros - viewWidth / 2,
                 sumY / nbHeros - viewHeight / 2,
@@ -224,7 +223,7 @@ export class ViewFirstHeroManager extends ViewManager {
     updateSceneView() {
         const scn = this.scene
         const { heros, localHero, viewWidth, viewHeight } = scn
-        if (!hasKeys(heros)) return
+        if (heros.size===0) return
         if (localHero) {
             scn.setView(
                 localHero.x - viewWidth / 2,
@@ -245,14 +244,13 @@ export class ViewFirstHeroManager extends ViewManager {
         const firstHero = scn.getFirstHero()
         if (!firstHero) return
         const { x: fhx, y: fhy } = firstHero
-        for (let playerId in heros) {
-            if (playerId === firstHero.playerId) continue
-            const hero = heros[playerId]
+        heros.forEach((hero, playerId) => {
+            if (playerId === firstHero.playerId) return
             const dx = hero.x - fhx, dy = hero.y - fhy
             if (dx < -viewWidth * .7 || dx > viewWidth * .7 || dy < -viewHeight * .7 || dy > viewHeight * .7) {
                 this.spawnHero(hero)
             }
-        }
+        })
     }
 
     spawnHero(hero) {
@@ -281,18 +279,103 @@ export class ViewFirstHeroManager extends ViewManager {
 export class PhysicsManager extends Manager { }
 
 
+const DEFAULT_TEAMS_COLOR = ["blue", "red", "yellow", "green", "purple", "orange"]
+
 @CATALOG.registerObject({
     ...REGISTER_COMMON_ARGS,
     label: "Attack",
 })
-@Category.append("attack")
-export class AttackManager extends Manager {
+@Category.append("teams")
+@StateNumber.define("nbTeams", { default: 1, nullableWith: 1 })
+export class TeamsManager extends Manager {
+
+    init(kwargs) {
+        super.init(kwargs)
+        this.defaultHerosSpawnX = 50
+        this.defaultHerosSpawnY = 50
+        const { scene } = this
+        hackMethod(scene, "onAddObject", -1, evt => {
+            const obj = evt.inputArgs[0]
+            if (obj instanceof Hero) this.initHero(obj)
+            if (obj instanceof HeroSpawnPoint) this.initHeroSpawnPoint(obj)
+        })
+    }
+
+    initHero(hero) {
+        this.assignHeroTeam(hero)
+    }
+
+    assignHeroTeam(hero) {
+        if(hero.team !== null) return
+        const { nbTeams } = this
+        if(this.nbTeams === Infinity) return
+        const nbHerosByTeams = new Map()
+        this.scene.heros.forEach(hero2 => {
+            const { team } = hero2
+            if(team === null) return
+            nbHerosByTeams.set(team, (nbHerosByTeams.get(team) ?? 0) + 1)
+        })
+        let lowestNb = Infinity, lowestTeam = null
+        for(let team=1; team<=nbTeams; ++team) {
+            const nb = nbHerosByTeams.get(team) ?? 0
+            if(nb < lowestNb) {
+                lowestNb = nb
+                lowestTeam = team
+            }
+        }
+        hero.team = (lowestTeam === null) ? 1 : lowestTeam
+    }
+
+    initHeroSpawnPoint(point) {
+        this.assignHeroSpawnPointTeam(point)
+    }
+
+    assignHeroSpawnPointTeam(point) {
+        console.log("TMP point.team", point.team)
+        if(point.team !== null) return
+        const { nbTeams } = this
+        if(this.nbTeams === Infinity) return
+        const nbPointsByTeams = new Map()
+        const spawnPoints = this.scene.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+        spawnPoints.forEach(point2 => {
+            const { team } = point2
+            if(team === null) return
+            nbPointsByTeams.set(team, (nbPointsByTeams.get(team) ?? 0) + 1)
+        })
+        let lowestNb = Infinity, lowestTeam = null
+        for(let team=1; team<=nbTeams; ++team) {
+            const nb = nbPointsByTeams.get(team) ?? 0
+            if(nb < lowestNb) {
+                lowestNb = nb
+                lowestTeam = team
+            }
+        }
+        point.team = (lowestTeam === null) ? 1 : lowestTeam
+    }
+
+    spawnHero(hero) {
+        const { scene } = this
+        const spawnPoints = scene.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+        const spawnPointsSameTeam = spawnPoints.filter(point => point.team === hero.team)
+        const nbSpawnPoints = spawnPointsSameTeam.length
+        console.log("TMP nbSpawnPoints", nbSpawnPoints)
+        if(nbSpawnPoints == 0) return hero.spawn(this.defaultHerosSpawnX, this.defaultHerosSpawnY)
+        const r = scene.rand("spawnHero")
+        const numSpawnPoint = (nbSpawnPoints == 1) ? 0 : floor(r * nbSpawnPoints)
+        const spawnPoint = spawnPointsSameTeam[numSpawnPoint]
+        hero.spawn(spawnPoint.x, spawnPoint.y)
+    }
 
     canTeamAttack(team1, team2) {
         return true
     }
     canTeamDamage(team1, team2) {
-        return team1 != team2
+        return team1 === null || team1 != team2
+    }
+
+    getTeamColor(team) {
+        if(!team) return null
+        return DEFAULT_TEAMS_COLOR[(team-1)%DEFAULT_TEAMS_COLOR.length]
     }
 }
 
@@ -543,8 +626,8 @@ export class GameScene extends Scene {
     init(kwargs) {
         super.init(kwargs)
         this.step = "GAME"
-        this.herosSpawnX = 50
-        this.herosSpawnY = 50
+        this.deaultHerosSpawnX = 50
+        this.defaultHerosSpawnY = 50
         this.scores = new Map()
         this.isGameScene = true // TODO: remove me
     }
@@ -560,7 +643,7 @@ export class GameScene extends Scene {
     }
 
     initHeros() {
-        this.initHerosSpawnPos()
+        //this.initHerosSpawnPos()
         if(this.game.mode == MODE_CLIENT) return  // objects are init by first full state
         for(let playerId in this.game.players) this.addHero(playerId)
     }
@@ -578,13 +661,13 @@ export class GameScene extends Scene {
     }
 
     getHero(playerId) {
-        return this.heros[playerId]
+        return this.heros.get(playerId)
     }
 
     getFirstHero() {
         const firstPlayerId = this.game.getFirstPlayerId()
         if(firstPlayerId === null) return null
-        return this.heros[firstPlayerId]
+        return this.heros.get(firstPlayerId)
     }
 
     rmHero(playerId) {
@@ -593,7 +676,8 @@ export class GameScene extends Scene {
     }
 
     spawnHero(hero) {
-        hero.spawn(this.herosSpawnX, this.herosSpawnY)
+        if(this.teamsManager) this.teamsManager.spawnHero(hero)
+        else hero.spawn(this.defaultHerosSpawnX, this.defaultHerosSpawnY)
     }
 
     incrScore(playerId, val) {
@@ -679,12 +763,17 @@ export class GameScene extends Scene {
         )
     }
 
-    initHerosSpawnPos() {}
+    // initHerosSpawnPos() {
+    //     const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+    //     if (points.length == 0) return
+    //     const firstPoint = points[0]
+    //     this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
+    // }
 
-    setHerosSpawnPos(x, y) {
-        this.herosSpawnX = floor(x)
-        this.herosSpawnY = floor(y)
-    }
+    // setHerosSpawnPos(x, y) {
+    //     this.herosSpawnX = floor(x)
+    //     this.herosSpawnY = floor(y)
+    // }
 
     getState(isInitState=false) {
         const state = super.getState(isInitState)
@@ -694,8 +783,8 @@ export class GameScene extends Scene {
         } else {
             state.it = this.iteration
             state.step = this.step
-            state.hsx = this.herosSpawnX
-            state.hsy = this.herosSpawnY
+            // state.hsx = this.herosSpawnX
+            // state.hsy = this.herosSpawnY
             state.sco = {}
             this.scores.forEach((val, pid) => state.sco[pid] = floor(val))
         }
@@ -718,7 +807,7 @@ export class GameScene extends Scene {
         if(!isInitState) {
             this.iteration = state.it
             this.step = state.step
-            this.setHerosSpawnPos(state.hsx, state.hsy)
+            // this.setHerosSpawnPos(state.hsx, state.hsy)
             this.scores.clear()
             for(let pid in state.sco) this.scores.set(pid, state.sco[pid])
         }
@@ -784,9 +873,9 @@ class PauseScene extends Scene {
 @Dependencies.add(GreenLandscapeBackground)
 @StateBool.define("killAllEnemies", { default: false, showInBuilder: true })
 @StateBool.define("catchAllStars", { default: false, showInBuilder: true })
-@GameObject.StateProperty.define("attackManager", {
-    filter: { category: "manager/attack" },
-    default: { key: "std:AttackManager" },
+@GameObject.StateProperty.define("teamsManager", {
+    filter: { category: "manager/teams" },
+    default: { key: "std:TeamsManager" },
     showInBuilder: true,
 })
 @GameObject.StateProperty.define("physicsManager", {
@@ -821,13 +910,6 @@ export class StandardScene extends GameScene {
         this.hud = new HeadsUpDisplay(this)
     }
 
-    initHerosSpawnPos() {
-        const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
-        if (points.length == 0) return
-        const firstPoint = points[0]
-        this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
-    }
-
     update() {
         super.update()
         this.background.update()
@@ -835,7 +917,7 @@ export class StandardScene extends GameScene {
         this.viewManager.update()
         this.herosLivesManager.update()
         this.physicsManager.update()
-        this.attackManager.update()
+        this.teamsManager.update()
         this.hud.update()
         if (this.step == "GAME") {
             let allOk = null
@@ -875,9 +957,9 @@ export class StandardScene extends GameScene {
 @CATALOG.registerScene(REGISTER_COMMON_ARGS)
 @Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
-@GameObject.StateProperty.define("attackManager", {
-    filter: { category: "manager/attack" },
-    default: { key: "std:AttackManager" },
+@GameObject.StateProperty.define("teamsManager", {
+    filter: { category: "manager/teams" },
+    default: { key: "std:TeamsManager" },
     showInBuilder: true,
 })
 @GameObject.StateProperty.define("physicsManager", {
@@ -887,7 +969,7 @@ export class StandardScene extends GameScene {
 })
 @GameObject.StateProperty.define("borderManager", {
     filter: { category: "manager/border" },
-    default: { key: "std:LoopBorderManager" },
+    default: { key: "std:BlockBorderManager" },
     showInBuilder: true,
 })
 @GameObject.StateProperty.define("background", {
@@ -904,13 +986,6 @@ export class TagScene extends GameScene {
         this.hud = new HeadsUpDisplay(this, {
             showHerosHealths: false
         })
-    }
-
-    initHerosSpawnPos() {
-        const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
-        if (points.length == 0) return
-        const firstPoint = points[0]
-        this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
     }
 
     loadMap(map) {
@@ -939,7 +1014,7 @@ export class TagScene extends GameScene {
         this.background.update()
         this.borderManager.update()
         this.physicsManager.update()
-        this.attackManager.update()
+        this.teamsManager.update()
         this.hud.update()
         this.checkTaggedHero()
         this.preventTaggedHeroToMove(this.step == "INIT")
@@ -1080,9 +1155,9 @@ export class Tag extends GameObject {
 @CATALOG.registerScene(REGISTER_COMMON_ARGS)
 @Dependencies.add(GreenLandscapeBackground)
 @StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
-@GameObject.StateProperty.define("attackManager", {
-    filter: { category: "manager/attack" },
-    default: { key: "std:AttackManager" },
+@GameObject.StateProperty.define("teamsManager", {
+    filter: { category: "manager/teams" },
+    default: { key: "std:TeamsManager" },
     showInBuilder: true,
 })
 @GameObject.StateProperty.define("physicsManager", {
@@ -1092,7 +1167,7 @@ export class Tag extends GameObject {
 })
 @GameObject.StateProperty.define("borderManager", {
     filter: { category: "manager/border" },
-    default: { key: "std:LoopBorderManager" },
+    default: { key: "std:BlockBorderManager" },
     showInBuilder: true,
 })
 @GameObject.StateProperty.define("background", {
@@ -1111,13 +1186,6 @@ export class StealTreasures extends GameScene {
                 return (scores.get(pid2) ?? 0) - (scores.get(pid1) ?? 0)
             }
         })
-    }
-
-    initHerosSpawnPos() {
-        const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
-        if (points.length == 0) return
-        const firstPoint = points[0]
-        this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
     }
 
     onAddObject(obj) {
@@ -1147,7 +1215,7 @@ export class StealTreasures extends GameScene {
         this.background.update()
         this.borderManager.update()
         this.physicsManager.update()
-        this.attackManager.update()
+        this.teamsManager.update()
         this.hud.update()
     }
 
@@ -1235,6 +1303,211 @@ function countStarExtras(hero) {
         if (extra instanceof Star) nbStars += 1
     })
     return nbStars
+}
+
+
+// BALL
+
+@CATALOG.registerScene(REGISTER_COMMON_ARGS)
+@Dependencies.add(GreenLandscapeBackground)
+@StateNumber.define("goalsSize", { default: 150, precision: 10, showInBuilder: true })
+@StateNumber.define("duration", { default: 3 * 60, precision: 30, showInBuilder: true })
+@GameObject.StateProperty.define("teamsManager", {
+    filter: { category: "manager/teams" },
+    default: { key: "std:TeamsManager", nbTeams: 2 },
+    showInBuilder: true,
+})
+@GameObject.StateProperty.define("physicsManager", {
+    filter: { category: "manager/physics" },
+    default: { key: "std:PhysicsManager" },
+    showInBuilder: true,
+})
+@GameObject.StateProperty.define("borderManager", {
+    filter: { category: "manager/border" },
+    default: { key: "std:BlockBorderManager" },
+    showInBuilder: true,
+})
+@GameObject.StateProperty.define("background", {
+    filter: { category: "background" },
+    default: { key: "std:GreenLandscapeBackground" },
+    showInBuilder: true,
+})
+export class BallScene extends GameScene {
+
+    init(args) {
+        super.init(args)
+        this.step = "INIT"
+        this.initDuration = 3
+        this.hud = new HeadsUpDisplay(this, {
+            showHerosHealths: false
+        })
+    }
+
+    onAddObject(obj) {
+        super.onAddObject(obj)
+        if (obj instanceof Ball) this.hackBall(obj)
+        if (obj instanceof HeroSpawnPoint) this.hackHeroSpawnPoint(obj)
+    }
+
+    hackBall(ball) {
+        ball._startX = ball.x
+        ball._startY = ball.y
+    }
+
+    hackHeroSpawnPoint(point) {
+        const goalsSize = this.goalsSize
+        point.getGoalImg = function() {
+            if(point.team===null) return
+            if(!this._goalImg) {
+                const scn = this.scene
+                const color = scn.teamsManager.getTeamColor(this.team)
+                this._goalImg = newCanvas(goalsSize, goalsSize)
+                const ctx = this._goalImg.getContext("2d")
+                ctx.beginPath()
+                ctx.arc(goalsSize/2, goalsSize/2, goalsSize/2, 0, 2*Math.PI)
+                ctx.lineWidth = 1
+                ctx.strokeStyle = color
+                ctx.setLineDash([5, 5])
+                ctx.stroke()
+            }
+            return this._goalImg
+        }
+        hackMethod(point, "draw", 0, evt => {
+            const drawer = evt.inputArgs[0]
+            const img = new GraphicsProps({
+                img: point.getGoalImg(),
+                width: goalsSize,
+                height: goalsSize,
+                x: point.x,
+                y: point.y,
+            })
+            if(img) drawer.draw(img)
+        })
+    }
+
+
+    update() {
+        super.update()
+        this.background.update()
+        this.borderManager.update()
+        this.physicsManager.update()
+        this.teamsManager.update()
+        this.hud.update()
+        //this.initTeams()
+        this.preventHerosToMove(this.step == "INIT")
+        this.checkBallGoals()
+        if (this.step == "INIT") this.updateStepInit()
+    }
+
+    // initTeams() {
+    //     if(this._initTeamsDone) return
+    //     this._initTeamsDone = true
+    //     const heroSpawnPoints = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+    //     const heros = this.filterObjects("heros", obj => obj instanceof Hero)
+    //     const nbTeams = heroSpawnPoints.length
+    //     for(let i=0; i<heroSpawnPoints.length; ++i) {
+    //         heroSpawnPoints[i].team = `heros${i%nbTeams}`
+    //         console.log("TMP spawnPoint team", `heros${i%nbTeams}`)
+    //     }
+    //     for(let i=0; i<heros.length; ++i) {
+    //         heros[i].team = `heros${i%nbTeams}`
+    //         console.log("TMP hero team", `heros${i%nbTeams}`)
+    //     }
+    // }
+
+    preventHerosToMove(val) {
+        if(this._herosPreventedToMove === val) return
+        this._herosPreventedToMove = val
+        const heros = this.filterObjects("heros", obj => obj.constructor.IS_HERO)
+        heros.forEach(hero => {
+            if (val) {
+                hero._preventMoveHack ||= hackMethod(hero, "getInputState", 1, evt => {
+                    evt.stopPropagation()
+                })
+            } else if (hero._preventMoveHack) {
+                hero._preventMoveHack.remove()
+                delete hero._preventMoveHack
+            }
+        })
+    }
+
+    checkBallGoals() {
+        const balls = this.filterObjects("balls", obj => obj instanceof Ball)
+        const heroSpawnPoints = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+        const goalsRadius = this.goalsSize/2
+        balls.forEach(ball => heroSpawnPoints.forEach(point => {
+            if(hypot(ball.x-point.x, ball.y-point.y) < goalsRadius) {
+                this.handleBallGoal(ball, point)
+            }
+        }))
+    }
+
+    handleBallGoal(ball, heroSpawnPoint) {
+        // incr other teams scores
+        const { team } = heroSpawnPoint
+        const heros = this.filterObjects("heros", obj => obj.constructor.IS_HERO)
+        const otherTeamsHeros = heros.filter(hero => hero.team !== team)
+        otherTeamsHeros.forEach(hero => this.incrScore(hero.playerId, 1))
+        // respawn ball
+        ball.x = ball._startX
+        ball.y = ball._startY
+        ball.speedX = 0
+        ball.speedY = 0
+    }
+
+    updateStepInit() {
+        const { iteration, initDuration } = this
+        const { fps } = this.game
+        this.initCountDown()
+        this.updateWorld()
+        if (iteration > initDuration * fps) {
+            this.step = "GAME"
+            delete this.countDown
+        }
+    }
+
+    initCountDown() {
+        this.countDown ||= this.notifs.add(CountDown, {
+            x: this.width / 2,
+            y: this.height / 2,
+            duration: 3,
+            font: "bold 200px arial",
+            fillStyle: "black",
+        })
+    }
+
+    updateStepGame() {
+        const { iteration, initDuration, duration } = this
+        const { fps } = this.game
+        super.updateStepGame()
+        if (iteration > (initDuration + duration) * fps) this.step = "GAMEOVER"
+    }
+
+    updateStepGameOver() {
+        const { scores } = this
+        if (!this.scoresBoard) this.scoresBoard = this.notifs.add(ScoresBoard, {
+            x: this.width / 2,
+            y: this.height / 2,
+            scores,
+        })
+    }
+
+    async loadJoypadScene() {
+        const { JoypadGameScene } = await import("/static/catalogs/std/v1/joypad.mjs")
+        await JoypadGameScene.load()
+        return new JoypadGameScene(this.game)
+    }
+
+    draw() {
+        const res = super.draw()
+        const drawer = this.graphicsEngine
+        this.hud.draw(drawer)
+        return res
+    }
+
+    drawBackground(drawer) {
+        this.background.draw(drawer)
+    }
 }
 
 

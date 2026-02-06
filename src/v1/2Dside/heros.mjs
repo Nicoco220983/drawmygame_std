@@ -41,12 +41,12 @@ const REGISTER_COMMON_ARGS = {
     canGetAttacked: true,
 })
 @StateNumber.define("lastSpawnIt", { default: -Infinity, nullableWith: -Infinity })
+@StateNumber.define("team", { default: null, nullableWith: null })
 export class Hero extends GameObject {
     static IS_HERO = true
 
     init(kwargs) {
         super.init(kwargs)
-        this.team = "hero"
         if (kwargs && kwargs.playerId !== undefined) this.setPlayerId(kwargs.playerId)
     }
 
@@ -77,8 +77,17 @@ export class Hero extends GameObject {
 
     update() {
         super.update()
+        //this.initTeam()
         this.updateSpawnEffect()
     }
+
+    // initTeam() {
+    //     if(this._initTeamDone) return
+    //     this._initTeamDone = true
+    //     if(this.scene.teamsManager) {
+    //         this.scene.teamsManager.assignHeroTeam(this)
+    //     }
+    // }
 
     updateSpawnEffect() {
         const { lastSpawnIt } = this

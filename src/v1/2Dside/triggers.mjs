@@ -57,7 +57,7 @@ export class Button extends Trigger {
 
     init(kwargs) {
         super.init(kwargs)
-        this.team = "engine"
+        this.team = 0
     }
 
     onGetAttacked(attacker, damage) {

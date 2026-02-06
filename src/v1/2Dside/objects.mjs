@@ -691,12 +691,8 @@ export class JetPack extends Extra {
     canGetAttacked: true,
 })
 @Category.append("npc/enemy")
+@StateNumber.define("team", { default: -1, nullableWith: -1 })
 export class Enemy extends GameObject {
-
-    init(kwargs) {
-        super.init(kwargs)
-        this.team = "enemy"
-    }
 
     die(killer) {
         this.remove()
@@ -1175,6 +1171,7 @@ export class Ball extends GameObject {
     label: "Hero",
     icon: PopImg,
 })
+@StateNumber.define("team", { default: null, nullableWith: null })
 export class HeroSpawnPoint extends GameObject {
 
     init(kwargs) {

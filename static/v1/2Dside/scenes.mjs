@@ -1,6 +1,6 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _Manager2, _Manager3, _BorderManager2, _BorderManager3, _BlockBorderManager2, _BorderManager5, _DamageBorderManager2, _BorderManager7, _LoopBorderManager2, _Manager5, _HerosLivesManager2, _Manager7, _ViewManager2, _ViewManager3, _ViewHerosCenterManager, _ViewManager5, _ViewFirstHeroManager2, _Manager9, _PhysicsManager2, _Manager1, _AttackManager2, _Background2, _Background3, _GreenLandscapeBackground, _Background5, _RockMountainsBackground, _Background7, _SnowMountainsBackground, _Background9, _DarkForestBackground2, _Background1, _DarkCityBackground2, _StandardScene2, _TagScene2, _Tag2, _StealTreasures2, _StarsBar2, _WaitingScene2;
-var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21;
+var _Manager2, _Manager3, _BorderManager2, _BorderManager3, _BlockBorderManager2, _BorderManager5, _DamageBorderManager2, _BorderManager7, _LoopBorderManager2, _Manager5, _HerosLivesManager2, _Manager7, _ViewManager2, _ViewManager3, _ViewHerosCenterManager, _ViewManager5, _ViewFirstHeroManager2, _Manager9, _PhysicsManager2, _Manager1, _TeamsManager2, _Background2, _Background3, _GreenLandscapeBackground, _Background5, _RockMountainsBackground, _Background7, _SnowMountainsBackground, _Background9, _DarkForestBackground2, _Background1, _DarkCityBackground2, _StandardScene2, _TagScene2, _Tag2, _StealTreasures2, _StarsBar2, _BallScene2, _WaitingScene2;
+var _initClass, _classDecs, _initClass2, _classDecs2, _initClass3, _classDecs3, _initClass4, _classDecs4, _initClass5, _classDecs5, _initClass6, _classDecs6, _initClass7, _classDecs7, _initClass8, _classDecs8, _initClass9, _classDecs9, _initClass0, _classDecs0, _initClass1, _classDecs1, _initClass10, _classDecs10, _initClass11, _classDecs11, _initClass12, _classDecs12, _initClass13, _classDecs13, _initClass14, _classDecs14, _initClass15, _classDecs15, _initClass16, _classDecs16, _initClass17, _classDecs17, _initClass18, _classDecs18, _initClass19, _classDecs19, _initClass20, _classDecs20, _initClass21, _classDecs21, _initClass22, _classDecs22;
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -39,10 +39,11 @@ var floor = Math.floor,
   ceil = Math.ceil,
   min = Math.min,
   max = Math.max,
+  hypot = Math.hypot,
   PI = Math.PI;
 import { sumTo, newCanvas, newTextCanvas, addCanvas, cloneCanvas, colorizeCanvas, newDomEl, addNewDomEl, importJs, hasKeys, nbKeys, GraphicsProps, CATALOG, MODE_CLIENT, StateProperty, StateBool, StateNumber, Dependencies, Scene, PhysicsEngine, GameObject, Category, Mixin, Text, CenteredText, hackMethod, GameObjectGroup, Img } from '../../../../core/v1/index.mjs';
 import { ActivableMixin, CollectMixin, OwnerableMixin, BodyMixin, PhysicsMixin, AttackMixin } from '../mixins.mjs';
-import { Enemy, Wall, Star, HeroSpawnPoint } from './objects.mjs';
+import { Enemy, Wall, Star, HeroSpawnPoint, Ball } from './objects.mjs';
 import { Hero } from './heros.mjs';
 var REGISTER_COMMON_ARGS = {
   url: import.meta.url,
@@ -337,19 +338,18 @@ var ViewHerosCenterManager = /*#__PURE__*/function (_ViewManager4) {
         localHero = scn.localHero,
         viewWidth = scn.viewWidth,
         viewHeight = scn.viewHeight;
-      if (!hasKeys(heros)) return;
+      if (heros.size === 0) return;
       if (localHero) {
         scn.setView(localHero.x - viewWidth / 2, localHero.y - viewHeight / 2);
       } else {
         var sumX = 0,
           sumY = 0,
           nbHeros = 0;
-        for (var playerId in heros) {
-          var hero = heros[playerId];
+        heros.forEach(function (hero) {
           sumX += hero.x;
           sumY += hero.y;
           nbHeros += 1;
-        }
+        });
         scn.setView(sumX / nbHeros - viewWidth / 2, sumY / nbHeros - viewHeight / 2);
       }
     }
@@ -399,7 +399,7 @@ var ViewFirstHeroManager = /*#__PURE__*/function (_ViewManager6) {
         localHero = scn.localHero,
         viewWidth = scn.viewWidth,
         viewHeight = scn.viewHeight;
-      if (!hasKeys(heros)) return;
+      if (heros.size === 0) return;
       if (localHero) {
         scn.setView(localHero.x - viewWidth / 2, localHero.y - viewHeight / 2);
       } else {
@@ -410,6 +410,7 @@ var ViewFirstHeroManager = /*#__PURE__*/function (_ViewManager6) {
   }, {
     key: "spawnFarHeros",
     value: function spawnFarHeros() {
+      var _this4 = this;
       var scn = this.scene;
       var heros = scn.heros,
         viewWidth = scn.viewWidth,
@@ -418,15 +419,14 @@ var ViewFirstHeroManager = /*#__PURE__*/function (_ViewManager6) {
       if (!firstHero) return;
       var fhx = firstHero.x,
         fhy = firstHero.y;
-      for (var playerId in heros) {
-        if (playerId === firstHero.playerId) continue;
-        var hero = heros[playerId];
+      heros.forEach(function (hero, playerId) {
+        if (playerId === firstHero.playerId) return;
         var dx = hero.x - fhx,
           dy = hero.y - fhy;
         if (dx < -viewWidth * .7 || dx > viewWidth * .7 || dy < -viewHeight * .7 || dy > viewHeight * .7) {
-          this.spawnHero(hero);
+          _this4.spawnHero(hero);
         }
-      }
+      });
     }
   }, {
     key: "spawnHero",
@@ -475,17 +475,113 @@ _PhysicsManager = _applyDecs$c0[0];
 _initClass0 = _applyDecs$c0[1];
 _initClass0();
 export { _PhysicsManager as PhysicsManager };
+var DEFAULT_TEAMS_COLOR = ["blue", "red", "yellow", "green", "purple", "orange"];
 _classDecs1 = [CATALOG.registerObject(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   label: "Attack"
-})), Category.append("attack")];
-var _AttackManager;
-var AttackManager = /*#__PURE__*/function (_Manager10) {
-  function AttackManager() {
-    _classCallCheck(this, AttackManager);
-    return _callSuper(this, AttackManager, arguments);
+})), Category.append("teams"), StateNumber.define("nbTeams", {
+  "default": 1,
+  nullableWith: 1
+})];
+var _TeamsManager;
+var TeamsManager = /*#__PURE__*/function (_Manager10) {
+  function TeamsManager() {
+    _classCallCheck(this, TeamsManager);
+    return _callSuper(this, TeamsManager, arguments);
   }
-  _inherits(AttackManager, _Manager10);
-  return _createClass(AttackManager, [{
+  _inherits(TeamsManager, _Manager10);
+  return _createClass(TeamsManager, [{
+    key: "init",
+    value: function init(kwargs) {
+      var _this5 = this;
+      _superPropGet(TeamsManager, "init", this, 3)([kwargs]);
+      this.defaultHerosSpawnX = 50;
+      this.defaultHerosSpawnY = 50;
+      var scene = this.scene;
+      hackMethod(scene, "onAddObject", -1, function (evt) {
+        var obj = evt.inputArgs[0];
+        if (obj instanceof Hero) _this5.initHero(obj);
+        if (obj instanceof HeroSpawnPoint) _this5.initHeroSpawnPoint(obj);
+      });
+    }
+  }, {
+    key: "initHero",
+    value: function initHero(hero) {
+      this.assignHeroTeam(hero);
+    }
+  }, {
+    key: "assignHeroTeam",
+    value: function assignHeroTeam(hero) {
+      if (hero.team !== null) return;
+      var nbTeams = this.nbTeams;
+      if (this.nbTeams === Infinity) return;
+      var nbHerosByTeams = new Map();
+      this.scene.heros.forEach(function (hero2) {
+        var team = hero2.team;
+        if (team === null) return;
+        nbHerosByTeams.set(team, (nbHerosByTeams.get(team) ?? 0) + 1);
+      });
+      var lowestNb = Infinity,
+        lowestTeam = null;
+      for (var team = 1; team <= nbTeams; ++team) {
+        var nb = nbHerosByTeams.get(team) ?? 0;
+        if (nb < lowestNb) {
+          lowestNb = nb;
+          lowestTeam = team;
+        }
+      }
+      hero.team = lowestTeam === null ? 1 : lowestTeam;
+    }
+  }, {
+    key: "initHeroSpawnPoint",
+    value: function initHeroSpawnPoint(point) {
+      this.assignHeroSpawnPointTeam(point);
+    }
+  }, {
+    key: "assignHeroSpawnPointTeam",
+    value: function assignHeroSpawnPointTeam(point) {
+      console.log("TMP point.team", point.team);
+      if (point.team !== null) return;
+      var nbTeams = this.nbTeams;
+      if (this.nbTeams === Infinity) return;
+      var nbPointsByTeams = new Map();
+      var spawnPoints = this.scene.filterObjects("heroSpawnPoints", function (obj) {
+        return obj instanceof HeroSpawnPoint;
+      });
+      spawnPoints.forEach(function (point2) {
+        var team = point2.team;
+        if (team === null) return;
+        nbPointsByTeams.set(team, (nbPointsByTeams.get(team) ?? 0) + 1);
+      });
+      var lowestNb = Infinity,
+        lowestTeam = null;
+      for (var team = 1; team <= nbTeams; ++team) {
+        var nb = nbPointsByTeams.get(team) ?? 0;
+        if (nb < lowestNb) {
+          lowestNb = nb;
+          lowestTeam = team;
+        }
+      }
+      point.team = lowestTeam === null ? 1 : lowestTeam;
+    }
+  }, {
+    key: "spawnHero",
+    value: function spawnHero(hero) {
+      var scene = this.scene;
+      var spawnPoints = scene.filterObjects("heroSpawnPoints", function (obj) {
+        return obj instanceof HeroSpawnPoint;
+      });
+      var spawnPointsSameTeam = spawnPoints.filter(function (point) {
+        return point.team === hero.team;
+      });
+      var nbSpawnPoints = spawnPointsSameTeam.length;
+      console.log("TMP nbSpawnPoints", nbSpawnPoints);
+      if (nbSpawnPoints == 0) return hero.spawn(this.defaultHerosSpawnX, this.defaultHerosSpawnY);
+      var r = scene.rand("spawnHero");
+      var numSpawnPoint = nbSpawnPoints == 1 ? 0 : floor(r * nbSpawnPoints);
+      var spawnPoint = spawnPointsSameTeam[numSpawnPoint];
+      hero.spawn(spawnPoint.x, spawnPoint.y);
+    }
+  }, {
     key: "canTeamAttack",
     value: function canTeamAttack(team1, team2) {
       return true;
@@ -493,16 +589,22 @@ var AttackManager = /*#__PURE__*/function (_Manager10) {
   }, {
     key: "canTeamDamage",
     value: function canTeamDamage(team1, team2) {
-      return team1 != team2;
+      return team1 === null || team1 != team2;
+    }
+  }, {
+    key: "getTeamColor",
+    value: function getTeamColor(team) {
+      if (!team) return null;
+      return DEFAULT_TEAMS_COLOR[(team - 1) % DEFAULT_TEAMS_COLOR.length];
     }
   }]);
 }(_Manager1 = _Manager); // NOTIFS ////////////////////////////////////////////
-_AttackManager2 = AttackManager;
-var _applyDecs$c1 = _slicedToArray(_applyDecs(_AttackManager2, [], _classDecs1, 0, void 0, _Manager1).c, 2);
-_AttackManager = _applyDecs$c1[0];
+_TeamsManager2 = TeamsManager;
+var _applyDecs$c1 = _slicedToArray(_applyDecs(_TeamsManager2, [], _classDecs1, 0, void 0, _Manager1).c, 2);
+_TeamsManager = _applyDecs$c1[0];
 _initClass1 = _applyDecs$c1[1];
 _initClass1();
-export { _AttackManager as AttackManager };
+export { _TeamsManager as TeamsManager };
 export var HeadsUpDisplay = /*#__PURE__*/function (_GameObject2) {
   function HeadsUpDisplay() {
     _classCallCheck(this, HeadsUpDisplay);
@@ -535,7 +637,7 @@ export var HeadsUpDisplay = /*#__PURE__*/function (_GameObject2) {
   }, {
     key: "initPlayerElements",
     value: function initPlayerElements(hero) {
-      var _this4 = this;
+      var _this6 = this;
       var game = this.game,
         playersElems = this.playersElems,
         textArgs = this.textArgs,
@@ -545,7 +647,7 @@ export var HeadsUpDisplay = /*#__PURE__*/function (_GameObject2) {
         heroLineMinHeight = this.heroLineMinHeight;
       var _loop = function _loop() {
         if (playersElems.has(playerId)) return 1; // continue
-        var grp = new GameObjectGroup(_this4.scene);
+        var grp = new GameObjectGroup(_this6.scene);
         playersElems.set(playerId, grp);
         //grp.nbBarElems = 0
         grp.add(PlayerIcon, {
@@ -555,12 +657,12 @@ export var HeadsUpDisplay = /*#__PURE__*/function (_GameObject2) {
           height: heroLineMinHeight,
           playerId: playerId
         });
-        if (_this4.showHerosHealths) grp.add(HealthBar, {
+        if (_this6.showHerosHealths) grp.add(HealthBar, {
           playerId: playerId,
           width: barWidth,
           height: barHeight
         });
-        if (_this4.showPlayersScores) grp.add(PlayerScoreText, _objectSpread({
+        if (_this6.showPlayersScores) grp.add(PlayerScoreText, _objectSpread({
           playerId: playerId
         }, textArgs));
         grp.sync = function () {
@@ -879,8 +981,8 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
     value: function init(kwargs) {
       _superPropGet(GameScene, "init", this, 3)([kwargs]);
       this.step = "GAME";
-      this.herosSpawnX = 50;
-      this.herosSpawnY = 50;
+      this.deaultHerosSpawnX = 50;
+      this.defaultHerosSpawnY = 50;
       this.scores = new Map();
       this.isGameScene = true; // TODO: remove me
     }
@@ -899,7 +1001,7 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
   }, {
     key: "initHeros",
     value: function initHeros() {
-      this.initHerosSpawnPos();
+      //this.initHerosSpawnPos()
       if (this.game.mode == MODE_CLIENT) return; // objects are init by first full state
       for (var playerId in this.game.players) this.addHero(playerId);
     }
@@ -921,14 +1023,14 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
   }, {
     key: "getHero",
     value: function getHero(playerId) {
-      return this.heros[playerId];
+      return this.heros.get(playerId);
     }
   }, {
     key: "getFirstHero",
     value: function getFirstHero() {
       var firstPlayerId = this.game.getFirstPlayerId();
       if (firstPlayerId === null) return null;
-      return this.heros[firstPlayerId];
+      return this.heros.get(firstPlayerId);
     }
   }, {
     key: "rmHero",
@@ -939,7 +1041,7 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
   }, {
     key: "spawnHero",
     value: function spawnHero(hero) {
-      hero.spawn(this.herosSpawnX, this.herosSpawnY);
+      if (this.teamsManager) this.teamsManager.spawnHero(hero);else hero.spawn(this.defaultHerosSpawnX, this.defaultHerosSpawnY);
     }
   }, {
     key: "incrScore",
@@ -1026,15 +1128,18 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
         font: "100px serif"
       });
     }
-  }, {
-    key: "initHerosSpawnPos",
-    value: function initHerosSpawnPos() {}
-  }, {
-    key: "setHerosSpawnPos",
-    value: function setHerosSpawnPos(x, y) {
-      this.herosSpawnX = floor(x);
-      this.herosSpawnY = floor(y);
-    }
+
+    // initHerosSpawnPos() {
+    //     const points = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+    //     if (points.length == 0) return
+    //     const firstPoint = points[0]
+    //     this.setHerosSpawnPos(firstPoint.x, firstPoint.y)
+    // }
+
+    // setHerosSpawnPos(x, y) {
+    //     this.herosSpawnX = floor(x)
+    //     this.herosSpawnY = floor(y)
+    // }
   }, {
     key: "getState",
     value: function getState() {
@@ -1046,8 +1151,8 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
       } else {
         state.it = this.iteration;
         state.step = this.step;
-        state.hsx = this.herosSpawnX;
-        state.hsy = this.herosSpawnY;
+        // state.hsx = this.herosSpawnX
+        // state.hsy = this.herosSpawnY
         state.sco = {};
         this.scores.forEach(function (val, pid) {
           return state.sco[pid] = floor(val);
@@ -1088,7 +1193,7 @@ export var GameScene = /*#__PURE__*/function (_Scene) {
       if (!isInitState) {
         this.iteration = state.it;
         this.step = state.step;
-        this.setHerosSpawnPos(state.hsx, state.hsy);
+        // this.setHerosSpawnPos(state.hsx, state.hsy)
         this.scores.clear();
         for (var pid in state.sco) this.scores.set(pid, state.sco[pid]);
       }
@@ -1176,12 +1281,12 @@ _classDecs16 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_G
 }), StateBool.define("catchAllStars", {
   "default": false,
   showInBuilder: true
-}), GameObject.StateProperty.define("attackManager", {
+}), GameObject.StateProperty.define("teamsManager", {
   filter: {
-    category: "manager/attack"
+    category: "manager/teams"
   },
   "default": {
-    key: "std:AttackManager"
+    key: "std:TeamsManager"
   },
   showInBuilder: true
 }), GameObject.StateProperty.define("physicsManager", {
@@ -1239,16 +1344,6 @@ var StandardScene = /*#__PURE__*/function (_GameScene) {
       this.hud = new HeadsUpDisplay(this);
     }
   }, {
-    key: "initHerosSpawnPos",
-    value: function initHerosSpawnPos() {
-      var points = this.filterObjects("heroSpawnPoints", function (obj) {
-        return obj instanceof HeroSpawnPoint;
-      });
-      if (points.length == 0) return;
-      var firstPoint = points[0];
-      this.setHerosSpawnPos(firstPoint.x, firstPoint.y);
-    }
-  }, {
     key: "update",
     value: function update() {
       _superPropGet(StandardScene, "update", this, 3)([]);
@@ -1257,7 +1352,7 @@ var StandardScene = /*#__PURE__*/function (_GameScene) {
       this.viewManager.update();
       this.herosLivesManager.update();
       this.physicsManager.update();
-      this.attackManager.update();
+      this.teamsManager.update();
       this.hud.update();
       if (this.step == "GAME") {
         var allOk = null;
@@ -1326,12 +1421,12 @@ _classDecs17 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_G
   "default": 3 * 60,
   precision: 30,
   showInBuilder: true
-}), GameObject.StateProperty.define("attackManager", {
+}), GameObject.StateProperty.define("teamsManager", {
   filter: {
-    category: "manager/attack"
+    category: "manager/teams"
   },
   "default": {
-    key: "std:AttackManager"
+    key: "std:TeamsManager"
   },
   showInBuilder: true
 }), GameObject.StateProperty.define("physicsManager", {
@@ -1347,7 +1442,7 @@ _classDecs17 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_G
     category: "manager/border"
   },
   "default": {
-    key: "std:LoopBorderManager"
+    key: "std:BlockBorderManager"
   },
   showInBuilder: true
 }), GameObject.StateProperty.define("background", {
@@ -1377,16 +1472,6 @@ var TagScene = /*#__PURE__*/function (_GameScene2) {
       });
     }
   }, {
-    key: "initHerosSpawnPos",
-    value: function initHerosSpawnPos() {
-      var points = this.filterObjects("heroSpawnPoints", function (obj) {
-        return obj instanceof HeroSpawnPoint;
-      });
-      if (points.length == 0) return;
-      var firstPoint = points[0];
-      this.setHerosSpawnPos(firstPoint.x, firstPoint.y);
-    }
-  }, {
     key: "loadMap",
     value: function loadMap(map) {
       _superPropGet(TagScene, "loadMap", this, 3)([map]);
@@ -1401,12 +1486,12 @@ var TagScene = /*#__PURE__*/function (_GameScene2) {
   }, {
     key: "hackHero",
     value: function hackHero(hero) {
-      var _this5 = this;
+      var _this7 = this;
       hero.maxHealth = Infinity;
       hackMethod(hero, "onGetAttacked", 0, function (evt) {
         var attackProps = evt.inputArgs[0];
         var attacker = attackProps.attacker;
-        var tag = _this5.tag;
+        var tag = _this7.tag;
         if (!tag || !attacker || tag.owner != attacker) return;
         tag.owner = hero;
       });
@@ -1418,7 +1503,7 @@ var TagScene = /*#__PURE__*/function (_GameScene2) {
       this.background.update();
       this.borderManager.update();
       this.physicsManager.update();
-      this.attackManager.update();
+      this.teamsManager.update();
       this.hud.update();
       this.checkTaggedHero();
       this.preventTaggedHeroToMove(this.step == "INIT");
@@ -1607,12 +1692,12 @@ _classDecs19 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_G
   "default": 3 * 60,
   precision: 30,
   showInBuilder: true
-}), GameObject.StateProperty.define("attackManager", {
+}), GameObject.StateProperty.define("teamsManager", {
   filter: {
-    category: "manager/attack"
+    category: "manager/teams"
   },
   "default": {
-    key: "std:AttackManager"
+    key: "std:TeamsManager"
   },
   showInBuilder: true
 }), GameObject.StateProperty.define("physicsManager", {
@@ -1628,7 +1713,7 @@ _classDecs19 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_G
     category: "manager/border"
   },
   "default": {
-    key: "std:LoopBorderManager"
+    key: "std:BlockBorderManager"
   },
   showInBuilder: true
 }), GameObject.StateProperty.define("background", {
@@ -1658,16 +1743,6 @@ var StealTreasures = /*#__PURE__*/function (_GameScene3) {
           return (scores.get(pid2) ?? 0) - (scores.get(pid1) ?? 0);
         }
       });
-    }
-  }, {
-    key: "initHerosSpawnPos",
-    value: function initHerosSpawnPos() {
-      var points = this.filterObjects("heroSpawnPoints", function (obj) {
-        return obj instanceof HeroSpawnPoint;
-      });
-      if (points.length == 0) return;
-      var firstPoint = points[0];
-      this.setHerosSpawnPos(firstPoint.x, firstPoint.y);
     }
   }, {
     key: "onAddObject",
@@ -1700,7 +1775,7 @@ var StealTreasures = /*#__PURE__*/function (_GameScene3) {
       this.background.update();
       this.borderManager.update();
       this.physicsManager.update();
-      this.attackManager.update();
+      this.teamsManager.update();
       this.hud.update();
     }
   }, {
@@ -1817,9 +1892,9 @@ var StarsBar = /*#__PURE__*/function (_GameObject6) {
   }]);
 }(GameObject);
 _StarsBar2 = StarsBar;
-var _applyDecs$c21 = _slicedToArray(_applyDecs(_StarsBar2, [], _classDecs20, 0, void 0, GameObject).c, 2);
-_StarsBar = _applyDecs$c21[0];
-_initClass20 = _applyDecs$c21[1];
+var _applyDecs$c22 = _slicedToArray(_applyDecs(_StarsBar2, [], _classDecs20, 0, void 0, GameObject).c, 2);
+_StarsBar = _applyDecs$c22[0];
+_initClass20 = _applyDecs$c22[1];
 _initClass20();
 function countStarExtras(hero) {
   var nbStars = 0;
@@ -1829,8 +1904,291 @@ function countStarExtras(hero) {
   return nbStars;
 }
 
-// WAIGTING
-_classDecs21 = [CATALOG.registerScene(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
+// BALL
+_classDecs21 = [CATALOG.registerScene(REGISTER_COMMON_ARGS), Dependencies.add(_GreenLandscapeBackgr), StateNumber.define("goalsSize", {
+  "default": 150,
+  precision: 10,
+  showInBuilder: true
+}), StateNumber.define("duration", {
+  "default": 3 * 60,
+  precision: 30,
+  showInBuilder: true
+}), GameObject.StateProperty.define("teamsManager", {
+  filter: {
+    category: "manager/teams"
+  },
+  "default": {
+    key: "std:TeamsManager",
+    nbTeams: 2
+  },
+  showInBuilder: true
+}), GameObject.StateProperty.define("physicsManager", {
+  filter: {
+    category: "manager/physics"
+  },
+  "default": {
+    key: "std:PhysicsManager"
+  },
+  showInBuilder: true
+}), GameObject.StateProperty.define("borderManager", {
+  filter: {
+    category: "manager/border"
+  },
+  "default": {
+    key: "std:BlockBorderManager"
+  },
+  showInBuilder: true
+}), GameObject.StateProperty.define("background", {
+  filter: {
+    category: "background"
+  },
+  "default": {
+    key: "std:GreenLandscapeBackground"
+  },
+  showInBuilder: true
+})];
+var _BallScene;
+var BallScene = /*#__PURE__*/function (_GameScene4) {
+  function BallScene() {
+    _classCallCheck(this, BallScene);
+    return _callSuper(this, BallScene, arguments);
+  }
+  _inherits(BallScene, _GameScene4);
+  return _createClass(BallScene, [{
+    key: "init",
+    value: function init(args) {
+      _superPropGet(BallScene, "init", this, 3)([args]);
+      this.step = "INIT";
+      this.initDuration = 3;
+      this.hud = new HeadsUpDisplay(this, {
+        showHerosHealths: false
+      });
+    }
+  }, {
+    key: "onAddObject",
+    value: function onAddObject(obj) {
+      _superPropGet(BallScene, "onAddObject", this, 3)([obj]);
+      if (obj instanceof Ball) this.hackBall(obj);
+      if (obj instanceof HeroSpawnPoint) this.hackHeroSpawnPoint(obj);
+    }
+  }, {
+    key: "hackBall",
+    value: function hackBall(ball) {
+      ball._startX = ball.x;
+      ball._startY = ball.y;
+    }
+  }, {
+    key: "hackHeroSpawnPoint",
+    value: function hackHeroSpawnPoint(point) {
+      var goalsSize = this.goalsSize;
+      point.getGoalImg = function () {
+        if (point.team === null) return;
+        if (!this._goalImg) {
+          var scn = this.scene;
+          var color = scn.teamsManager.getTeamColor(this.team);
+          this._goalImg = newCanvas(goalsSize, goalsSize);
+          var ctx = this._goalImg.getContext("2d");
+          ctx.beginPath();
+          ctx.arc(goalsSize / 2, goalsSize / 2, goalsSize / 2, 0, 2 * Math.PI);
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = color;
+          ctx.setLineDash([5, 5]);
+          ctx.stroke();
+        }
+        return this._goalImg;
+      };
+      hackMethod(point, "draw", 0, function (evt) {
+        var drawer = evt.inputArgs[0];
+        var img = new GraphicsProps({
+          img: point.getGoalImg(),
+          width: goalsSize,
+          height: goalsSize,
+          x: point.x,
+          y: point.y
+        });
+        if (img) drawer.draw(img);
+      });
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      _superPropGet(BallScene, "update", this, 3)([]);
+      this.background.update();
+      this.borderManager.update();
+      this.physicsManager.update();
+      this.teamsManager.update();
+      this.hud.update();
+      //this.initTeams()
+      this.preventHerosToMove(this.step == "INIT");
+      this.checkBallGoals();
+      if (this.step == "INIT") this.updateStepInit();
+    }
+
+    // initTeams() {
+    //     if(this._initTeamsDone) return
+    //     this._initTeamsDone = true
+    //     const heroSpawnPoints = this.filterObjects("heroSpawnPoints", obj => obj instanceof HeroSpawnPoint)
+    //     const heros = this.filterObjects("heros", obj => obj instanceof Hero)
+    //     const nbTeams = heroSpawnPoints.length
+    //     for(let i=0; i<heroSpawnPoints.length; ++i) {
+    //         heroSpawnPoints[i].team = `heros${i%nbTeams}`
+    //         console.log("TMP spawnPoint team", `heros${i%nbTeams}`)
+    //     }
+    //     for(let i=0; i<heros.length; ++i) {
+    //         heros[i].team = `heros${i%nbTeams}`
+    //         console.log("TMP hero team", `heros${i%nbTeams}`)
+    //     }
+    // }
+  }, {
+    key: "preventHerosToMove",
+    value: function preventHerosToMove(val) {
+      if (this._herosPreventedToMove === val) return;
+      this._herosPreventedToMove = val;
+      var heros = this.filterObjects("heros", function (obj) {
+        return obj.constructor.IS_HERO;
+      });
+      heros.forEach(function (hero) {
+        if (val) {
+          hero._preventMoveHack || (hero._preventMoveHack = hackMethod(hero, "getInputState", 1, function (evt) {
+            evt.stopPropagation();
+          }));
+        } else if (hero._preventMoveHack) {
+          hero._preventMoveHack.remove();
+          delete hero._preventMoveHack;
+        }
+      });
+    }
+  }, {
+    key: "checkBallGoals",
+    value: function checkBallGoals() {
+      var _this8 = this;
+      var balls = this.filterObjects("balls", function (obj) {
+        return obj instanceof Ball;
+      });
+      var heroSpawnPoints = this.filterObjects("heroSpawnPoints", function (obj) {
+        return obj instanceof HeroSpawnPoint;
+      });
+      var goalsRadius = this.goalsSize / 2;
+      balls.forEach(function (ball) {
+        return heroSpawnPoints.forEach(function (point) {
+          if (hypot(ball.x - point.x, ball.y - point.y) < goalsRadius) {
+            _this8.handleBallGoal(ball, point);
+          }
+        });
+      });
+    }
+  }, {
+    key: "handleBallGoal",
+    value: function handleBallGoal(ball, heroSpawnPoint) {
+      var _this9 = this;
+      // incr other teams scores
+      var team = heroSpawnPoint.team;
+      var heros = this.filterObjects("heros", function (obj) {
+        return obj.constructor.IS_HERO;
+      });
+      var otherTeamsHeros = heros.filter(function (hero) {
+        return hero.team !== team;
+      });
+      otherTeamsHeros.forEach(function (hero) {
+        return _this9.incrScore(hero.playerId, 1);
+      });
+      // respawn ball
+      ball.x = ball._startX;
+      ball.y = ball._startY;
+      ball.speedX = 0;
+      ball.speedY = 0;
+    }
+  }, {
+    key: "updateStepInit",
+    value: function updateStepInit() {
+      var iteration = this.iteration,
+        initDuration = this.initDuration;
+      var fps = this.game.fps;
+      this.initCountDown();
+      this.updateWorld();
+      if (iteration > initDuration * fps) {
+        this.step = "GAME";
+        delete this.countDown;
+      }
+    }
+  }, {
+    key: "initCountDown",
+    value: function initCountDown() {
+      this.countDown || (this.countDown = this.notifs.add(CountDown, {
+        x: this.width / 2,
+        y: this.height / 2,
+        duration: 3,
+        font: "bold 200px arial",
+        fillStyle: "black"
+      }));
+    }
+  }, {
+    key: "updateStepGame",
+    value: function updateStepGame() {
+      var iteration = this.iteration,
+        initDuration = this.initDuration,
+        duration = this.duration;
+      var fps = this.game.fps;
+      _superPropGet(BallScene, "updateStepGame", this, 3)([]);
+      if (iteration > (initDuration + duration) * fps) this.step = "GAMEOVER";
+    }
+  }, {
+    key: "updateStepGameOver",
+    value: function updateStepGameOver() {
+      var scores = this.scores;
+      if (!this.scoresBoard) this.scoresBoard = this.notifs.add(ScoresBoard, {
+        x: this.width / 2,
+        y: this.height / 2,
+        scores: scores
+      });
+    }
+  }, {
+    key: "loadJoypadScene",
+    value: function () {
+      var _loadJoypadScene4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+        var _yield$import4, JoypadGameScene;
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.n) {
+            case 0:
+              _context4.n = 1;
+              return import("/static/catalogs/std/v1/joypad.mjs");
+            case 1:
+              _yield$import4 = _context4.v;
+              JoypadGameScene = _yield$import4.JoypadGameScene;
+              _context4.n = 2;
+              return JoypadGameScene.load();
+            case 2:
+              return _context4.a(2, new JoypadGameScene(this.game));
+          }
+        }, _callee4, this);
+      }));
+      function loadJoypadScene() {
+        return _loadJoypadScene4.apply(this, arguments);
+      }
+      return loadJoypadScene;
+    }()
+  }, {
+    key: "draw",
+    value: function draw() {
+      var res = _superPropGet(BallScene, "draw", this, 3)([]);
+      var drawer = this.graphicsEngine;
+      this.hud.draw(drawer);
+      return res;
+    }
+  }, {
+    key: "drawBackground",
+    value: function drawBackground(drawer) {
+      this.background.draw(drawer);
+    }
+  }]);
+}(GameScene); // WAIGTING
+_BallScene2 = BallScene;
+var _applyDecs$c20 = _slicedToArray(_applyDecs(_BallScene2, [], _classDecs21, 0, void 0, GameScene).c, 2);
+_BallScene = _applyDecs$c20[0];
+_initClass21 = _applyDecs$c20[1];
+_initClass21();
+export { _BallScene as BallScene };
+_classDecs22 = [CATALOG.registerScene(_objectSpread(_objectSpread({}, REGISTER_COMMON_ARGS), {}, {
   showInBuilder: false
 }))];
 var _WaitingScene;
@@ -1852,15 +2210,15 @@ var WaitingScene = /*#__PURE__*/function (_Scene3) {
   }, {
     key: "initTitleText",
     value: function initTitleText() {
-      var _this6 = this;
+      var _this0 = this;
       var titleTxt = this.addNotif(Text, {
         text: "WAITING PLAYERS",
         font: "bold 50px arial",
         fillStyle: "white"
       });
       titleTxt.syncPos = function () {
-        titleTxt.x = _this6.viewWidth / 2;
-        titleTxt.y = _this6.viewHeight / 6;
+        titleTxt.x = _this0.viewWidth / 2;
+        titleTxt.y = _this0.viewHeight / 6;
       };
       hackMethod(titleTxt, "update", 0, function (evt) {
         return titleTxt.syncPos();
@@ -1963,26 +2321,26 @@ var WaitingScene = /*#__PURE__*/function (_Scene3) {
   }, {
     key: "initQrcodeImg",
     value: function () {
-      var _initQrcodeImg = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+      var _initQrcodeImg = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
         var res, qrcodeImg, can, ctx;
-        return _regenerator().w(function (_context4) {
-          while (1) switch (_context4.n) {
+        return _regenerator().w(function (_context5) {
+          while (1) switch (_context5.n) {
             case 0:
               if (!IS_SERVER_ENV) {
-                _context4.n = 1;
+                _context5.n = 1;
                 break;
               }
-              return _context4.a(2);
+              return _context5.a(2);
             case 1:
               res = this._qrcodeImg;
               if (res) {
-                _context4.n = 3;
+                _context5.n = 3;
                 break;
               }
-              _context4.n = 2;
+              _context5.n = 2;
               return this.game.initQrcodeImg();
             case 2:
-              qrcodeImg = this._qrcodeImg = _context4.v;
+              qrcodeImg = this._qrcodeImg = _context5.v;
               can = newCanvas(ceil(qrcodeImg.width * 1.2), ceil(qrcodeImg.height * 1.2));
               ctx = can.getContext("2d");
               ctx.fillStyle = "white";
@@ -1990,9 +2348,9 @@ var WaitingScene = /*#__PURE__*/function (_Scene3) {
               ctx.drawImage(qrcodeImg, floor((can.width - qrcodeImg.width) / 2), floor((can.height - qrcodeImg.height) / 2));
               res = this._qrcodeImg = can;
             case 3:
-              return _context4.a(2, res);
+              return _context5.a(2, res);
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
       function initQrcodeImg() {
         return _initQrcodeImg.apply(this, arguments);
@@ -2002,35 +2360,35 @@ var WaitingScene = /*#__PURE__*/function (_Scene3) {
   }, {
     key: "loadJoypadScene",
     value: function () {
-      var _loadJoypadScene4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-        var _yield$import4, JoypadWaitingScene;
-        return _regenerator().w(function (_context5) {
-          while (1) switch (_context5.n) {
+      var _loadJoypadScene5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+        var _yield$import5, JoypadWaitingScene;
+        return _regenerator().w(function (_context6) {
+          while (1) switch (_context6.n) {
             case 0:
-              _context5.n = 1;
+              _context6.n = 1;
               return import("/static/catalogs/std/v1/joypad.mjs");
             case 1:
-              _yield$import4 = _context5.v;
-              JoypadWaitingScene = _yield$import4.JoypadWaitingScene;
-              _context5.n = 2;
+              _yield$import5 = _context6.v;
+              JoypadWaitingScene = _yield$import5.JoypadWaitingScene;
+              _context6.n = 2;
               return JoypadWaitingScene.load();
             case 2:
-              return _context5.a(2, new JoypadWaitingScene(this.game));
+              return _context6.a(2, new JoypadWaitingScene(this.game));
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
       function loadJoypadScene() {
-        return _loadJoypadScene4.apply(this, arguments);
+        return _loadJoypadScene5.apply(this, arguments);
       }
       return loadJoypadScene;
     }()
   }]);
 }(Scene);
 _WaitingScene2 = WaitingScene;
-var _applyDecs$c20 = _slicedToArray(_applyDecs(_WaitingScene2, [], _classDecs21, 0, void 0, Scene).c, 2);
-_WaitingScene = _applyDecs$c20[0];
-_initClass21 = _applyDecs$c20[1];
-_initClass21();
+var _applyDecs$c21 = _slicedToArray(_applyDecs(_WaitingScene2, [], _classDecs22, 0, void 0, Scene).c, 2);
+_WaitingScene = _applyDecs$c21[0];
+_initClass22 = _applyDecs$c21[1];
+_initClass22();
 export { _WaitingScene as WaitingScene };
 export var PlayerIcon = /*#__PURE__*/function (_GameObject7) {
   function PlayerIcon() {

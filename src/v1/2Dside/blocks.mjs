@@ -410,7 +410,7 @@ export class Trap extends Block {
         super.init(kwargs)
         this.canBlock = false
         this.checkBlockAnyway = true
-        this.team = "engine"
+        this.team = 0
         this.attackPeriod = this.duration
     }
 

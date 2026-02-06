@@ -244,7 +244,7 @@ export class AttackMixin extends Mixin {
         proto.getHealth ||= this.getHealth
         const canReallyAttackObject = function(obj) {
             if(!this.canAttack) return false
-            if(!this.scene.attackManager.canTeamAttack(this.team, obj.team)) return false
+            if(!this.scene.teamsManager.canTeamAttack(this.team, obj.team)) return false
             const { attackPeriod, attackAges } = this
             if(attackPeriod != 0 && attackAges) {
                 const attackAge = attackAges[obj.id]
@@ -317,7 +317,7 @@ export class AttackMixin extends Mixin {
     getAttacked(props) {
         if(this.getHealth() <= 0) return
         const { attacker, damages } = props
-        if(this.scene.attackManager.canTeamDamage(attacker.team, this.team)) {
+        if(this.scene.teamsManager.canTeamDamage(attacker.team, this.team)) {
             this.getDamaged(damages, props)
         }
         const knockback = props?.knockback
